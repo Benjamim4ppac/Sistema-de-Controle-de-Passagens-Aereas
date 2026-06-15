@@ -11,6 +11,6 @@ typedef struct {
 #include <stdio.h>
 
 int main(){
-    printf("Hello, Wd!\n");
+    printf("Gustavo Lima!\n");
     return 0;
 }
