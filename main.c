@@ -1,6 +1,16 @@
+typedef struct {
+    char assentos[5];
+} Passagem;
+
+
+
+
+
+
+
 #include <stdio.h>
 
 int main(){
-    printf("Hello World\n");
+    printf("Gustavo Lima!\n");
     return 0;
 }
