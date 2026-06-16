@@ -59,11 +59,11 @@ int validaCPF(char cpf[12]){ //Função para verificar a validade de um CPF
 
 typedef struct
 {
-    char nome[100];
-    char cpf[12];
-    char telefone[12];
-    char email[50];
-    char dataNascimento[11];
+    char nome[100]; //Nome do  Passageiro
+    char cpf[12]; //CPF do Passageiro (XXX.XXX.XXX-XX)
+    char telefone[12]; //Telefone do Passageiro ((XX)XXXX-XXXX)
+    char email[50]; //E-mail do Passageiro (XXXXXX@XX.com)
+    char dataNascimento[11]; //DatadeNascimento (DD/MM/AAAA)
 
 } Passageiro;
 
@@ -77,6 +77,7 @@ typedef struct {
 } Passagem;
 
 int main(){
+    Passageiro passageiro;
     Passagem passagens[5];
     return 0;
 }
