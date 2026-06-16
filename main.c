@@ -1,6 +1,16 @@
 #include <stdio.h>
 #include <string.h>
 
+typedef struct
+{
+    char nome[100]; //Nome do  Passageiro
+    char cpf[12]; //CPF do Passageiro (XXX.XXX.XXX-XX)
+    char telefone[16]; //Telefone do Passageiro ((XX)XXXX-XXXX)
+    char email[50]; //E-mail do Passageiro (XXXXXX@XX.com)
+    char dataNascimento[11]; //DatadeNascimento (DD/MM/AAAA)
+
+} Passageiro;
+
 int validaCPF(char cpf[12]){ //Função para verificar a validade de um CPF
     int peso=10,cont,soma=0,resto;
     int digitoVerificador[2];
@@ -56,14 +66,14 @@ int validaCPF(char cpf[12]){ //Função para verificar a validade de um CPF
     }
 }
 
-int existeCPF(char cpfConsulta[12], Passageiro consulta[], int qtdPassageiro){
+int buscaCPF(char cpfConsulta[12], Passageiro consulta[], int qtdPassageiro){ //Função para verificar se o CPF já existe no banco de dados de CPFs cadastrados
     int cont;
     for(cont=0;cont<qtdPassageiro;cont++){
         if(strcmp(cpfConsulta,consulta[cont].cpf)==0){
-            return 1; //CPF ja cadastrado
+            return cont; //CPF ja cadastrado - Retorna o indice do vetor que o CPF ja existe
         }
     }
-    return 0; //CPF não cadastrado
+    return -1; //CPF não cadastrado
 }
 
 void limparCPF(char original[], char limpo[]){//Função que remove (. e -) do CPF caso o usuário digite na forma(XXX.XXX.XXX-XX) e limpa para (XXXXXXXXXXX)
@@ -80,50 +90,74 @@ void limparCPF(char original[], char limpo[]){//Função que remove (. e -) do C
 
 void cadastrarPassageiro(Passageiro cadastro[], int *qtdPassageiro){
     printf("------- Cadastro de Novo Passageiro -------\n");
+
     if(*qtdPassageiro>=5){ //Se houver 5 cadastros, a função é encerrada
         printf("Vetor Cheio!\n");
         return;
     }
+
     char cpfDigitado[20]; //Variavel para armazenar o CPF digitado
+    
     printf("CPF: ");
     scanf("%s",cpfDigitado); //Recebe do usuário o CPF a ser cadastrado
+
     limparCPF(cpfDigitado, cadastro[*qtdPassageiro].cpf); //Caso o usuario digite o CPF com (. ou -) ele sera convertido em apenas caracteres numéricos
+
     if(validaCPF(cadastro[*qtdPassageiro].cpf) == 0){ //verifica se é um CPF válido
-        printf("CPF Inválido!"); //CPF invaliudo, fecha a função
+        printf("CPF Invalido!\n"); //CPF invaliudo, fecha a função
         return;
     } 
    
-    if(existeCPF(cadastro[*qtdPassageiro].cpf,cadastro,*qtdPassageiro)){  //Verifica se esse CPF ja foi cadastrado
-        printf("CPF Já Cadastrado!\n"); //CPF ja cadastrado, fecha a função
+    if(buscaCPF(cadastro[*qtdPassageiro].cpf,cadastro,*qtdPassageiro)!= -1){  //Verifica se esse CPF ja foi cadastrado
+        printf("CPF ja Cadastrado!\n"); //CPF ja cadastrado, fecha a função
         return;
     }
+
     printf("Nome: ");
     scanf(" %[^\n]",cadastro[*qtdPassageiro].nome);
+
     printf("Telefone: ");
     scanf("%s",cadastro[*qtdPassageiro].telefone);
+
     printf("E-mail: ");
     scanf("%s",cadastro[*qtdPassageiro].email);
+
     printf("Data de Nascimento: ");
     scanf("%s",cadastro[*qtdPassageiro].dataNascimento);
-    (*qtdPassageiro)++;
+
+    (*qtdPassageiro)++; //Soma 1 a quantidade de passageiros cadastrados
     printf("Passageiro cadastrado com sucesso!\n");
 }
 
-void consultarPassageiro(Passageiro *consulta){
-    char cpfConsulta[12];
+void buscarPassageiro(Passageiro consulta[], int qtdPassageiro){
+    char cpfDigitado[20]; //Variavel para armazenar o cpf digitado
+    char cpfConsulta[12]; //Variavel para armazenar o cpf limpo
+
     printf("------- Consulta de Passageiro -------\n");
     printf("Digite o CPF do Passageiro que deseja consultar: ");
+    scanf("%s",cpfDigitado); //Recebe CPF do passageiro a ser consultado
+
+    limparCPF(cpfDigitado,cpfConsulta); //cpfConsulta recebe o cpfDigitado com pontos e traços removidos
+    if(validaCPF(cpfConsulta)==0){ //verifica se é um CPF válido
+        printf("CPF invalido!\n");
+        return;
+    }
+
+    int indiceConsulta = buscaCPF(cpfConsulta,consulta,qtdPassageiro);
+
+    if(indiceConsulta == -1){
+        printf("Passageiro não cadastrado!\n");
+        return;
+    } else{
+        printf("---Passageiro Encontrado---\n");
+        printf("Nome: %s\n",consulta[indiceConsulta].nome);
+        printf("CPF: %s\n",consulta[indiceConsulta].cpf);
+        printf("Telefone: %s\n",consulta[indiceConsulta].telefone);
+        printf("E-mail: %s\n",consulta[indiceConsulta].email);
+        printf("Data de nascimento: %s\n",consulta[indiceConsulta].dataNascimento);
+    }
 }
 
-typedef struct
-{
-    char nome[100]; //Nome do  Passageiro
-    char cpf[12]; //CPF do Passageiro (XXX.XXX.XXX-XX)
-    char telefone[12]; //Telefone do Passageiro ((XX)XXXX-XXXX)
-    char email[50]; //E-mail do Passageiro (XXXXXX@XX.com)
-    char dataNascimento[11]; //DatadeNascimento (DD/MM/AAAA)
-
-} Passageiro;
 
 typedef struct {
     int num_passagem;
@@ -137,6 +171,16 @@ typedef struct {
 int main(){
     Passageiro passageiro[5];
     int qtdPassageiro=0;
+    cadastrarPassageiro(passageiro,&qtdPassageiro);
+    buscarPassageiro(passageiro,qtdPassageiro);
+    cadastrarPassageiro(passageiro,&qtdPassageiro);
+    buscarPassageiro(passageiro,qtdPassageiro);
+    cadastrarPassageiro(passageiro,&qtdPassageiro);
+    buscarPassageiro(passageiro,qtdPassageiro);
+    cadastrarPassageiro(passageiro,&qtdPassageiro);
+    buscarPassageiro(passageiro,qtdPassageiro);
+    cadastrarPassageiro(passageiro,&qtdPassageiro);
+    buscarPassageiro(passageiro,qtdPassageiro);
     Passagem passagens[5];
     return 0;
 }
