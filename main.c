@@ -88,7 +88,7 @@ void limparCPF(char original[], char limpo[]){//Função que remove (. e -) do C
 
 }
 
-void cadastrarPassageiro(Passageiro cadastro[], int *qtdPassageiro){
+void cadastrarPassageiro(Passageiro cadastro[], int *qtdPassageiro){ //Função que efetua o cadastro de um novo passageiro
     printf("------- Cadastro de Novo Passageiro -------\n");
 
     if(*qtdPassageiro>=5){ //Se houver 5 cadastros, a função é encerrada
@@ -124,12 +124,13 @@ void cadastrarPassageiro(Passageiro cadastro[], int *qtdPassageiro){
 
     printf("Data de Nascimento: ");
     scanf("%s",cadastro[*qtdPassageiro].dataNascimento);
+    formatarData(cadastro[*qtdPassageiro].dataNascimento);
 
     (*qtdPassageiro)++; //Soma 1 a quantidade de passageiros cadastrados
     printf("Passageiro cadastrado com sucesso!\n");
 }
 
-void buscarPassageiro(Passageiro consulta[], int qtdPassageiro){
+void buscarPassageiro(Passageiro consulta[], int qtdPassageiro){ //Função que imprime na tela os dados do passageiro que teve o CPF informado
     char cpfDigitado[20]; //Variavel para armazenar o cpf digitado
     char cpfConsulta[12]; //Variavel para armazenar o cpf limpo
 
@@ -151,13 +152,70 @@ void buscarPassageiro(Passageiro consulta[], int qtdPassageiro){
     } else{
         printf("---Passageiro Encontrado---\n");
         printf("Nome: %s\n",consulta[indiceConsulta].nome);
+        formatarCPF(consulta[indiceConsulta].cpf);
         printf("CPF: %s\n",consulta[indiceConsulta].cpf);
         printf("Telefone: %s\n",consulta[indiceConsulta].telefone);
         printf("E-mail: %s\n",consulta[indiceConsulta].email);
+        formatarData(consulta[indiceConsulta].dataNascimento);
         printf("Data de nascimento: %s\n",consulta[indiceConsulta].dataNascimento);
     }
 }
 
+void formatarData(char dataNascimento[]){ //Função que deixa a data no formato: (dd/mm/aaaa)
+    char dataFormatada[11];
+    int contOriginal,contFormatado=0;
+    //Percorre toda a string dataNascimento digitada no cadastro
+    for(contOriginal =0; dataNascimento[contOriginal]!= '\0';contOriginal++){
+        //Copia apenas os caracteres numéricos
+        if(dataNascimento[contOriginal]>='0' && dataNascimento[contOriginal]<='9'){
+           dataFormatada[contFormatado] = dataNascimento[contOriginal];
+            contFormatado++;
+        }
+    } //Coloca o caracter '\0' para indicar o fim da string
+    dataFormatada[10] = '\0';
+    //Desloca os digitos do ano para a direita
+    dataFormatada[9] = dataFormatada[7];
+    dataFormatada[8] = dataFormatada[6];
+    dataFormatada[7] = dataFormatada[5];
+    dataFormatada[6] = dataFormatada[4];
+    //Coloca a / para separar mes de ano
+    dataFormatada[5] = '/';
+    //Desloca os digitos do mes para a direita
+    dataFormatada[4] = dataFormatada[3];
+    dataFormatada[3] = dataFormatada[2];
+    //Coloca / para separar dia de mes
+    dataFormatada[2] = '/';
+
+    strcpy(dataNascimento, dataFormatada); //Copia o conteudo da data formatada para o parametro da função
+    }
+
+void formatarCPF(char cpfFormatado[15]){// formata o CPF recebido no formato: (XXX.XXX.XXX-XX)
+
+    cpfFormatado[14] = '\0';
+
+    // Desloca os dois últimos dígitos para a direita
+    cpfFormatado[13] = cpfFormatado[10];
+    cpfFormatado[12] = cpfFormatado[9];
+
+    // Coloca o hífen antes dos dígitos verificadores
+    cpfFormatado[11] = '-';
+
+    // Desloca os três dígitos anteriores para a direita
+    cpfFormatado[10] = cpfFormatado[8];
+    cpfFormatado[9] = cpfFormatado[7];
+    cpfFormatado[8] = cpfFormatado[6];
+
+    // Coloca o segundo ponto
+    cpfFormatado[7] = '.';
+
+    // Desloca os três dígitos anteriores para a direita
+    cpfFormatado[6] = cpfFormatado[5];
+    cpfFormatado[5] = cpfFormatado[4];
+    cpfFormatado[4] = cpfFormatado[3];
+
+    // Coloca o primeiro ponto
+    cpfFormatado[3] = '.';
+}
 
 typedef struct {
     int num_passagem;
