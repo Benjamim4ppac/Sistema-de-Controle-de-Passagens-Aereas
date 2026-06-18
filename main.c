@@ -1,6 +1,15 @@
 #include <stdio.h>
 #include <string.h>
 
+typedef struct {
+    int num_passagem;
+    char cpf_p[14]; // Copiar do "Passageiro" ou referenciar o cpf diretamente (Pode vir a virar um ponteiro)
+    char codigo_voo_p[6]; // Copiar do "Voo" ou referenciar o codigo_voo diretamente (Pode vir a virar um ponteiro)
+    char assentos[5];
+    char classe[20]; // (Econômica, Executiva ou Primeira Classe) -> Pode virar uma opção de mútipla escolha e guardar inteiros
+    char status[20]; // (Confirmada, Cancelada, Pendente) -> Pode virar uma opção de mútipla escolha e guardar inteiros
+} Passagem;
+
 typedef struct
 {
     char nome[100]; //Nome do  Passageiro
@@ -376,15 +385,6 @@ void deletarPassageiro(Passageiro deletar[], int *qtdPassageiro){
 
     }
 }
-
-typedef struct {
-    int num_passagem;
-    char cpf_p[14]; // Copiar do "Passageiro" ou referenciar o cpf diretamente (Pode vir a virar um ponteiro)
-    int codigo_voo_p; // Copiar do "Voo" ou referenciar o codigo_voo diretamente (Pode vir a virar um ponteiro)
-    char assentos[5];
-    char classe[20]; // (Econômica, Executiva ou Primeira Classe) -> Pode virar uma opção de mútipla escolha e guardar inteiros
-    char status[20]; // (Confirmada, Cancelada, Pendente) -> Pode virar uma opção de mútipla escolha e guardar inteiros
-} Passagem;
 
 int main(){
     Passageiro passageiro[5];
