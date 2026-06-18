@@ -11,6 +11,24 @@ typedef struct
 
 } Passageiro;
 
+int validacodigo_voo(char codigo_voo[6]){
+    if(strlen(codigo_voo)!=6) return 0;
+    if(codigo_voo[0]!='L' && codigo_voo[0]!='A' && codigo_voo[0]!='G'){
+        return 0;
+    }
+    int soma=0;
+    for (int i=1;i<4;i++){
+    if(codigo_voo[i]<'0' || codigo_voo[i]>'9') return 0;
+    soma+=codigo_voo[i]-'0';
+    }
+    if(codigo_voo[4]!='-') return 0;
+    if(codigo_voo[5]<'0' || codigo_voo[5]>'9') return 0;
+    int verifica=codigo_voo[5]-'0';
+    if(soma>9)soma=soma%10;
+    if(soma==verifica) return 1;
+    else return 0;
+}
+
 int validaCPF(char cpf[12]){ //Função para verificar a validade de um CPF
     int peso=10,cont,soma=0,resto;
     int digitoVerificador[2];
