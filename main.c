@@ -128,6 +128,7 @@ void cadastrarPassageiro(Passageiro cadastro[], int *qtdPassageiro){ //Função 
 
     (*qtdPassageiro)++; //Soma 1 a quantidade de passageiros cadastrados
     printf("Passageiro cadastrado com sucesso!\n");
+    printf("Passageiros cadastrados: %d\n",*qtdPassageiro);
 }
 
 void buscarPassageiro(Passageiro consulta[], int qtdPassageiro){ //Função que imprime na tela os dados do passageiro que teve o CPF informado
@@ -152,8 +153,10 @@ void buscarPassageiro(Passageiro consulta[], int qtdPassageiro){ //Função que 
     } else{
         printf("---Passageiro Encontrado---\n");
         printf("Nome: %s\n",consulta[indiceConsulta].nome);
-        formatarCPF(consulta[indiceConsulta].cpf);
-        printf("CPF: %s\n",consulta[indiceConsulta].cpf);
+        char cpfExibicao[15]; //Cria uma variavel temporaria para armazenar o CPF que sera mostrado, par anão editar o conteudo do vetor principal
+        strcpy(cpfExibicao, consulta[indiceConsulta].cpf); //Copia o conteudo do CPF do vetor
+        formatarCPF(cpfExibicao); //Formata somente o cpf a ser exibido no formato XXX.XXX.XXX-XX
+        printf("CPF: %s\n",cpfExibicao);
         printf("Telefone: %s\n",consulta[indiceConsulta].telefone);
         printf("E-mail: %s\n",consulta[indiceConsulta].email);
         formatarData(consulta[indiceConsulta].dataNascimento);
@@ -164,18 +167,20 @@ void buscarPassageiro(Passageiro consulta[], int qtdPassageiro){ //Função que 
 void editarPassageiro(Passageiro editar[], int qtdPassageiro){
 
     char cpfDigitado[20]; //Variavel para armazenar o cpf digitado
-    char cpfEditar[12]; //Variavel para armazenar o cpf limpo
+    char cpfEditar[12]; //Variavel para armazenar o cpf do passageiro editado
 
     printf("------- Editar dados do Passageiro -------\n");
     printf("Digite o CPF do Passageiro que deseja editar: ");
     scanf("%s",cpfDigitado); //Recebe CPF do passageiro a ser editado
 
-    limparCPF(cpfDigitado,cpfEditar); //cpfConsulta recebe o cpfDigitado com pontos e traços removidos
+    limparCPF(cpfDigitado,cpfEditar); //cpfEditar recebe o cpfDigitado com pontos e traços removidos
+    
     if(validaCPF(cpfEditar)==0){ //verifica se é um CPF válido
         printf("CPF invalido!\n");
         return;
     }
 
+    limparCPF(cpfDigitado,cpfEditar);
     int indiceEditar = buscaCPF(cpfEditar,editar,qtdPassageiro);
 
     if(indiceEditar == -1){
@@ -217,10 +222,10 @@ void editarPassageiro(Passageiro editar[], int qtdPassageiro){
     }
 }
 
-int menuEditarPassageiro(){
+int menuEditarPassageiro(){//SubMenu acessado dentro da função editarPassageiro para saber qual dado do passageiro sera editado
     int menu;
-    printf("O que deseja Editar?\n");
-    printf("1. Nome\n2. Telefone\n3. E-mail\n4. Data de Nascimento\n,");
+    printf("---O que deseja Editar?---\n");
+    printf("1. Nome\n2. Telefone\n3. E-mail\n4. Data de Nascimento\nOpção Selecionada: ");
     scanf("%d",&menu);
     switch (menu)
     {
@@ -309,9 +314,12 @@ int main(){
     cadastrarPassageiro(passageiro,&qtdPassageiro);
     buscarPassageiro(passageiro,qtdPassageiro);
     editarPassageiro(passageiro,qtdPassageiro);
+    buscarPassageiro(passageiro,qtdPassageiro);
+    editarPassageiro(passageiro,qtdPassageiro);
     cadastrarPassageiro(passageiro,&qtdPassageiro);
     buscarPassageiro(passageiro,qtdPassageiro);
     editarPassageiro(passageiro,qtdPassageiro);
+    buscarPassageiro(passageiro,qtdPassageiro);
     
     Passagem passagens[5];
     return 0;
