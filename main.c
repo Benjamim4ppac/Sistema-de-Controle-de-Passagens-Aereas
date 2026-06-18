@@ -38,6 +38,21 @@ int validacodigo_voo(char codigo_voo[6]){
     else return 0;
 }
 
+void menuPrincipal(){
+    printf("====================================\n");
+    printf("  SISTEMA DE CONTROLE DE PASSAGENS\n");
+    printf("====================================\n\n");
+
+    printf("1 - Gerenciar Passageiros\n");
+    printf("2 - Gerenciar Voos\n");
+    printf("3 - Gerenciar Passagens\n");
+    printf("4 - Consultas\n");
+    printf("5 - Relatórios\n");
+    printf("0 - Sair\n\n");
+
+    printf("Escolha uma opcao: ");
+}        
+
 int validaCPF(char cpf[12]){ //Função para verificar a validade de um CPF
     int peso=10,cont,soma=0,resto;
     int digitoVerificador[2];
@@ -380,20 +395,107 @@ void deletarPassageiro(Passageiro deletar[], int *qtdPassageiro){
         printf("Passageiro Deletado\n");
         //Apaga as informações do ultimo passageiro, ja que seus dados estavam duplicados devido ao deslocamento
     } else{
-        printf("Exclusão Cncelada!\n");
+        printf("Exclusão Cancelada!\n");
     }
 
     }
 }
 
+void menuPassageiros(){
+    int opcao;
+    do{
+        printf("\n===== MENU PASSAGEIROS =====\n");
+        printf("1 - Cadastrar Passageiro\n");
+        printf("2 - Consultar Passageiro\n");
+        printf("3 - Editar Passageiro\n");
+        printf("4 - Deletar Passageiro\n");
+        printf("0 - Voltar\n");
+        printf("Opcao: ");
+
+        scanf("%d", &opcao){
+            case 1:
+                cadastrarPassageiro(passageiros, qtdPassageiro);
+                break;
+
+            case 2:
+                buscarPassageiro(passageiros, *qtdPassageiro);
+                break;
+
+            case 3:
+                editarPassageiro(passageiros, *qtdPassageiro);
+                break;
+
+            case 4:
+                deletarPassageiro(passageiros, qtdPassageiro);
+                break;
+
+            case 0:
+                break;
+
+            default:
+                printf("Opcao invalida!\n");
+        }
+
+    }while(opcao != 0);
+}
+
+void menuVoos(){
+
+}
+
+void menuPassagens(){
+
+
+}
+
+void menuConsultas(){
+
+}
+
+void menuRelatorios(){
+    
+}
+
 int main(){
     Passageiro passageiro[5];
     int qtdPassageiro=0;
-    cadastrarPassageiro(passageiro,&qtdPassageiro);
-    buscarPassageiro(passageiro,qtdPassageiro);
-    deletarPassageiro(passageiro,&qtdPassageiro);
-    buscarPassageiro(passageiro,qtdPassageiro);
-    
     Passagem passagens[5];
+
+    int opcao;
+
+    do{
+        menuPrincipal();
+        scanf("%d", &opcao);
+
+        switch(opcao){
+            case 1:
+                menuPassageiros();
+                break;
+
+            case 2:
+                menuVoos();
+                break;
+
+            case 3:
+                menuPassagens();
+                break;
+
+            case 4:
+                menuConsultas();
+                break;
+
+            case 5:
+                menuRelatorios();
+                break;
+
+            case 0:
+                printf("Encerrando sistema...\n");
+                break;
+
+            default:
+                printf("Opcao invalida!\n");
+        }
+    }while(opcao!=0);
+    
     return 0;
 }
