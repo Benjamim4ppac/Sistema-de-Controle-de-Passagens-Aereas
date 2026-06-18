@@ -161,6 +161,83 @@ void buscarPassageiro(Passageiro consulta[], int qtdPassageiro){ //Função que 
     }
 }
 
+void editarPassageiro(Passageiro editar[], int qtdPassageiro){
+
+    char cpfDigitado[20]; //Variavel para armazenar o cpf digitado
+    char cpfEditar[12]; //Variavel para armazenar o cpf limpo
+
+    printf("------- Editar dados do Passageiro -------\n");
+    printf("Digite o CPF do Passageiro que deseja editar: ");
+    scanf("%s",cpfDigitado); //Recebe CPF do passageiro a ser editado
+
+    limparCPF(cpfDigitado,cpfEditar); //cpfConsulta recebe o cpfDigitado com pontos e traços removidos
+    if(validaCPF(cpfEditar)==0){ //verifica se é um CPF válido
+        printf("CPF invalido!\n");
+        return;
+    }
+
+    int indiceEditar = buscaCPF(cpfEditar,editar,qtdPassageiro);
+
+    if(indiceEditar == -1){
+        printf("Passageiro não cadastrado!\n");
+        return;
+    } else{
+        printf("---Passageiro Encontrado---\n");
+        int opcao = menuEditarPassageiro();
+        switch (opcao){
+        case 1:
+            printf("---Editar Nome---\n");
+            printf("Nome Atual: %s",editar[indiceEditar].nome);
+            printf("Novo Nome: ");
+            scanf(" %[^\n]",editar[indiceEditar].nome);
+            break;
+        case 2:
+            printf("---Editar Telefone---\n");
+            printf("Telefone Atual: %s",editar[indiceEditar].telefone);
+            printf("Telefone Nome: ");
+            scanf(" %[^\n]",editar[indiceEditar].telefone);
+            break;
+        case 3:
+            printf("---Editar E-mail---\n");
+            printf("E-mail Atual: %s",editar[indiceEditar].email);
+            printf("Novo E-mail: ");
+            scanf(" %[^\n]",editar[indiceEditar].email);
+            break;
+        case 4:
+            printf("---Editar Data de Nascimento---\n");
+            formatarData(editar[indiceEditar].dataNascimento);
+            printf("Atual Data de Nascimento: %s",editar[indiceEditar].dataNascimento);
+            printf("Nova Data de Nascimento: ");
+            scanf(" %[^\n]",editar[indiceEditar].dataNascimento);
+            break;
+        default:
+            break;
+        }
+        
+    }
+}
+
+int menuEditarPassageiro(){
+    int menu;
+    printf("O que deseja Editar?\n");
+    printf("1. Nome\n2. Telefone\n3. E-mail\n4. Data de Nascimento\n,");
+    scanf("%d",&menu);
+    switch (menu)
+    {
+    case 1 :
+        return 1;
+    case 2 :
+        return 2;
+    case 3 :
+        return 3;
+    case 4 :
+        return 4;
+    default:
+        printf("Entrada Inválida!\n");
+        break;
+    }
+}
+
 void formatarData(char dataNascimento[]){ //Função que deixa a data no formato: (dd/mm/aaaa)
     char dataFormatada[11];
     int contOriginal,contFormatado=0;
@@ -231,14 +308,11 @@ int main(){
     int qtdPassageiro=0;
     cadastrarPassageiro(passageiro,&qtdPassageiro);
     buscarPassageiro(passageiro,qtdPassageiro);
+    editarPassageiro(passageiro,qtdPassageiro);
     cadastrarPassageiro(passageiro,&qtdPassageiro);
     buscarPassageiro(passageiro,qtdPassageiro);
-    cadastrarPassageiro(passageiro,&qtdPassageiro);
-    buscarPassageiro(passageiro,qtdPassageiro);
-    cadastrarPassageiro(passageiro,&qtdPassageiro);
-    buscarPassageiro(passageiro,qtdPassageiro);
-    cadastrarPassageiro(passageiro,&qtdPassageiro);
-    buscarPassageiro(passageiro,qtdPassageiro);
+    editarPassageiro(passageiro,qtdPassageiro);
+    
     Passagem passagens[5];
     return 0;
 }
