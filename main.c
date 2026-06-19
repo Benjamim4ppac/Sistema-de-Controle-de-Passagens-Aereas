@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 typedef struct {
     int num_passagem;
@@ -21,21 +22,31 @@ typedef struct
 } Passageiro;
 
 int validacodigo_voo(char codigo_voo[6]){
-    if(strlen(codigo_voo)!=6) return 0;
-    if(codigo_voo[0]!='L' && codigo_voo[0]!='A' && codigo_voo[0]!='G'){
+    limparCodVoo(codigo_voo);
+    
+    if(strlen(codigo_voo)!=5){//O formato esperado deve ter 5 caracteres (LXXXX)
+        printf("Formato Não Correspondente\n");
         return 0;
     }
-    int soma=0;
-    for (int i=1;i<4;i++){
-    if(codigo_voo[i]<'0' || codigo_voo[i]>'9') return 0;
-    soma+=codigo_voo[i]-'0';
+    if(codigo_voo[0]!='L' && codigo_voo[0]!='A' && codigo_voo[0]!='G'){
+        printf("Companhia Áerea Não Correspondente\n");
+        return 0;
     }
-    if(codigo_voo[4]!='-') return 0;
-    if(codigo_voo[5]<'0' || codigo_voo[5]>'9') return 0;
-    int verifica=codigo_voo[5]-'0';
-    if(soma>9)soma=soma%10;
-    if(soma==verifica) return 1;
-    else return 0;
+
+    int soma=0;//Soma é utilizada para gerar o digito verificador
+
+    for (int i=1;i<4;i++){
+        soma+=codigo_voo[i]-'0'; //Soma os digitos do código para gerar o digito verificador
+    }
+    int digitoInformado = codigo_voo[4]-'0';
+    int digitoVerificador = soma%10;
+
+    if(digitoInformado!= digitoVerificador){
+        printf("Código Inválido\n");
+        return 0;
+    }
+
+    return 1;
 }
 
 void menuPrincipal(){
@@ -57,13 +68,15 @@ int validaCPF(char cpf[12]){ //Função para verificar a validade de um CPF
     int peso=10,cont,soma=0,resto;
     int digitoVerificador[2];
     if (strlen(cpf)!=11){ //Se o CPF não tem 11 digitos = CPF INVÁLIDO!
+        printf("Formato Não Correspondente\n");
         return 0;
     }
-    for(cont = 0; cont<11; cont++){ //Se o CPF contém digitos não numericos = CPF INVÁLIDO!
+    /*for(cont = 0; cont<11; cont++){ //Se o CPF contém digitos não numericos = CPF INVÁLIDO!
         if(cpf[cont]<'0' || cpf[cont]>'9'){
+            printf("CPF Contém Dígitos Não Numéricos\n");
             return 0;
         }
-    }
+    }*/ //Retirado pois a função limparCPF após a entrada do usuario já remove os dígitos não numericos
     int iguais=1;
     for (cont=1;cont<11;cont++){ //Verifica se todos os dígitos do CPF são iguais
         if (cpf[cont] != cpf[0]){
@@ -73,6 +86,7 @@ int validaCPF(char cpf[12]){ //Função para verificar a validade de um CPF
         
     }
     if(iguais == 1){ //Se todos os dígitos do CPF são iguais = CPF INVÁLIDO!
+        printf("CPF possui todos os dígitos Iguais\n");
         return 0;
     }
 
@@ -121,6 +135,7 @@ int buscaCPF(char cpfConsulta[12], Passageiro consulta[], int qtdPassageiro){ //
 
 void limparCPF(char original[], char limpo[]){//Função que remove (. e -) do CPF caso o usuário digite na forma(XXX.XXX.XXX-XX) e limpa para (XXXXXXXXXXX)
     int contOriginal,contLimpo=0;
+
     for(contOriginal =0; original[contOriginal]!= '\0';contOriginal++){
         if(original[contOriginal]>='0' && original[contOriginal]<='9'){
             limpo[contLimpo] = original[contOriginal];
@@ -128,6 +143,22 @@ void limparCPF(char original[], char limpo[]){//Função que remove (. e -) do C
         }
     }
     limpo[contLimpo]='\0';
+
+}
+
+void limparCodVoo(char original[]){//Função que remove (-) do Codígo do voo caso o usuário digite na forma(LXXX-X) e limpa para (LXXXX) e corrije a primeira letra caso o usuario digite (lXXX-X)
+    int contOriginal,contLimpo=1;
+    char limpo[8];
+    limpo[0]=original[0]; //Preserva o primeiro caracter que é a letra
+    limpo[0] = toupper(limpo[0]); //Deixa a primeira letra do código em maiusculo
+    for(contOriginal = 0; original[contOriginal]!= '\0';contOriginal++){
+        if(original[contOriginal]>='0' && original[contOriginal]<='9'){
+            limpo[contLimpo] = original[contOriginal];
+            contLimpo++;
+        }
+    }
+    limpo[contLimpo]='\0';
+    strcpy(original,limpo);
 
 }
 
@@ -390,7 +421,7 @@ void deletarPassageiro(Passageiro deletar[], int *qtdPassageiro){
         deletar[*qtdPassageiro].email[0] = '\0';
         deletar[*qtdPassageiro].dataNascimento[0] = '\0';
         printf("Passageiro Deletado\n");
-        printf('Passageiros Cadastrados: %d\n',*qtdPassageiro);
+        printf("Passageiros Cadastrados: %d\n",*qtdPassageiro);
         //Apaga as informações do ultimo passageiro, ja que seus dados estavam duplicados devido ao deslocamento
     } else{
         printf("Exclusão Cancelada!\n");
@@ -460,7 +491,6 @@ int main(){
     Passageiro passageiros[5];
     int qtdPassageiro=0;
     Passagem passagens[5];
-
     int opcao;
 
     do{
@@ -469,8 +499,7 @@ int main(){
 
         switch(opcao){
             case 1:
-                menuPassageiros(passageiro, &qtdPassageiro);
-                //ygyguuguguyqq
+                menuPassageiros(passageiros, &qtdPassageiro);
                 break;
 
             case 2:
