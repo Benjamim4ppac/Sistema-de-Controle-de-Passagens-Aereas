@@ -111,9 +111,6 @@ int validaCPF(char cpf[12]){ //Função para verificar a validade de um CPF
 int buscaCPF(char cpfConsulta[12], Passageiro consulta[], int qtdPassageiro){ //Função para verificar se o CPF já existe no banco de dados de CPFs cadastrados
     int cont;
 
-    printf("CPF procurado: %s\n", cpfConsulta);
-    printf("Quantidade recebida: %d\n", qtdPassageiro);
-
     for(cont=0;cont<qtdPassageiro;cont++){
         if(strcmp(cpfConsulta,consulta[cont].cpf)==0){
             return cont; //CPF ja cadastrado - Retorna o indice do vetor que o CPF ja existe
@@ -227,12 +224,12 @@ void cadastrarPassageiro(Passageiro cadastro[], int *qtdPassageiro){ //Função 
     limparCPF(cpfDigitado, cadastro[*qtdPassageiro].cpf); //Caso o usuario digite o CPF com (. ou -) ele sera convertido em apenas caracteres numéricos
 
     if(validaCPF(cadastro[*qtdPassageiro].cpf) == 0){ //verifica se é um CPF válido
-        printf("CPF Invalido!\n"); //CPF invaliudo, fecha a função
+        printf("CPF Inválido!\n"); //CPF invaliudo, fecha a função
         return;
     } 
    
     if(buscaCPF(cadastro[*qtdPassageiro].cpf,cadastro,*qtdPassageiro)!= -1){  //Verifica se esse CPF ja foi cadastrado
-        printf("CPF ja Cadastrado!\n"); //CPF ja cadastrado, fecha a função
+        printf("CPF já Cadastrado!\n"); //CPF ja cadastrado, fecha a função
         return;
     }
 
@@ -264,7 +261,7 @@ void buscarPassageiro(Passageiro consulta[], int qtdPassageiro){ //Função que 
 
     limparCPF(cpfDigitado,cpfConsulta); //cpfConsulta recebe o cpfDigitado com pontos e traços removidos
     if(validaCPF(cpfConsulta)==0){ //verifica se é um CPF válido
-        printf("CPF invalido!\n");
+        printf("CPF Inválido!\n");
         return;
     }
 
@@ -299,7 +296,7 @@ void editarPassageiro(Passageiro editar[], int qtdPassageiro){
     limparCPF(cpfDigitado,cpfEditar); //cpfEditar recebe o cpfDigitado com pontos e traços removidos
     
     if(validaCPF(cpfEditar)==0){ //verifica se é um CPF válido
-        printf("CPF invalido!\n");
+        printf("CPF Inválido!\n");
         return;
     }
 
@@ -315,26 +312,26 @@ void editarPassageiro(Passageiro editar[], int qtdPassageiro){
         switch (opcao){
         case 1:
             printf("---Editar Nome---\n");
-            printf("Nome Atual: %s",editar[indiceEditar].nome);
+            printf("Nome Atual: %s\n",editar[indiceEditar].nome);
             printf("Novo Nome: ");
             scanf(" %[^\n]",editar[indiceEditar].nome);
             break;
         case 2:
             printf("---Editar Telefone---\n");
-            printf("Telefone Atual: %s",editar[indiceEditar].telefone);
-            printf("Telefone Nome: ");
+            printf("Telefone Atual: %s\n",editar[indiceEditar].telefone);
+            printf("Novo Telefone: ");
             scanf(" %[^\n]",editar[indiceEditar].telefone);
             break;
         case 3:
             printf("---Editar E-mail---\n");
-            printf("E-mail Atual: %s",editar[indiceEditar].email);
+            printf("E-mail Atual: %s\n",editar[indiceEditar].email);
             printf("Novo E-mail: ");
             scanf(" %[^\n]",editar[indiceEditar].email);
             break;
         case 4:
             printf("---Editar Data de Nascimento---\n");
             formatarData(editar[indiceEditar].dataNascimento);
-            printf("Atual Data de Nascimento: %s",editar[indiceEditar].dataNascimento);
+            printf("Data de Nascimento Atual: %s\n",editar[indiceEditar].dataNascimento);
             printf("Nova Data de Nascimento: ");
             scanf(" %[^\n]",editar[indiceEditar].dataNascimento);
             break;
@@ -393,6 +390,7 @@ void deletarPassageiro(Passageiro deletar[], int *qtdPassageiro){
         deletar[*qtdPassageiro].email[0] = '\0';
         deletar[*qtdPassageiro].dataNascimento[0] = '\0';
         printf("Passageiro Deletado\n");
+        printf('Passageiros Cadastrados: %d\n',*qtdPassageiro);
         //Apaga as informações do ultimo passageiro, ja que seus dados estavam duplicados devido ao deslocamento
     } else{
         printf("Exclusão Cancelada!\n");
@@ -459,7 +457,7 @@ void menuRelatorios(){
 }
 
 int main(){
-    Passageiro passageiro[5];
+    Passageiro passageiros[5];
     int qtdPassageiro=0;
     Passagem passagens[5];
 
