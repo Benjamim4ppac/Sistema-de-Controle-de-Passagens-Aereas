@@ -401,7 +401,7 @@ void deletarPassageiro(Passageiro deletar[], int *qtdPassageiro){
     }
 }
 
-void menuPassageiros(){
+void menuPassageiros(Passageiro passageiros[], int *qtdPassageiro){
     int opcao;
     do{
         printf("\n===== MENU PASSAGEIROS =====\n");
@@ -412,7 +412,9 @@ void menuPassageiros(){
         printf("0 - Voltar\n");
         printf("Opcao: ");
 
-        scanf("%d", &opcao){
+        scanf("%d", &opcao);
+        
+        switch(opcao){
             case 1:
                 cadastrarPassageiro(passageiros, qtdPassageiro);
                 break;
@@ -469,7 +471,7 @@ int main(){
 
         switch(opcao){
             case 1:
-                menuPassageiros();
+                menuPassageiros(passageiro, &qtdPassageiro);
                 //ygyguuguguyqq
                 break;
 
