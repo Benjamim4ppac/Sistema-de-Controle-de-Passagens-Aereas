@@ -348,6 +348,7 @@ void deletarPassageiro(Passageiro deletar[], int *qtdPassageiro){
         deletar[*qtdPassageiro].email[0] = '\0';
         deletar[*qtdPassageiro].dataNascimento[0] = '\0';
         printf("Passageiro Deletado\n");
+        printf('Passageiros Cadastrados: %d\n',*qtdPassageiro);
         //Apaga as informações do ultimo passageiro, ja que seus dados estavam duplicados devido ao deslocamento
     } else{
         printf("Exclusão Cancelada!\n");
