@@ -469,7 +469,7 @@ int main(){
 
         switch(opcao){
             case 1:
-                menuPassageiros(passageiro, &qtdPassageiro);
+                menuPassageiros(passageiros, &qtdPassageiro);
                 //ygyguuguguyqq
                 break;
 
