@@ -441,21 +441,148 @@ void menuPassageiros(Passageiro passageiros[], int *qtdPassageiro){
     }while(opcao != 0);
 }
 
-void menuVoos(){
 
+void menuVoos(){
+    int opcao;
+
+    do{
+        printf("\n===== VOOS =====\n");
+        printf("1 - Cadastrar Voo\n");
+        printf("2 - Consultar Voo\n");
+        printf("3 - Alterar Voo\n");
+        printf("4 - Remover Voo\n");
+        printf("5 - Listar Voos\n");
+        printf("0 - Voltar\n");
+        printf("Opcao: ");
+
+        scanf("%d",&opcao);
+
+        switch(opcao){
+            case 1:
+                cadastrarVoo();
+                break;
+
+            case 2:
+                buscarVoo();
+                break;
+
+            case 3:
+                editarVoo();
+                break;
+
+            case 4:
+                deletarVoo();
+                break;
+
+            case 5:
+                listarVoos();
+                break;
+        }
+
+    }while(opcao != 0);
 }
 
-void menuPassagens(){
 
+void menuPassagens(){
+    int opcao;
+
+    do{
+        printf("\n===== PASSAGENS =====\n");
+        printf("1 - Emitir Passagem\n");
+        printf("2 - Consultar Passagem\n");
+        printf("3 - Alterar Passagem\n");
+        printf("4 - Cancelar/Remover Passagem\n");
+        printf("5 - Listar Passagens\n");
+        printf("0 - Voltar\n");
+        printf("Opcao: ");
+
+        scanf("%d",&opcao);
+
+        switch(opcao){
+            case 1:
+                cadastrarPassagem();
+                break;
+
+            case 2:
+                buscarPassagem();
+                break;
+
+            case 3:
+                editarPassagem();
+                break;
+
+            case 4:
+                deletarPassagem();
+                break;
+
+            case 5:
+                listarPassagens();
+                break;
+        }
+
+    }while(opcao != 0);
 
 }
 
 void menuConsultas(){
+     int opcao;
+
+    do{
+        printf("\n===== CONSULTAS =====\n");
+        printf("1 - Consultar por Codigo do Voo\n");
+        printf("2 - Consultar por CPF do Passageiro\n");
+        printf("3 - Consultar por Status\n");
+        printf("0 - Voltar\n");
+        printf("Opcao: ");
+
+        scanf("%d",&opcao);
+
+        switch(opcao){
+            case 1:
+                consultarPorVoo();
+                break;
+
+            case 2:
+                consultarPorCPF();
+                break;
+
+            case 3:
+                consultarPorStatus();
+                break;
+        }
+
+    }while(opcao != 0);
 
 }
 
 void menuRelatorios(){
-    
+    int opcao;
+
+    do{
+        printf("\n===== RELATORIOS =====\n");
+        printf("1 - Passagens por Companhia Aerea\n");
+        printf("2 - Passagens por Destino\n");
+        printf("3 - Historico de Voos por CPF\n");
+        printf("0 - Voltar\n");
+        printf("Opcao: ");
+
+        scanf("%d",&opcao);
+
+        switch(opcao){
+            case 1:
+                relatorioCompanhia();
+                break;
+
+            case 2:
+                relatorioDestino();
+                break;
+
+            case 3:
+                relatorioHistoricoCPF();
+                break;
+        }
+
+    }while(opcao != 0);
 }
 
 int main(){
