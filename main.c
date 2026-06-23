@@ -281,7 +281,7 @@ void cadastrarPassageiro(Passageiro cadastro[], int *qtdPassageiro){ //Função 
     printf("------- Cadastro de Novo Passageiro -------\n");
 
     if(*qtdPassageiro>=5){ //Se houver 5 cadastros, a função é encerrada
-        printf("Vetor Cheio!\n");
+        printf("Quantidade de 5 passageiros cadastrados atingida!\n");
         return;
     }
 
@@ -324,6 +324,11 @@ void buscarPassageiro(Passageiro consulta[], int qtdPassageiro){ //Função que 
     char cpfDigitado[20]; //Variavel para armazenar o cpf digitado
     char cpfConsulta[12]; //Variavel para armazenar o cpf limpo
 
+    if(qtdPassageiro==0){
+        printf("Nenhum passageiro cadastrado!\n");
+        return;
+    }
+
     printf("------- Consulta de Passageiro -------\n");
     printf("Digite o CPF do Passageiro que deseja consultar: ");
     scanf("%s",cpfDigitado); //Recebe CPF do passageiro a ser consultado
@@ -357,6 +362,11 @@ void editarPassageiro(Passageiro editar[], int qtdPassageiro){
 
     char cpfDigitado[20]; //Variavel para armazenar o cpf digitado
     char cpfEditar[12]; //Variavel para armazenar o cpf do passageiro editado
+
+    if(qtdPassageiro==0){
+        printf("Nenhum passageiro cadastrado!\n");
+        return;
+    }
 
     printf("------- Editar dados do Passageiro -------\n");
     printf("Digite o CPF do Passageiro que deseja editar: ");
@@ -412,6 +422,12 @@ void editarPassageiro(Passageiro editar[], int qtdPassageiro){
 }
 
 void deletarPassageiro(Passageiro deletar[], int *qtdPassageiro){
+    
+    if(*qtdPassageiro==0){
+        printf("Nenhum passageiro cadastrado!\n");
+        return;
+    }
+    
     char cpfDigitado[20], cpfDeletar[15];
     printf("------- Deletar Passageiro -------\n");
     printf("Digite o CPF do Passageiro que deseja excluir: ");
@@ -465,6 +481,32 @@ void deletarPassageiro(Passageiro deletar[], int *qtdPassageiro){
         printf("Exclusão Cancelada!\n");
     }
 
+    }
+}
+
+void listarPassageiros(Passageiro listar[], int qtdPassageiros){
+
+    int cont;
+
+    if(qtdPassageiros == 0){
+        printf("Nenhum passageiro cadastrado!\n");
+        return;
+    }
+
+    for(cont=0;cont<qtdPassageiros;cont++){
+
+        
+        printf("\n----- PASSAGEIRO %d -----\n",cont+1);
+
+        printf("Nome: %s\n",listar[cont].nome);
+        char cpfExibicao[15]; //Cria uma variavel temporaria para armazenar o CPF que sera mostrado, para não editar o conteudo do vetor principal
+        strcpy(cpfExibicao, listar[cont].cpf); //Copia o conteudo do CPF do vetor
+        formatarCPF(cpfExibicao); //Formata somente o cpf a ser exibido no formato XXX.XXX.XXX-XX
+        printf("CPF: %s\n",cpfExibicao);
+        printf("Telefone: %s\n",listar[cont].telefone);
+        printf("E-mail: %s\n",listar[cont].email);
+        formatarData(listar[cont].dataNascimento);
+        printf("Data de nascimento: %s\n",listar[cont].dataNascimento);
     }
 }
 
@@ -638,11 +680,12 @@ void menuPassageiros(Passageiro passageiros[], int *qtdPassageiro){
         printf("2 - Consultar Passageiro\n");
         printf("3 - Editar Passageiro\n");
         printf("4 - Deletar Passageiro\n");
+        printf("5 - Listar Passageiros\n");
         printf("0 - Voltar\n");
         printf("Opcao: ");
 
         scanf("%d", &opcao);
-        
+
         switch(opcao){
             case 1:
                 cadastrarPassageiro(passageiros, qtdPassageiro);
@@ -660,6 +703,9 @@ void menuPassageiros(Passageiro passageiros[], int *qtdPassageiro){
                 deletarPassageiro(passageiros, qtdPassageiro);
                 break;
 
+            case 5:
+                listarPassageiros(passageiros, *qtdPassageiro);
+                break;
             case 0:
                 break;
 
