@@ -468,6 +468,168 @@ void deletarPassageiro(Passageiro deletar[], int *qtdPassageiro){
     }
 }
 
+void cadastrarVoo(Voo voos[], int *qtdVoos){
+
+    if(*qtdVoos >= 5){
+        printf("Limite de voos atingido!\n");
+        return;
+    }
+
+    printf("\n--- Cadastro de Voo ---\n");
+
+    printf("Codigo do voo: ");
+    scanf("%s", voos[*qtdVoos].codigo_voo);
+
+    limparCodVoo(voos[*qtdVoos].codigo_voo);
+
+    if(validacodigo_voo(voos[*qtdVoos].codigo_voo) == 0){
+        return;
+    }
+
+    if(buscaVoo(voos[*qtdVoos].codigo_voo, voos, *qtdVoos) != -1){
+        printf("Codigo ja cadastrado!\n");
+        return;
+    }
+
+    printf("Origem: ");
+    scanf(" %[^\n]", voos[*qtdVoos].origem);
+
+    printf("Destino: ");
+    scanf(" %[^\n]", voos[*qtdVoos].destino);
+
+    printf("Data/Hora: ");
+    scanf(" %[^\n]", voos[*qtdVoos].dataHora);
+
+    printf("Duracao: ");
+    scanf(" %[^\n]", voos[*qtdVoos].duracao);
+
+    printf("Companhia: ");
+    scanf(" %[^\n]", voos[*qtdVoos].companhia);
+
+    (*qtdVoos)++;
+
+    printf("Voo cadastrado com sucesso!\n");
+}
+
+void consultarVoo(Voo voos[], int qtdVoos){
+
+    char codigo[10];
+
+    printf("\nDigite o codigo do voo: ");
+    scanf("%s", codigo);
+
+    limparCodVoo(codigo);
+
+    int indice = buscaVoo(codigo, voos, qtdVoos);
+
+    if(indice == -1){
+        printf("Voo nao encontrado!\n");
+        return;
+    }
+
+    printf("\nCodigo: %s\n", voos[indice].codigo_voo);
+    printf("Origem: %s\n", voos[indice].origem);
+    printf("Destino: %s\n", voos[indice].destino);
+    printf("Data/Hora: %s\n", voos[indice].dataHora);
+    printf("Duracao: %s\n", voos[indice].duracao);
+    printf("Companhia: %s\n", voos[indice].companhia);
+}
+
+void editarVoo(Voo voos[], int qtdVoos){
+
+    char codigo[10];
+
+    printf("Digite o codigo do voo: ");
+    scanf("%s", codigo);
+
+    limparCodVoo(codigo);
+
+    int indice = buscaVoo(codigo, voos, qtdVoos);
+
+    if(indice == -1){
+        printf("Voo nao encontrado!\n");
+        return;
+    }
+
+    switch(menuEditarVoo()){
+
+        case 1:
+            printf("Nova origem: ");
+            scanf(" %[^\n]", voos[indice].origem);
+            break;
+
+        case 2:
+            printf("Novo destino: ");
+            scanf(" %[^\n]", voos[indice].destino);
+            break;
+
+        case 3:
+            printf("Nova data/hora: ");
+            scanf(" %[^\n]", voos[indice].dataHora);
+            break;
+
+        case 4:
+            printf("Nova duracao: ");
+            scanf(" %[^\n]", voos[indice].duracao);
+            break;
+
+        case 5:
+            printf("Nova companhia: ");
+            scanf(" %[^\n]", voos[indice].companhia);
+            break;
+
+        default:
+            printf("Opcao invalida!\n");
+    }
+}
+
+void deletarVoo(Voo voos[], int *qtdVoos){
+
+    char codigo[10];
+
+    printf("Digite o codigo do voo: ");
+    scanf("%s", codigo);
+
+    limparCodVoo(codigo);
+
+    int indice = buscaVoo(codigo, voos, *qtdVoos);
+
+    if(indice == -1){
+        printf("Voo nao encontrado!\n");
+        return;
+    }
+
+    for(int i = indice; i < *qtdVoos - 1; i++){
+        voos[i] = voos[i + 1];
+    }
+
+    (*qtdVoos)--;
+
+    printf("Voo removido com sucesso!\n");
+}
+
+void listarVoos(Voo voos[], int qtdVoos){
+
+    int i;
+
+    if(qtdVoos == 0){
+        printf("Nenhum voo cadastrado!\n");
+        return;
+    }
+
+    for(i = 0; i < qtdVoos; i++){
+
+        printf("\n===== VOO %d =====\n", i + 1);
+
+        printf("Codigo: %s\n", voos[i].codigo_voo);
+        printf("Origem: %s\n", voos[i].origem);
+        printf("Destino: %s\n", voos[i].destino);
+        printf("Data/Hora: %s\n", voos[i].dataHora);
+        printf("Duracao: %s\n", voos[i].duracao);
+        printf("Companhia: %s\n", voos[i].companhia);
+    }
+}
+
 void menuPassageiros(Passageiro passageiros[], int *qtdPassageiro){
     int opcao;
     do{
