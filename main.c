@@ -21,6 +21,15 @@ typedef struct
 
 } Passageiro;
 
+typedef struct{
+    char codigo_voo[6];  //Código do voo (LXXXX)
+    char origem[50];    //Cidade de Origem do voo
+    char destino[50];  //Cidade de Destino do voo
+    char dataHora[20]; //Data e Hora do voo (DD/MM/AAAA HH:MM)
+    char duracao[10]; //Duração do voo (HH:MM)
+    char companhia[50]; //Companhia aérea do voo
+} Voo;
+
 int validacodigo_voo(char codigo_voo[6]){
     limparCodVoo(codigo_voo);
     
@@ -133,6 +142,18 @@ int buscaCPF(char cpfConsulta[12], Passageiro consulta[], int qtdPassageiro){ //
     return -1; //CPF não cadastrado
 }
 
+int buscaVoo(char codigo[], Voo voos[], int qtdVoos){
+    int i;
+
+    for(i = 0; i < qtdVoos; i++){
+        if(strcmp(codigo, voos[i].codigo_voo) == 0){
+            return i;  // Procura um voo pelo código e retorna o índice do vetor se encontrado
+        }
+    }
+
+    return -1;
+}
+
 void limparCPF(char original[], char limpo[]){//Função que remove (. e -) do CPF caso o usuário digite na forma(XXX.XXX.XXX-XX) e limpa para (XXXXXXXXXXX)
     int contOriginal,contLimpo=0;
 
@@ -237,6 +258,23 @@ int menuEditarPassageiro(){//SubMenu acessado dentro da função editarPassageir
         printf("Entrada Inválida!\n");
         break;
     }
+    
+}
+
+int menuEditarVoo(){
+    int opcao;
+
+    printf("\n--- O que deseja editar? ---\n");
+    printf("1 - Origem\n");
+    printf("2 - Destino\n");
+    printf("3 - Data/Hora\n");
+    printf("4 - Duracao\n");
+    printf("5 - Companhia\n");
+    printf("Opcao: "); // Mostra o menu de opções para o usuário escolher qual dado do voo deseja editar
+
+    scanf("%d",&opcao);
+
+    return opcao;
 }
 
 void cadastrarPassageiro(Passageiro cadastro[], int *qtdPassageiro){ //Função que efetua o cadastro de um novo passageiro
