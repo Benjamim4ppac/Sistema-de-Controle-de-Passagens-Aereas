@@ -6,8 +6,8 @@ Trabalho da disciplina Algoritmos e Programação II (FACOM/UFU).
 
 - Pedro Henrique Pereira da Mata - 12521BSI243
 - Benjamim Martins Magalhães Sena - 12521BSI246
-- Gustavo Henrique Silva Lima - MATRÍCULA
-- William Ferreira Rabelo - MATRÍCULA
+- Gustavo Henrique Silva Lima - 12521BSI237
+- William Ferreira Rabelo - 12511BSI255
 
 ## Descrição
 
