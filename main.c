@@ -670,8 +670,53 @@ void menuPassageiros(Passageiro passageiros[], int *qtdPassageiro){
     }while(opcao != 0);
 }
 
-void menuVoos(){
+void menuVoos(Voo voos[], int *qtdVoos){
 
+    int opcao;
+
+    do{
+
+        printf("\n===== MENU VOOS =====\n");
+        printf("1 - Cadastrar Voo\n");
+        printf("2 - Consultar Voo\n");
+        printf("3 - Editar Voo\n");
+        printf("4 - Remover Voo\n");
+        printf("5 - Listar Voos\n");
+        printf("0 - Voltar\n");
+        printf("Opcao: ");
+
+        scanf("%d",&opcao);
+
+        switch(opcao){
+
+            case 1:
+                cadastrarVoo(voos, qtdVoos);
+                break;
+
+            case 2:
+                consultarVoo(voos, *qtdVoos);
+                break;
+
+            case 3:
+                editarVoo(voos, *qtdVoos);
+                break;
+
+            case 4:
+                deletarVoo(voos, qtdVoos);
+                break;
+
+            case 5:
+                listarVoos(voos, *qtdVoos);
+                break;
+
+            case 0:
+                break;
+
+            default:
+                printf("Opcao invalida!\n");
+        }
+
+    }while(opcao != 0);
 }
 
 void menuPassagens(){
