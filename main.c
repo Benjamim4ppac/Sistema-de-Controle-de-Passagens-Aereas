@@ -735,6 +735,8 @@ void menuRelatorios(){
 int main(){
     Passageiro passageiros[5];
     int qtdPassageiro=0;
+    Voo voos[5];
+    int qtdVoos = 0;
     Passagem passagens[5];
     int opcao;
 
@@ -748,7 +750,7 @@ int main(){
                 break;
 
             case 2:
-                menuVoos();
+                menuVoos(voos, &qtdVoos);
                 break;
 
             case 3:
