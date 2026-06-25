@@ -30,33 +30,6 @@ typedef struct{
     char companhia[50]; //Companhia aérea do voo
 } Voo;
 
-int validacodigo_voo(char codigo_voo[6]){
-    limparCodVoo(codigo_voo);
-    
-    if(strlen(codigo_voo)!=5){//O formato esperado deve ter 5 caracteres (LXXXX)
-        printf("Formato Não Correspondente\n");
-        return 0;
-    }
-    if(codigo_voo[0]!='L' && codigo_voo[0]!='A' && codigo_voo[0]!='G'){
-        printf("Companhia Áerea Não Correspondente\n");
-        return 0;
-    }
-
-    int soma=0;//Soma é utilizada para gerar o digito verificador
-
-    for (int i=1;i<4;i++){
-        soma+=codigo_voo[i]-'0'; //Soma os digitos do código para gerar o digito verificador
-    }
-    int digitoInformado = codigo_voo[4]-'0';
-    int digitoVerificador = soma%10;
-
-    if(digitoInformado!= digitoVerificador){
-        printf("Código Inválido\n");
-        return 0;
-    }
-
-    return 1;
-}
 
 void menuPrincipal(){
     printf("====================================\n");
@@ -181,6 +154,34 @@ void limparCodVoo(char original[]){//Função que remove (-) do Codígo do voo c
     limpo[contLimpo]='\0';
     strcpy(original,limpo);
 
+}
+
+int validacodigo_voo(char codigo_voo[6]){
+    limparCodVoo(codigo_voo);
+    
+    if(strlen(codigo_voo)!=5){//O formato esperado deve ter 5 caracteres (LXXXX)
+        printf("Formato Não Correspondente\n");
+        return 0;
+    }
+    if(codigo_voo[0]!='L' && codigo_voo[0]!='A' && codigo_voo[0]!='G'){
+        printf("Companhia Áerea Não Correspondente\n");
+        return 0;
+    }
+
+    int soma=0;//Soma é utilizada para gerar o digito verificador
+
+    for (int i=1;i<4;i++){
+        soma+=codigo_voo[i]-'0'; //Soma os digitos do código para gerar o digito verificador
+    }
+    int digitoInformado = codigo_voo[4]-'0';
+    int digitoVerificador = soma%10;
+
+    if(digitoInformado!= digitoVerificador){
+        printf("Código Inválido\n");
+        return 0;
+    }
+
+    return 1;
 }
 
 void formatarData(char dataNascimento[]){ //Função que deixa a data no formato: (dd/mm/aaaa)
