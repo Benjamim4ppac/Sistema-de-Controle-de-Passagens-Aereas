@@ -44,7 +44,39 @@ void menuPrincipal(){
     printf("0 - Sair\n\n");
 
     printf("Escolha uma opcao: ");
-}        
+}     
+
+void carregarPassageiro(Passageiro passageiros[],int *qtdPassageiro){
+
+    FILE *arquivo;
+    arquivo = fopen("passageirosSalvos.bin","rb");
+
+    if(arquivo == NULL){
+    *qtdPassageiro = 0;
+    return;
+}
+    fread(qtdPassageiro, sizeof(int), 1, arquivo);
+    printf("Quantidade lida: %d\n", *qtdPassageiro);
+    fread(passageiros, sizeof(Passageiro), *qtdPassageiro, arquivo);
+    fclose(arquivo);
+    printf("Dados dos Passageiros carregados!\n");
+
+}
+
+void  salvarPassageiro(Passageiro passageiros[], int qtdPassageiro){
+
+    FILE *arquivo;
+    arquivo = fopen("passageirosSalvos.bin","wb");
+    if(arquivo == NULL){
+        printf("Erro ao salvar os dados dos passageiros!\n");
+        return;
+    }
+    fwrite(&qtdPassageiro, sizeof(int), 1, arquivo);
+    fwrite(passageiros, sizeof(Passageiro), qtdPassageiro, arquivo);
+    fclose(arquivo);
+    printf("Operacao Salva!\n");
+
+}
 
 int validaCPF(char cpf[12]){ //Função para verificar a validade de um CPF
     int peso=10,cont,soma=0,resto;
@@ -690,6 +722,7 @@ void menuPassageiros(Passageiro passageiros[], int *qtdPassageiro){
         switch(opcao){
             case 1:
                 cadastrarPassageiro(passageiros, qtdPassageiro);
+                salvarPassageiro(passageiros,*qtdPassageiro);
                 break;
 
             case 2:
@@ -698,10 +731,12 @@ void menuPassageiros(Passageiro passageiros[], int *qtdPassageiro){
 
             case 3:
                 editarPassageiro(passageiros, *qtdPassageiro);
+                salvarPassageiro(passageiros,*qtdPassageiro);
                 break;
 
             case 4:
                 deletarPassageiro(passageiros, qtdPassageiro);
+                salvarPassageiro(passageiros,*qtdPassageiro);
                 break;
 
             case 5:
@@ -782,12 +817,24 @@ void menuRelatorios(){
 int main(){
     Passageiro passageiros[5];
     int qtdPassageiro=0;
+    
+    //int capacidadePassageiro=5;
+    /*Passageiro *passageiros;
+    passageiros = (Passageiro*) malloc(capacidadePassageiro * sizeof(Passageiro));
+
+    if(passageiros == NULL){
+    printf("Erro ao alocar memoria (Passageiros)!\n");
+    return 1;
+}*/
+
     Voo voos[5];
     int qtdVoos = 0;
     Passagem passagens[5];
     int opcao;
+    carregarPassageiro(passageiros, &qtdPassageiro);
 
     do{
+        
         menuPrincipal();
         scanf("%d", &opcao);
 
