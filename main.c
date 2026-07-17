@@ -1201,7 +1201,7 @@ int main(){
 
     int opcao;
     carregarPassageiro(passageiros, &qtdPassageiro);
-    carregarPassagem(passagens,&qtdPassagem);
+    carregarPassagem(passagens,&qtdPassagem,&proximoNumero);
 
     do{
         
