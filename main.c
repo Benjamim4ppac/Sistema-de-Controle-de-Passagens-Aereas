@@ -513,7 +513,7 @@ void deletarPassageiro(Passageiro deletar[], int *qtdPassageiro){
     } else{
         printf("Exclusão Cancelada!\n");
     }
-    
+
     }
 }
 
@@ -800,53 +800,6 @@ void menuVoos(Voo voos[], int *qtdVoos){
 
     }while(opcao != 0);
 }
-
-void menuPassagens(Passageiro passageiros[],Voo voos[],Passagem passagens[],int *qtdPassagem,int *qtdPassageiro,int *qtdVoos){
- int opcao;
-    do{
-        printf("\n===== MENU PASSAGENS =====\n");
-        printf("1 - Cadastrar Passagem\n");
-        printf("2 - Consultar Passagem\n");
-        printf("3 - Editar Passagem\n");
-        printf("4 - Deletar Passagem\n");
-        printf("5 - Listar Passagem\n");
-        printf("0 - Voltar\n");
-        printf("Opcao: ");
-
-        scanf("%d", &opcao);
-
-        switch(opcao){
-            case 1:
-                cadastrarPassagem(passageiros,voos,passagens,qtdPassagem,qtdVoos,qtdPassageiro);
-                salvarPassagem(passagens,*qtdPassagem);
-                break;
-
-            case 2:
-                buscarPassagem(passagens, *qtdPassagem);
-                break;
-
-            case 3:
-                editarPassagem(passagens, *qtdPassagem);
-                salvarPassagem(passagens,*qtdPassagem);
-                break;
-
-            case 4:
-                deletarPassagem(passagens, qtdPassagem);
-                salvarPassagem(passagens,*qtdPassagem);
-                break;
-
-            case 5:
-                listarPassagem(passagens, *qtdPassagem);
-                break;
-            case 0:
-                break;
-
-            default:
-                printf("Opcao invalida!\n");
-        }
-
-    }while(opcao != 0);
-}
 void listarPassagem(Passagem passagens[], int qtdPassagem){
     int cont;
 
@@ -868,36 +821,181 @@ void listarPassagem(Passagem passagens[], int qtdPassagem){
         printf("Status: %s\n",passagens[cont].status);
     }
 }
-void deletarPassagem(Passagem passagens[], int *qtdPassagem){
-    int numero_digitado;
-    printf("Digite o numero da passagem a ser deletada: ");
-    scanf("%d",&numero_digitado);
-    if(*qtdPassagem==0){
+int menuEditarPassagem(){
+    int menu;
+    printf("---O que deseja Editar?---\n");
+    printf("1. Assento e/ou Classe\n2. Status\nOpção Selecionada: ");
+    scanf("%d",&menu);
+    switch (menu)
+    {
+    case 1 :
+        return 1;
+    case 2 :
+        return 2;
+    default:
+        printf("Entrada Inválida!\n");
+        return -1;
+    }
+    
+}
+int buscaNum (int numero_digitado,Passagem passagens[], int qtdPassagem){
+    for (int i=0;i<qtdPassagem;i++){
+        if(passagens[i].num_passagem==numero_digitado) return i;
+    }
+    return -1;
+}
+
+int validaClasse(char assentos[], int op){
+    if(op==3){
+        if(assentos[1]=='3' && assentos[2]>'2')return 1;
+        else if(assentos[1]=='4' && assentos[2]=='0')return 1;
+    }
+    else if(op!=3){
+        if(op==1 && (assentos[0]!='A' && assentos[0]!='B')) return 0;
+        if(op==2 && (assentos[0]!='C' && assentos[0]!='D')) return 0;
+        if(assentos[1]=='3' && assentos[2]<='2')return 1;
+        else if(assentos[1]<'3')return 1;
+    }
+    return 0;
+}
+void salvarPassagem(Passagem passagens[], int qtdPassagem){
+
+    FILE *arquivo;
+    arquivo = fopen("passagensSalvas.bin","wb");
+    if(arquivo == NULL){
+        printf("Erro ao salvar os dados das passagens!\n");
+        return;
+    }
+    fwrite(&qtdPassagem, sizeof(int), 1, arquivo);
+    fwrite(passagens, sizeof(Passagem), qtdPassagem, arquivo);
+    fclose(arquivo);
+    printf("Operacao Salva!\n");
+
+}
+int buscaAssento(char assentos[],char codigo_voo[], Passagem passagens[], int qtdPassagem, int ignorar){
+    for (int i=0; i<qtdPassagem;i++){
+        if(i == ignorar) continue;
+        if((strcmp(passagens[i].assentos,assentos)==0) && (strcmp(passagens[i].codigo_voo,codigo_voo)==0)) return 0;
+    }
+    return 1;
+}
+int validaAssento(char assentos[]){
+    if(assentos[0]<'A' || assentos[0]>'D'){
+        return 0;}
+    else if(assentos[1]<'1' || assentos[1]>'9'){
+        return 0;}
+    else if (assentos[1] == '4' && assentos[2] == '0' && assentos[3] == '\0') {
+        return 1;}
+    else if(assentos[1]>'3' && assentos[2]!='\0'){
+        return 0;}
+    else if(assentos[2]=='\0') {
+        return 1;}
+    else if(assentos[2]<'0' || assentos[2]>'9'){
+        return 0;}
+    else if (assentos[3] == '\0'){
+    return 1;}
+    else return 0;
+}
+void cadastrarPassagem(Passageiro passageiros[],Voo voos[],Passagem passagens[],int *qtdPassagem,int *qtdPassageiro,int *qtdVoos){
+    printf("------- Cadastro de Nova Passagem -------\n");
+    if(*qtdPassagem>=5){
+        printf("Quantidade de 5 passagens cadastrados atingida!\n");
+        return;
+    }
+    passagens[*qtdPassagem].num_passagem = 1000 + *qtdPassagem;
+    printf("Passagem n. %d\n",passagens[*qtdPassagem].num_passagem);
+    char cpfDigitado[20];
+    printf("CPF: ");
+    scanf("%s",cpfDigitado);
+    limparCPF(cpfDigitado, passagens[*qtdPassagem].cpf);
+    if(validaCPF(passagens[*qtdPassagem].cpf) == 0){
+        printf("CPF Inválido!\n");
+        return;
+    } 
+    if(buscaCPF(passagens[*qtdPassagem].cpf,passageiros,*qtdPassageiro)== -1){  //Verifica se esse CPF ja foi cadastrado
+        printf("CPF nao encontrado em Passageiros!\n"); //CPF ja cadastrado, fecha a função
+        return;
+    }
+
+    printf("Codigo do voo: ");
+    scanf("%s", passagens[*qtdPassagem].codigo_voo);
+    limparCodVoo(passagens[*qtdPassagem].codigo_voo);
+    if(validacodigo_voo(passagens[*qtdPassagem].codigo_voo) == 0){
+        return;
+    }
+    if(buscaVoo(passagens[*qtdPassagem].codigo_voo, voos, *qtdVoos) == -1){
+        printf("Codigo nao encontrado em Voos!\n");
+        return;
+    }
+
+    printf("\n!!!Lembre-se:\nAs fileiras de 1 à 32 são Economicas e Executivas, sendo, 'A' e 'B' para Economicas e 'C' e 'D' Executivas.\nAlem disso, as fileiras de 33 à 40 são Primeira Classe\n\nAssentos:\n");
+    scanf("%s",passagens[*qtdPassagem].assentos);
+    if(validaAssento(passagens[*qtdPassagem].assentos)!=1){
+        printf("Assento inválido!\n");
+        return;
+    }
+    if(buscaAssento(passagens[*qtdPassagem].assentos,passagens[*qtdPassagem].codigo_voo, passagens, *qtdPassagem,-1)!=1){
+        printf("Assento ocupado nesse Voo!\n");
+        return;
+    }
+    printf("Para classe, digite:\nEconomica = 1\nExecutiva = 2\nPrimeira Classe = 3\n");
+    int op;
+    scanf("%d",&op);
+    if(op<1 || op>3){printf("Classe Invalida\n");
+        return;
+    }
+    if(op==1) strcpy(passagens[*qtdPassagem].classe,"Economica");
+    if(op==2) strcpy(passagens[*qtdPassagem].classe,"Executiva");
+    if(op==3) strcpy(passagens[*qtdPassagem].classe,"Primeira Classe");
+    if(validaClasse(passagens[*qtdPassagem].assentos, op)!=1){
+        printf("Classe incompativel com o assento!\n");
+        return;
+    }
+
+    printf("Para o status, digite:\nConfirmada = 1\nCancelada = 2\nEmbarcada = 3\n");
+    int op2;
+    scanf("%d",&op2);
+    if(op2<1 || op2>3){printf("Status Inválido\n");return;}
+    if(op2==1) strcpy(passagens[*qtdPassagem].status,"Confirmada");
+    if(op2==2) strcpy(passagens[*qtdPassagem].status,"Cancelada");
+    if(op2==3) strcpy(passagens[*qtdPassagem].status,"Embarcada");
+    
+    (*qtdPassagem)++; //Soma 1 a quantidade de passageiros cadastrados
+    printf("Passagem cadastrada com sucesso!\n");
+    printf("Passagens cadastradas: %d\n",*qtdPassagem);
+}
+void buscarPassagem(Passagem passagens[], int qtdPassagem){
+    int numero_digitado; 
+
+    if(qtdPassagem==0){
         printf("Nenhuma passagem cadastrada!\n");
         return;
     }
+
+    printf("------- Consulta da Passagem -------\n");
+    printf("Digite o numero da Passagem que deseja consultar: ");
+    scanf("%d",&numero_digitado);
     if(numero_digitado<1000 || numero_digitado>9999){
         printf("Numero Invalido!\n");
         return;
     }
-    int indice=buscaNum (numero_digitado,passagens,*qtdPassagem);
-    if (indice==-1){
-    printf("Passagem nao encontrada!\n");
-    return;
-    }else{
-        for(int cont=indice;cont<*qtdPassagem-1;cont++){
-            passagens[cont]=passagens[cont+1];//Desloca os elementos do vetor para a esquerda, assim excluindo as informações do passageiro selecionado
-        }
 
-        (*qtdPassagem)--;
-        passagens[*qtdPassagem].num_passagem=0;
-        passagens[*qtdPassagem].cpf[0] = '\0';
-        passagens[*qtdPassagem].codigo_voo[0] = '\0';
-        passagens[*qtdPassagem].assentos[0] = '\0';
-        passagens[*qtdPassagem].classe[0] = '\0';
-        passagens[*qtdPassagem].status[0] = '\0';
-        printf("Passagem Deletada\n");
-        printf("Passagens Cadastradas: %d\n",*qtdPassagem);
+    int indiceConsulta = buscaNum(numero_digitado,passagens,qtdPassagem);
+
+    if(indiceConsulta == -1){
+        printf("Passagem não cadastrada!\n");
+        return;
+    } else{
+        printf("---Passagem Encontrada---\n");
+        printf("Numero: %d\n",passagens[indiceConsulta].num_passagem);
+        char cpfExibicao[15];
+        strcpy(cpfExibicao, passagens[indiceConsulta].cpf);
+        formatarCPF(cpfExibicao);
+        printf("CPF: %s\n",cpfExibicao);
+        printf("Codigo do Voo: %s\n",passagens[indiceConsulta].codigo_voo);
+        printf("Assento: %s\n",passagens[indiceConsulta].assentos);
+        printf("Classe: %s\n",passagens[indiceConsulta].classe);
+        printf("Status: %s\n",passagens[indiceConsulta].status);
     }
 }
 void editarPassagem(Passagem passagens[], int qtdPassagem){
@@ -977,181 +1075,83 @@ void editarPassagem(Passagem passagens[], int qtdPassagem){
         
     }
 }
-int menuEditarPassagem(){
-    int menu;
-    printf("---O que deseja Editar?---\n");
-    printf("1. Assento e/ou Classe\n2. Status\nOpção Selecionada: ");
-    scanf("%d",&menu);
-    switch (menu)
-    {
-    case 1 :
-        return 1;
-    case 2 :
-        return 2;
-    default:
-        printf("Entrada Inválida!\n");
-        return -1;
-    }
-    
-}
-void buscarPassagem(Passagem passagens[], int qtdPassagem){
-    int numero_digitado; 
-
-    if(qtdPassagem==0){
+void deletarPassagem(Passagem passagens[], int *qtdPassagem){
+    int numero_digitado;
+    printf("Digite o numero da passagem a ser deletada: ");
+    scanf("%d",&numero_digitado);
+    if(*qtdPassagem==0){
         printf("Nenhuma passagem cadastrada!\n");
         return;
     }
-
-    printf("------- Consulta da Passagem -------\n");
-    printf("Digite o numero da Passagem que deseja consultar: ");
-    scanf("%d",&numero_digitado);
     if(numero_digitado<1000 || numero_digitado>9999){
         printf("Numero Invalido!\n");
         return;
     }
+    int indice=buscaNum (numero_digitado,passagens,*qtdPassagem);
+    if (indice==-1){
+    printf("Passagem nao encontrada!\n");
+    return;
+    }else{
+        for(int cont=indice;cont<*qtdPassagem-1;cont++){
+            passagens[cont]=passagens[cont+1];//Desloca os elementos do vetor para a esquerda, assim excluindo as informações do passageiro selecionado
+        }
 
-    int indiceConsulta = buscaNum(numero_digitado,passagens,qtdPassagem);
-
-    if(indiceConsulta == -1){
-        printf("Passagem não cadastrada!\n");
-        return;
-    } else{
-        printf("---Passagem Encontrada---\n");
-        printf("Numero: %d\n",passagens[indiceConsulta].num_passagem);
-        char cpfExibicao[15];
-        strcpy(cpfExibicao, passagens[indiceConsulta].cpf);
-        formatarCPF(cpfExibicao);
-        printf("CPF: %s\n",cpfExibicao);
-        printf("Codigo do Voo: %s\n",passagens[indiceConsulta].codigo_voo);
-        printf("Assento: %s\n",passagens[indiceConsulta].assentos);
-        printf("Classe: %s\n",passagens[indiceConsulta].classe);
-        printf("Status: %s\n",passagens[indiceConsulta].status);
+        (*qtdPassagem)--;
+        passagens[*qtdPassagem].num_passagem=0;
+        passagens[*qtdPassagem].cpf[0] = '\0';
+        passagens[*qtdPassagem].codigo_voo[0] = '\0';
+        passagens[*qtdPassagem].assentos[0] = '\0';
+        passagens[*qtdPassagem].classe[0] = '\0';
+        passagens[*qtdPassagem].status[0] = '\0';
+        printf("Passagem Deletada\n");
+        printf("Passagens Cadastradas: %d\n",*qtdPassagem);
     }
 }
-int buscaNum (int numero_digitado,Passagem passagens[], int qtdPassagem){
-    for (int i=0;i<qtdPassagem;i++){
-        if(passagens[i].num_passagem==numero_digitado) return i;
-    }
-    return -1;
-}
-void cadastrarPassagem(Passageiro passageiros[],Voo voos[],Passagem passagens[],int *qtdPassagem,int *qtdPassageiro,int *qtdVoos){
-    printf("------- Cadastro de Nova Passagem -------\n");
-    if(*qtdPassagem>=5){
-        printf("Quantidade de 5 passagens cadastrados atingida!\n");
-        return;
-    }
-    passagens[*qtdPassagem].num_passagem = 1000 + *qtdPassagem;
-    printf("Passagem n. %d\n",passagens[*qtdPassagem].num_passagem);
-    char cpfDigitado[20];
-    printf("CPF: ");
-    scanf("%s",cpfDigitado);
-    limparCPF(cpfDigitado, passagens[*qtdPassagem].cpf);
-    if(validaCPF(passagens[*qtdPassagem].cpf) == 0){
-        printf("CPF Inválido!\n");
-        return;
-    } 
-    if(buscaCPF(passagens[*qtdPassagem].cpf,passageiros,*qtdPassageiro)== -1){  //Verifica se esse CPF ja foi cadastrado
-        printf("CPF nao encontrado em Passageiros!\n"); //CPF ja cadastrado, fecha a função
-        return;
-    }
+void menuPassagens(Passageiro passageiros[],int *qtdPassageiro,Voo voos[],int *qtdVoos,Passagem passagens[],int *qtdPassagem){
+ int opcao;
+    do{
+        printf("\n===== MENU PASSAGENS =====\n");
+        printf("1 - Cadastrar Passagem\n");
+        printf("2 - Consultar Passagem\n");
+        printf("3 - Editar Passagem\n");
+        printf("4 - Deletar Passagem\n");
+        printf("5 - Listar Passagem\n");
+        printf("0 - Voltar\n");
+        printf("Opcao: ");
 
-    printf("Codigo do voo: ");
-    scanf("%s", passagens[*qtdPassagem].codigo_voo);
-    limparCodVoo(passagens[*qtdPassagem].codigo_voo);
-    if(validacodigo_voo(passagens[*qtdPassagem].codigo_voo) == 0){
-        return;
-    }
-    if(buscaVoo(passagens[*qtdPassagem].codigo_voo, voos, *qtdVoos) == -1){
-        printf("Codigo nao encontrado em Voos!\n");
-        return;
-    }
+        scanf("%d", &opcao);
 
-    printf("\n!!!Lembre-se:\nAs fileiras de 1 à 32 são Economicas e Executivas, sendo, 'A' e 'B' para Economicas e 'C' e 'D' Executivas.\nAlem disso, as fileiras de 33 à 40 são Primeira Classe\n\nAssentos:\n");
-    scanf("%s",passagens[*qtdPassagem].assentos);
-    if(validaAssento(passagens[*qtdPassagem].assentos)!=1){
-        printf("Assento inválido!\n");
-        return;
-    }
-    if(buscaAssento(passagens[*qtdPassagem].assentos,passagens[*qtdPassagem].codigo_voo, passagens, *qtdPassagem,-1)!=1){
-        printf("Assento ocupado nesse Voo!\n");
-        return;
-    }
-    printf("Para classe, digite:\nEconomica = 1\nExecutiva = 2\nPrimeira Classe = 3\n");
-    int op;
-    scanf("%d",&op);
-    if(op<1 || op>3){printf("Classe Invalida\n");
-        return;
-    }
-    if(op==1) strcpy(passagens[*qtdPassagem].classe,"Economica");
-    if(op==2) strcpy(passagens[*qtdPassagem].classe,"Executiva");
-    if(op==3) strcpy(passagens[*qtdPassagem].classe,"Primeira Classe");
-    if(validaClasse(passagens[*qtdPassagem].assentos, op)!=1){
-        printf("Classe incompativel com o assento!\n");
-        return;
-    }
+        switch(opcao){
+            case 1:
+                cadastrarPassagem(passageiros,voos,passagens,qtdPassagem,qtdVoos,qtdPassageiro);
+                salvarPassagem(passagens,*qtdPassagem);
+                break;
 
-    printf("Para o status, digite:\nConfirmada = 1\nCancelada = 2\nEmbarcada = 3\n");
-    int op2;
-    scanf("%d",&op2);
-    if(op2<1 || op2>3){printf("Status Inválido\n");return;}
-    if(op2==1) strcpy(passagens[*qtdPassagem].status,"Confirmada");
-    if(op2==2) strcpy(passagens[*qtdPassagem].status,"Cancelada");
-    if(op2==3) strcpy(passagens[*qtdPassagem].status,"Embarcada");
-    
-    (*qtdPassagem)++; //Soma 1 a quantidade de passageiros cadastrados
-    printf("Passagem cadastrada com sucesso!\n");
-    printf("Passagens cadastradas: %d\n",*qtdPassagem);
-}
-int validaClasse(char assentos[], int op){
-    if(op==3){
-        if(assentos[1]=='3' && assentos[2]>'2')return 1;
-        else if(assentos[1]=='4' && assentos[2]=='0')return 1;
-    }
-    else if(op!=3){
-        if(op==1 && (assentos[0]!='A' && assentos[0]!='B')) return 0;
-        if(op==2 && (assentos[0]!='C' && assentos[0]!='D')) return 0;
-        if(assentos[1]=='3' && assentos[2]<='2')return 1;
-        else if(assentos[1]<'3')return 1;
-    }
-    return 0;
-}
-void salvarPassagem(Passagem passagens[], int qtdPassagem){
+            case 2:
+                buscarPassagem(passagens, *qtdPassagem);
+                break;
 
-    FILE *arquivo;
-    arquivo = fopen("passagensSalvas.bin","wb");
-    if(arquivo == NULL){
-        printf("Erro ao salvar os dados das passagens!\n");
-        return;
-    }
-    fwrite(&qtdPassagem, sizeof(int), 1, arquivo);
-    fwrite(passagens, sizeof(Passagem), qtdPassagem, arquivo);
-    fclose(arquivo);
-    printf("Operacao Salva!\n");
+            case 3:
+                editarPassagem(passagens, *qtdPassagem);
+                salvarPassagem(passagens,*qtdPassagem);
+                break;
 
-}
-int buscaAssento(char assentos[],char codigo_voo[], Passagem passagens[], int qtdPassagem, int ignorar){
-    for (int i=0; i<qtdPassagem;i++){
-        if(i == ignorar) continue;
-        if((strcmp(passagens[i].assentos,assentos)==0) && (strcmp(passagens[i].codigo_voo,codigo_voo)==0)) return 0;
-    }
-    return 1;
-}
-int validaAssento(char assentos[]){
-    if(assentos[0]<'A' || assentos[0]>'D'){
-        return 0;}
-    else if(assentos[1]<'1' || assentos[1]>'9'){
-        return 0;}
-    else if (assentos[1] == '4' && assentos[2] == '0' && assentos[3] == '\0') {
-        return 1;}
-    else if(assentos[1]>'3' && assentos[2]!='\0'){
-        return 0;}
-    else if(assentos[2]=='\0') {
-        return 1;}
-    else if(assentos[2]<'0' || assentos[2]>'9'){
-        return 0;}
-    else if (assentos[3] == '\0'){
-    return 1;}
-    else return 0;
+            case 4:
+                deletarPassagem(passagens, qtdPassagem);
+                salvarPassagem(passagens,*qtdPassagem);
+                break;
+
+            case 5:
+                listarPassagem(passagens, *qtdPassagem);
+                break;
+            case 0:
+                break;
+
+            default:
+                printf("Opcao invalida!\n");
+        }
+
+    }while(opcao != 0);
 }
 void menuConsultas(){
 
@@ -1177,7 +1177,7 @@ int main(){
     Voo voos[5];
     int qtdVoos = 0;
 
-    Passagem [5];
+    Passagem passagens[5];
     int qtdPassagem=0;
 
     int opcao;
@@ -1198,7 +1198,7 @@ int main(){
                 break;
 
             case 3:
-                menuPassagens(passagens, passageiros, qtdPassageiro, voos, qtdVoos, &qtdPassagem);
+                menuPassagens(passageiros, &qtdPassageiro, voos, &qtdVoos, passagens, &qtdPassagem);
                 break;
 
             case 4:
