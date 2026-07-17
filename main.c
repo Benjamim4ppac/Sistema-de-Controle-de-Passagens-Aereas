@@ -800,6 +800,22 @@ void menuVoos(Voo voos[], int *qtdVoos){
 
     }while(opcao != 0);
 }
+void carregarPassagem(Passagem passagens[],int *qtdPassagem){
+
+    FILE *arquivo;
+    arquivo = fopen("passagensSalvas.bin","rb");
+
+    if(arquivo == NULL){
+    *qtdPassagem = 0;
+    *proximoNumero = 1000;
+    return;
+    fread(qtdPassagem, sizeof(int), 1, arquivo);
+    fread(proximoNumero, sizeof(int), 1, arquivo);
+    fread(passagens, sizeof(Passagem), *qtdPassagem, arquivo);
+
+    fclose(arquivo);
+    }
+}
 void listarPassagem(Passagem passagens[], int qtdPassagem){
     int cont;
 
@@ -858,7 +874,7 @@ int validaClasse(char assentos[], int op){
     }
     return 0;
 }
-void salvarPassagem(Passagem passagens[], int qtdPassagem){
+void salvarPassagem(Passagem passagens[], int qtdPassagem, int proximoNumero){
 
     FILE *arquivo;
     arquivo = fopen("passagensSalvas.bin","wb");
@@ -867,6 +883,7 @@ void salvarPassagem(Passagem passagens[], int qtdPassagem){
         return;
     }
     fwrite(&qtdPassagem, sizeof(int), 1, arquivo);
+    fwrite(&proximoNumero, sizeof(int), 1, arquivo);
     fwrite(passagens, sizeof(Passagem), qtdPassagem, arquivo);
     fclose(arquivo);
     printf("Operacao Salva!\n");
@@ -896,13 +913,13 @@ int validaAssento(char assentos[]){
     return 1;}
     else return 0;
 }
-void cadastrarPassagem(Passageiro passageiros[],Voo voos[],Passagem passagens[],int *qtdPassagem,int *qtdPassageiro,int *qtdVoos){
+void cadastrarPassagem(Passageiro passageiros[],Voo voos[],Passagem passagens[],int *qtdPassagem,int *qtdPassageiro,int *qtdVoos,int *proximoNumero){
     printf("------- Cadastro de Nova Passagem -------\n");
     if(*qtdPassagem>=5){
         printf("Quantidade de 5 passagens cadastrados atingida!\n");
         return;
     }
-    passagens[*qtdPassagem].num_passagem = 1000 + *qtdPassagem;
+    passagens[*qtdPassagem].num_passagem = *proximoNumero;
     printf("Passagem n. %d\n",passagens[*qtdPassagem].num_passagem);
     char cpfDigitado[20];
     printf("CPF: ");
@@ -960,6 +977,7 @@ void cadastrarPassagem(Passageiro passageiros[],Voo voos[],Passagem passagens[],
     if(op2==2) strcpy(passagens[*qtdPassagem].status,"Cancelada");
     if(op2==3) strcpy(passagens[*qtdPassagem].status,"Embarcada");
     
+    (*proximoNumero)++;
     (*qtdPassagem)++; //Soma 1 a quantidade de passageiros cadastrados
     printf("Passagem cadastrada com sucesso!\n");
     printf("Passagens cadastradas: %d\n",*qtdPassagem);
@@ -1107,7 +1125,7 @@ void deletarPassagem(Passagem passagens[], int *qtdPassagem){
         printf("Passagens Cadastradas: %d\n",*qtdPassagem);
     }
 }
-void menuPassagens(Passageiro passageiros[],int *qtdPassageiro,Voo voos[],int *qtdVoos,Passagem passagens[],int *qtdPassagem){
+void menuPassagens(Passageiro passageiros[],int *qtdPassageiro,Voo voos[],int *qtdVoos,Passagem passagens[],int *qtdPassagem, int *proximoNumero){
  int opcao;
     do{
         printf("\n===== MENU PASSAGENS =====\n");
@@ -1123,8 +1141,8 @@ void menuPassagens(Passageiro passageiros[],int *qtdPassageiro,Voo voos[],int *q
 
         switch(opcao){
             case 1:
-                cadastrarPassagem(passageiros,voos,passagens,qtdPassagem,qtdVoos,qtdPassageiro);
-                salvarPassagem(passagens,*qtdPassagem);
+                cadastrarPassagem(passageiros,voos,passagens,qtdPassagem,qtdVoos,qtdPassageiro,proximoNumero);
+                salvarPassagem(passagens,*qtdPassagem,*proximoNumero);
                 break;
 
             case 2:
@@ -1179,9 +1197,11 @@ int main(){
 
     Passagem passagens[5];
     int qtdPassagem=0;
+    int proximoNumero=1000;
 
     int opcao;
     carregarPassageiro(passageiros, &qtdPassageiro);
+    carregarPassagem(passagens,&qtdPassagem);
 
     do{
         
@@ -1198,7 +1218,7 @@ int main(){
                 break;
 
             case 3:
-                menuPassagens(passageiros, &qtdPassageiro, voos, &qtdVoos, passagens, &qtdPassagem);
+                menuPassagens(passageiros, &qtdPassageiro, voos, &qtdVoos, passagens, &qtdPassagem,&proximoNumero);
                 break;
 
             case 4:
