@@ -513,7 +513,7 @@ void deletarPassageiro(Passageiro deletar[], int *qtdPassageiro){
     } else{
         printf("Exclusão Cancelada!\n");
     }
-
+    
     }
 }
 
@@ -846,6 +846,27 @@ void menuPassagens(Passageiro passageiros[],Voo voos[],Passagem passagens[],int 
         }
 
     }while(opcao != 0);
+}
+void listarPassagem(Passagem passagens[], int qtdPassagem){
+    int cont;
+
+    if(qtdPassagem == 0){
+        printf("Nenhuma passagem cadastrada!\n");
+        return;
+    }
+
+    for(cont=0;cont<qtdPassagem;cont++){        
+        printf("\n----- PASSAGEM %d -----\n",passagens[cont].num_passagem);
+        char cpfExibicao[15]; //Cria uma variavel temporaria para armazenar o CPF que sera mostrado, para não editar o conteudo do vetor principal
+        strcpy(cpfExibicao, passagens[cont].cpf); //Copia o conteudo do CPF do vetor
+        formatarCPF(cpfExibicao); //Formata somente o cpf a ser exibido no formato XXX.XXX.XXX-XX
+        printf("CPF: %s\n",cpfExibicao);
+
+        printf("Codigo do Voo: %s\n",passagens[cont].codigo_voo);
+        printf("Assento: %s\n",passagens[cont].assentos);
+        printf("Classe: %s\n",passagens[cont].classe);
+        printf("Status: %s\n",passagens[cont].status);
+    }
 }
 void deletarPassagem(Passagem passagens[], int *qtdPassagem){
     int numero_digitado;
