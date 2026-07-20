@@ -814,7 +814,7 @@ void menuVoos(Voo voos[], int *qtdVoos){
 
     }while(opcao != 0);
 }
-void carregarPassagem(Passagem passagens[],int *qtdPassagem){
+void carregarPassagem(Passagem passagens[],int *qtdPassagem, int *proximoNumero){
 
     FILE *arquivo;
     arquivo = fopen("passagensSalvas.bin","rb");
@@ -1165,12 +1165,12 @@ void menuPassagens(Passageiro passageiros[],int *qtdPassageiro,Voo voos[],int *q
 
             case 3:
                 editarPassagem(passagens, *qtdPassagem);
-                salvarPassagem(passagens,*qtdPassagem);
+                salvarPassagem(passagens,*qtdPassagem,*proximoNumero);
                 break;
 
             case 4:
                 deletarPassagem(passagens, qtdPassagem);
-                salvarPassagem(passagens,*qtdPassagem);
+                salvarPassagem(passagens,*qtdPassagem,*proximoNumero);
                 break;
 
             case 5:
