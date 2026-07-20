@@ -55,8 +55,6 @@ void carregarPassageiro(Passageiro passageiros[],int *qtdPassageiro){
     *qtdPassageiro = 0;
     return;
 }
-    fread(qtdPassageiro, sizeof(int), 1, arquivo);
-    printf("Quantidade lida: %d\n", *qtdPassageiro);
     fread(passageiros, sizeof(Passageiro), *qtdPassageiro, arquivo);
     fclose(arquivo);
     printf("Dados dos Passageiros carregados!\n");
@@ -313,11 +311,6 @@ int menuEditarVoo(){
 void cadastrarPassageiro(Passageiro cadastro[], int *qtdPassageiro){ //Função que efetua o cadastro de um novo passageiro
     printf("------- Cadastro de Novo Passageiro -------\n");
 
-    if(*qtdPassageiro>=5){ //Se houver 5 cadastros, a função é encerrada
-        printf("Quantidade de 5 passageiros cadastrados atingida!\n");
-        return;
-    }
-
     char cpfDigitado[20]; //Variavel para armazenar o CPF digitado
     
     printf("CPF: ");
@@ -454,11 +447,11 @@ void editarPassageiro(Passageiro editar[], int qtdPassageiro){
     }
 }
 
-void deletarPassageiro(Passageiro deletar[], int *qtdPassageiro){
+Passageiro *deletarPassageiro(Passageiro deletar[], int *qtdPassageiro, int *passageirosAlocados){
     
     if(*qtdPassageiro==0){
         printf("Nenhum passageiro cadastrado!\n");
-        return;
+        return deletar;
     }
     
     char cpfDigitado[20], cpfDeletar[15];
@@ -470,7 +463,7 @@ void deletarPassageiro(Passageiro deletar[], int *qtdPassageiro){
 
     if(validaCPF(cpfDeletar)==0){ //verifica se é um CPF válido
         printf("CPF Inválido!\n");
-        return;
+        return deletar;
     }
     
     int indiceDeletar = buscaCPF(cpfDeletar,deletar,*qtdPassageiro);
@@ -478,7 +471,7 @@ void deletarPassageiro(Passageiro deletar[], int *qtdPassageiro){
 
     if(indiceDeletar == -1){
         printf("Passageiro não cadastrado!\n");
-        return;
+        return deletar;
     } else{
         printf("---Passageiro Encontrado---\n");
         char cpfExibicao[15]; //Cria uma variavel temporaria para armazenar o CPF que sera mostrado, para não editar o conteudo do vetor principal
@@ -507,6 +500,14 @@ void deletarPassageiro(Passageiro deletar[], int *qtdPassageiro){
         deletar[*qtdPassageiro].telefone[0] = '\0';
         deletar[*qtdPassageiro].email[0] = '\0';
         deletar[*qtdPassageiro].dataNascimento[0] = '\0';
+        (*passageirosAlocados)--;
+                Passageiro *aux = realloc(deletar,(*passageirosAlocados)*sizeof(Passageiro));
+                if(aux==NULL){
+                        printf("Erro ao realocar memoria! (Passageiros/Exclusao)\n");
+                        (*passageirosAlocados)++;
+                    }else{
+                        deletar = aux;
+                    }
         printf("Passageiro Deletado\n");
         printf("Passageiros Cadastrados: %d\n",*qtdPassageiro);
         //Apaga as informações do ultimo passageiro, ja que seus dados estavam duplicados devido ao deslocamento
@@ -515,6 +516,7 @@ void deletarPassageiro(Passageiro deletar[], int *qtdPassageiro){
     }
 
     }
+    return deletar;
 }
 
 void listarPassageiros(Passageiro listar[], int qtdPassageiros){
@@ -705,7 +707,7 @@ void listarVoos(Voo voos[], int qtdVoos){
     }
 }
 
-void menuPassageiros(Passageiro passageiros[], int *qtdPassageiro){
+Passageiro *menuPassageiros(Passageiro passageiros[], int *qtdPassageiro, int *passageirosAlocados){
     int opcao;
     do{
         printf("\n===== MENU PASSAGEIROS =====\n");
@@ -721,6 +723,17 @@ void menuPassageiros(Passageiro passageiros[], int *qtdPassageiro){
 
         switch(opcao){
             case 1:
+                if(*qtdPassageiro==*passageirosAlocados){
+                    (*passageirosAlocados)+=5;
+                    Passageiro *aux = realloc(passageiros,(*passageirosAlocados)*sizeof(Passageiro));
+                    if(aux==NULL){
+                        printf("Erro ao realocar memoria! (Passageiros/Cadastro)\n");
+                        (*passageirosAlocados) -= 5;
+                    }else{
+                        passageiros = aux;
+                    }
+
+                }
                 cadastrarPassageiro(passageiros, qtdPassageiro);
                 salvarPassageiro(passageiros,*qtdPassageiro);
                 break;
@@ -735,7 +748,7 @@ void menuPassageiros(Passageiro passageiros[], int *qtdPassageiro){
                 break;
 
             case 4:
-                deletarPassageiro(passageiros, qtdPassageiro);
+                passageiros = deletarPassageiro(passageiros, qtdPassageiro, passageirosAlocados);
                 salvarPassageiro(passageiros,*qtdPassageiro);
                 break;
 
@@ -750,6 +763,7 @@ void menuPassageiros(Passageiro passageiros[], int *qtdPassageiro){
         }
 
     }while(opcao != 0);
+    return passageiros;
 }
 
 void menuVoos(Voo voos[], int *qtdVoos){
@@ -1180,17 +1194,25 @@ void menuRelatorios(){
 }
 
 int main(){
-    Passageiro passageiros[5];
     int qtdPassageiro=0;
-    
-    //int capacidadePassageiro=5;
-    /*Passageiro *passageiros;
-    passageiros = (Passageiro*) malloc(capacidadePassageiro * sizeof(Passageiro));
+    FILE *arquivoPassageiros;
+    arquivoPassageiros = fopen("passageirosSalvos.bin","rb");
+
+    if(arquivoPassageiros == NULL){
+    qtdPassageiro = 0;
+    }else{
+    fread(&qtdPassageiro, sizeof(int), 1, arquivoPassageiros);
+    fclose(arquivoPassageiros);
+    printf("Quantidade lida: %d\n", qtdPassageiro);
+}
+    int passageirosAlocados = qtdPassageiro+5;
+    Passageiro *passageiros;
+    passageiros = (Passageiro*) malloc(passageirosAlocados * sizeof(Passageiro));
 
     if(passageiros == NULL){
     printf("Erro ao alocar memoria (Passageiros)!\n");
     return 1;
-}*/
+}
 
     Voo voos[5];
     int qtdVoos = 0;
@@ -1210,7 +1232,8 @@ int main(){
 
         switch(opcao){
             case 1:
-                menuPassageiros(passageiros, &qtdPassageiro);
+                passageiros = menuPassageiros(passageiros, &qtdPassageiro,&passageirosAlocados);
+                printf("Passageiros cadastrados: %d\nPassageiros Alocados: %d\n",qtdPassageiro,passageirosAlocados);
                 break;
 
             case 2:
@@ -1237,6 +1260,6 @@ int main(){
                 printf("Opcao invalida!\n");
         }
     }while(opcao!=0);
-    
+    free(passageiros);
     return 0;
 }
