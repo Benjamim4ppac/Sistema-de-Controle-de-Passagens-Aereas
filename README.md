@@ -97,3 +97,31 @@ Códigos inválidos:
 - k1236 (Companhia Inexistente)
 
 O código do voo também é um campo de valor único, portanto não é permitido cadastrar dois voos diferentes utilizando o mesmo código.
+
+## Regras das Passagens
+
+### Numeração das passagens
+* Os números das passagens são gerados automaticamente.
+* A numeração inicia em **1000** e é incrementada em uma unidade para cada nova passagem cadastrada (1000, 1001, 1002, ...), sem nunca se repetir.
+
+### Assentos
+
+* Cada voo possui **160 assentos**, distribuídos da seguinte forma:
+  * **40 fileiras** (1 a 40);
+  * **4 assentos por fileira**: **A**, **B**, **C** e **D**.
+
+* Exemplos de assentos válidos:
+  * A1, B1, C1, D1
+  * A2, B2, C2, D2
+
+* O mesmo assento pode existir em **voos diferentes**, porém **não pode ser cadastrado mais de uma vez no mesmo voo**.
+
+### Classes dos assentos
+A classe da passagem é definida automaticamente de acordo com o assento informado:
+
+* **Fileiras 1 a 32:**
+  * Assentos **A** e **B** → **Classe Econômica**
+  * Assentos **C** e **D** → **Classe Executiva**
+
+* **Fileiras 33 a 40:**
+  * Todos os assentos (**A**, **B**, **C** e **D**) pertencem à **Primeira Classe**.
