@@ -187,6 +187,16 @@ int buscaVoo(char codigo[], Voo voos[], int qtdVoos){
 
     return -1;
 }
+int buscaPassagemPorVoo(char codigo[], Passagem passagens[], int qtdPassagens)
+{
+    for (int i = 0; i < qtdPassagens; i++)
+    {
+        if (strcmp(passagens[i].codigo_voo, codigo) == 0)
+            return i;
+    }
+
+    return -1;
+}
 
 void limparCPF(char original[], char limpo[]){//Função que remove (. e -) do CPF caso o usuário digite na forma(XXX.XXX.XXX-XX) e limpa para (XXXXXXXXXXX)
     int contOriginal,contLimpo=0;
@@ -685,7 +695,7 @@ void editarVoo(Voo voos[], int qtdVoos){
     }
 }
 
-Voo *deletarVoo(Voo voos[], int *qtdVoos, int *voosAlocados){
+Voo *deletarVoo(Voo voos[], int *qtdVoos, int *voosAlocados, Passagem passagens[], int *qtdPassagem){
 
     char codigo[10];
 
@@ -695,9 +705,13 @@ Voo *deletarVoo(Voo voos[], int *qtdVoos, int *voosAlocados){
     limparCodVoo(codigo);
 
     int indice = buscaVoo(codigo, voos, *qtdVoos);
-
     if(indice == -1){
         printf("Voo nao encontrado!\n");
+        return voos;
+    }
+    int indice2 = buscaPassagemPorVoo(codigo, passagens, *qtdPassagem);
+    if(indice2 != -1){
+        printf("Voo com passagens cadastradas nao podem ser apagados!\nDesvincule todas as passagens desse voo primeiro!\n");
         return voos;
     }
 
@@ -797,7 +811,7 @@ Passageiro *menuPassageiros(Passageiro passageiros[], int *qtdPassageiro, int *p
     return passageiros;
 }
 
-Voo *menuVoos(Voo voos[], int *qtdVoos, int *voosAlocados){
+Voo *menuVoos(Voo voos[], int *qtdVoos, int *voosAlocados, Passagem passagens[], int *qtdPassagem){
 
     int opcao;
 
@@ -842,7 +856,7 @@ Voo *menuVoos(Voo voos[], int *qtdVoos, int *voosAlocados){
                 break;
 
             case 4:
-                voos = deletarVoo(voos, qtdVoos,voosAlocados);
+                voos = deletarVoo(voos, qtdVoos,voosAlocados, passagens, qtdPassagem);
                 salvarVoo(voos,*qtdVoos);
                 break;
 
@@ -1337,7 +1351,7 @@ int main(){
                 break;
 
             case 2:
-                voos = menuVoos(voos, &qtdVoos, &voosAlocados);
+                voos = menuVoos(voos, &qtdVoos, &voosAlocados, passagens, &qtdPassagem);
                 printf("Voos cadastrados: %d\nVoos Alocados: %d\n",qtdVoos,voosAlocados);
                 break;
 
