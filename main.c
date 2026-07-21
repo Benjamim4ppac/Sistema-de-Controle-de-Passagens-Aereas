@@ -77,6 +77,36 @@ void  salvarPassageiro(Passageiro passageiros[], int qtdPassageiro){
 
 }
 
+void  salvarVoo(Voo voos[], int qtdVoos){
+
+    FILE *arquivo;
+    arquivo = fopen("voosSalvos.bin","wb");
+    if(arquivo == NULL){
+        printf("Erro ao salvar os dados dos voos!\n");
+        return;
+    }
+    fwrite(&qtdVoos, sizeof(int), 1, arquivo);
+    fwrite(voos, sizeof(Voo), qtdVoos, arquivo);
+    fclose(arquivo);
+    printf("Operacao Salva!\n");
+
+}
+
+void carregarVoo(Voo voos[], int *qtdVoos){
+
+    FILE *arquivo;
+    arquivo = fopen("voosSalvos.bin","rb");
+
+    if(arquivo == NULL){
+    *qtdVoos = 0;
+    return;
+    }
+    fread(voos, sizeof(Voo), *qtdVoos, arquivo);
+    fclose(arquivo);
+    printf("Dados dos Voos carregados!\n");
+
+}
+
 int validaCPF(char cpf[12]){ //Função para verificar a validade de um CPF
     int peso=10,cont,soma=0,resto;
     int digitoVerificador[2];
@@ -788,6 +818,7 @@ void menuVoos(Voo voos[], int *qtdVoos){
 
             case 1:
                 cadastrarVoo(voos, qtdVoos);
+                salvarVoo(voos,*qtdVoos)
                 break;
 
             case 2:
@@ -796,10 +827,12 @@ void menuVoos(Voo voos[], int *qtdVoos){
 
             case 3:
                 editarVoo(voos, *qtdVoos);
+                salvarVoo(voos,*qtdVoos)
                 break;
 
             case 4:
                 deletarVoo(voos, qtdVoos);
+                salvarVoo(voos,*qtdVoos)
                 break;
 
             case 5:
@@ -1205,7 +1238,7 @@ int main(){
     fread(&qtdPassageiro, sizeof(int), 1, arquivoPassageiros);
     fclose(arquivoPassageiros);
     printf("Quantidade lida: %d\n", qtdPassageiro);
-}
+    }
     int passageirosAlocados = qtdPassageiro+5;
     Passageiro *passageiros;
     passageiros = (Passageiro*) malloc(passageirosAlocados * sizeof(Passageiro));
@@ -1213,7 +1246,7 @@ int main(){
     if(passageiros == NULL){
     printf("Erro ao alocar memoria (Passageiros)!\n");
     return 1;
-}
+    }
 
     Voo voos[5];
     int qtdVoos = 0;
@@ -1224,6 +1257,7 @@ int main(){
 
     int opcao;
     carregarPassageiro(passageiros, &qtdPassageiro);
+    carregarVoo(voos,&qtdVoos)
     carregarPassagem(passagens,&qtdPassagem,&proximoNumero);
 
     do{
