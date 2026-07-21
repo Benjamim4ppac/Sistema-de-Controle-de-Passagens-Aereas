@@ -988,10 +988,6 @@ int validaAssento(char assentos[]){
 }
 void cadastrarPassagem(Passageiro passageiros[],Voo voos[],Passagem passagens[],int *qtdPassagem,int *qtdPassageiro,int *qtdVoos,int *proximoNumero){
     printf("------- Cadastro de Nova Passagem -------\n");
-    if(*qtdPassagem>=5){
-        printf("Quantidade de 5 passagens cadastrados atingida!\n");
-        return;
-    }
     passagens[*qtdPassagem].num_passagem = *proximoNumero;
     printf("Passagem n. %d\n",passagens[*qtdPassagem].num_passagem);
     char cpfDigitado[20];
