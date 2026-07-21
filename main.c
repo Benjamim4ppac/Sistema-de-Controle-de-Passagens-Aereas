@@ -577,12 +577,6 @@ void listarPassageiros(Passageiro listar[], int qtdPassageiros){
 }
 
 void cadastrarVoo(Voo voos[], int *qtdVoos){
-
-    if(*qtdVoos >= 5){
-        printf("Limite de voos atingido!\n");
-        return;
-    }
-
     printf("\n--- Cadastro de Voo ---\n");
 
     printf("Codigo do voo: ");
@@ -691,7 +685,7 @@ void editarVoo(Voo voos[], int qtdVoos){
     }
 }
 
-void deletarVoo(Voo voos[], int *qtdVoos){
+Voo *deletarVoo(Voo voos[], int *qtdVoos, int *voosAlocados){
 
     char codigo[10];
 
@@ -704,7 +698,7 @@ void deletarVoo(Voo voos[], int *qtdVoos){
 
     if(indice == -1){
         printf("Voo nao encontrado!\n");
-        return;
+        return voos;
     }
 
     for(int i = indice; i < *qtdVoos - 1; i++){
@@ -712,8 +706,14 @@ void deletarVoo(Voo voos[], int *qtdVoos){
     }
 
     (*qtdVoos)--;
-
+    (*voosAlocados)--;
+    Voo *aux = realloc(voos,(*voosAlocados)*sizeof(Voo));
+    if(aux==NULL){
+        printf("Erro ao realocar memoria! (Voos/Exclusao)\n");
+       (*voosAlocados)++;
+    }else voos = aux;
     printf("Voo removido com sucesso!\n");
+    return voos;
 }
 
 void listarVoos(Voo voos[], int qtdVoos){
@@ -797,7 +797,7 @@ Passageiro *menuPassageiros(Passageiro passageiros[], int *qtdPassageiro, int *p
     return passageiros;
 }
 
-void menuVoos(Voo voos[], int *qtdVoos){
+Voo *menuVoos(Voo voos[], int *qtdVoos, int *voosAlocados){
 
     int opcao;
 
@@ -817,8 +817,19 @@ void menuVoos(Voo voos[], int *qtdVoos){
         switch(opcao){
 
             case 1:
+                if(*qtdVoos==*voosAlocados){
+                    (*voosAlocados)+=5;
+                    Voo *aux = realloc(voos,(*voosAlocados)*sizeof(Voo));
+                    if(aux==NULL){
+                        printf("Erro ao realocar memoria! (Voos/Cadastro)\n");
+                        (*voosAlocados) -= 5;
+                    }else{
+                        voos = aux;
+                    }
+
+                }
                 cadastrarVoo(voos, qtdVoos);
-                salvarVoo(voos,*qtdVoos)
+                salvarVoo(voos,*qtdVoos);
                 break;
 
             case 2:
@@ -827,12 +838,12 @@ void menuVoos(Voo voos[], int *qtdVoos){
 
             case 3:
                 editarVoo(voos, *qtdVoos);
-                salvarVoo(voos,*qtdVoos)
+                salvarVoo(voos,*qtdVoos);
                 break;
 
             case 4:
-                deletarVoo(voos, qtdVoos);
-                salvarVoo(voos,*qtdVoos)
+                voos = deletarVoo(voos, qtdVoos,voosAlocados);
+                salvarVoo(voos,*qtdVoos);
                 break;
 
             case 5:
@@ -847,6 +858,7 @@ void menuVoos(Voo voos[], int *qtdVoos){
         }
 
     }while(opcao != 0);
+    return voos;
 }
 void carregarPassagem(Passagem passagens[],int *qtdPassagem, int *proximoNumero){
 
@@ -1229,27 +1241,43 @@ void menuRelatorios(){
 
 int main(){
     int qtdPassageiro=0;
+
     FILE *arquivoPassageiros;
     arquivoPassageiros = fopen("passageirosSalvos.bin","rb");
-
     if(arquivoPassageiros == NULL){
     qtdPassageiro = 0;
     }else{
     fread(&qtdPassageiro, sizeof(int), 1, arquivoPassageiros);
     fclose(arquivoPassageiros);
-    printf("Quantidade lida: %d\n", qtdPassageiro);
+    printf("Quantidade de Passageiros lidos: %d\n", qtdPassageiro);
     }
     int passageirosAlocados = qtdPassageiro+5;
     Passageiro *passageiros;
     passageiros = (Passageiro*) malloc(passageirosAlocados * sizeof(Passageiro));
-
     if(passageiros == NULL){
     printf("Erro ao alocar memoria (Passageiros)!\n");
     return 1;
     }
 
-    Voo voos[5];
     int qtdVoos = 0;
+    FILE *arquivoVoos;
+    arquivoVoos=fopen("voosSalvos.bin","rb");
+    if(arquivoVoos == NULL){
+        printf("Erro ao abrir voosSalvos.bin\n");
+        qtdVoos = 0;
+    }else{
+        fread(&qtdVoos, sizeof(int), 1, arquivoVoos);
+        fclose(arquivoVoos);
+        printf("Quantidade de Voos lidos: %d\n", qtdVoos);
+    }
+    int voosAlocados = qtdVoos+5;
+    Voo *voos;
+    voos = (Voo*) malloc(voosAlocados * sizeof(Voo));
+    if(voos == NULL){
+        printf("Erro ao alocar memoria (Voos)!\n");
+        return 1;
+    }
+
 
     Passagem passagens[5];
     int qtdPassagem=0;
@@ -1257,7 +1285,7 @@ int main(){
 
     int opcao;
     carregarPassageiro(passageiros, &qtdPassageiro);
-    carregarVoo(voos,&qtdVoos)
+    carregarVoo(voos,&qtdVoos);
     carregarPassagem(passagens,&qtdPassagem,&proximoNumero);
 
     do{
@@ -1272,7 +1300,8 @@ int main(){
                 break;
 
             case 2:
-                menuVoos(voos, &qtdVoos);
+                menuVoos(voos, &qtdVoos, &voosAlocados);
+                printf("Voos cadastrados: %d\nVoos Alocados: %d\n",qtdVoos,voosAlocados);
                 break;
 
             case 3:
