@@ -56,6 +56,7 @@ void carregarPassageiro(Passageiro passageiros[],int *qtdPassageiro){
     *qtdPassageiro = 0;
     return;
 }
+    fseek(arquivo,sizeof(int),SEEK_SET); //Pula os quanto inteiros da qtdPassageiro já lida na main para declarar o vetor passageiros de forma dinâmica
     fread(passageiros, sizeof(Passageiro), *qtdPassageiro, arquivo);
     fclose(arquivo);
     printf("Dados dos Passageiros carregados!\n");
@@ -763,7 +764,10 @@ Passageiro *menuPassageiros(Passageiro passageiros[], int *qtdPassageiro, int *p
         printf("0 - Voltar\n");
         printf("Opcao: ");
 
-        scanf("%d", &opcao);
+        if(scanf("%d", &opcao) != 1){
+            while(getchar() != '\n'); // limpa o buffer
+            opcao = -1; // garante que não saia do menu
+        }
 
         switch(opcao){
             case 1:
@@ -1337,7 +1341,11 @@ int main(){
     do{
         
         menuPrincipal();
-        scanf("%d", &opcao);
+
+        if(scanf("%d", &opcao) != 1){
+            while(getchar() != '\n'); // limpa o buffer
+            opcao = -1; // garante que não saia do menu
+        }
 
         switch(opcao){
             case 1:
