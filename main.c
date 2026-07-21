@@ -187,8 +187,7 @@ int buscaVoo(char codigo[], Voo voos[], int qtdVoos){
 
     return -1;
 }
-int buscaPassagemPorVoo(char codigo[], Passagem passagens[], int qtdPassagens)
-{
+int buscaPassagemPorVoo(char codigo[], Passagem passagens[], int qtdPassagens){
     for (int i = 0; i < qtdPassagens; i++)
     {
         if (strcmp(passagens[i].codigo_voo, codigo) == 0)
