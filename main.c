@@ -247,7 +247,11 @@ int validacodigo_voo(char codigo_voo[6]){
         return 0;
     }
     if(codigo_voo[0]!='L' && codigo_voo[0]!='A' && codigo_voo[0]!='G'){
-        printf("Companhia Áerea Não Correspondente\n");
+        printf("Companhia Aerea Nao Correspondente\n");
+        printf("Companhias Compativeis:\n");
+        printf("- Azul\n");
+        printf("- Gol\n");
+        printf("- Latam\n");
         return 0;
     }
 
@@ -619,6 +623,15 @@ void cadastrarVoo(Voo voos[], int *qtdVoos){
         printf("Codigo ja cadastrado!\n");
         return;
     }
+    //Seleciona a companhia aerea automaticamente com base no digito verificador do código de voo
+    if(voos[*qtdVoos].codigo_voo[0] == 'A'){
+        strcpy(voos[*qtdVoos].companhia, "Azul");
+    }else if(voos[*qtdVoos].codigo_voo[0] == 'G'){
+        strcpy(voos[*qtdVoos].companhia, "Gol");
+    }else{
+        strcpy(voos[*qtdVoos].companhia, "Latam");
+    }
+    printf("Companhia selecionada: %s\n", voos[*qtdVoos].companhia);
 
     printf("Origem: ");
     scanf(" %[^\n]", voos[*qtdVoos].origem);
@@ -631,9 +644,6 @@ void cadastrarVoo(Voo voos[], int *qtdVoos){
 
     printf("Duracao: ");
     scanf(" %[^\n]", voos[*qtdVoos].duracao);
-
-    printf("Companhia: ");
-    scanf(" %[^\n]", voos[*qtdVoos].companhia);
 
     (*qtdVoos)++;
 
