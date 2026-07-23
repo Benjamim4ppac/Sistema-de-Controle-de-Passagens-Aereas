@@ -1,49 +1,47 @@
 ========================================
      RELATORIO DE PASSAGENS AEREAS
-               (Latam)
+               (Gol)
 ========================================
 
 ----------------------------------------------------
-Numero da passagem: 1000
-CPF: 663.283.720-43
-Assento: A33
-Classe: Executiva
-Classe: Embarcada
-----------------------------------------------------
-Numero da passagem: 1002
-CPF: 392.669.013-50
-Assento: A40
-Classe: Executiva
+Numero da passagem: 1004
+Nome: Jo∆o Silva
+CPF: 529.982.247-25
+Codigo de Voo: G6703
+Origem: Rio de Janeiro
+Destino: Bras°lia
+Assento: A12
+Classe: Economica
 Classe: Confirmada
 ----------------------------------------------------
-Numero da passagem: 1007
-CPF: 168.995.350-09
-Assento: A35
-Classe: Primeira Classe
+Numero da passagem: 1005
+Nome: Jo∆o Silva
+CPF: 529.982.247-25
+Codigo de Voo: G6703
+Origem: Rio de Janeiro
+Destino: Bras°lia
+Assento: A8
+Classe: Economica
 Classe: Confirmada
 ----------------------------------------------------
-Numero da passagem: 1008
-CPF: 104.332.181-00
-Assento: D38
-Classe: Primeira Classe
-Classe: Cancelada
-----------------------------------------------------
-Numero da passagem: 1010
-CPF: 083.863.794-99
-Assento: B33
-Classe: Primeira Classe
+Numero da passagem: 1011
+Nome: Carolina Almeida
+CPF: 026.542.351-14
+Codigo de Voo: G6703
+Origem: Rio de Janeiro
+Destino: Bras°lia
+Assento: C9
+Classe: Economica
 Classe: Confirmada
 ----------------------------------------------------
-Numero da passagem: 1013
-CPF: 475.255.341-44
-Assento: C34
-Classe: Primeira Classe
-Classe: Cancelada
-----------------------------------------------------
-Numero da passagem: 1014
-CPF: 473.420.003-37
-Assento: B36
-Classe: Primeira Classe
+Numero da passagem: 1012
+Nome: Thiago Oliveira
+CPF: 310.341.316-56
+Codigo de Voo: G1247
+Origem: Belo Horizonte
+Destino: Porto Alegre
+Assento: B17
+Classe: Economica
 Classe: Confirmada
 -----------------------------------------
-Passagens Encontradas: 7
+Passagens Encontradas: 4

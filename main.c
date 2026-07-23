@@ -1206,32 +1206,46 @@ void editarPassagem(Passagem passagens[], int qtdPassagem){
     }
 }
 
-void relatorioCompanhia(Passagem passagens[], int qtdPassagens){
+void relatorioCompanhia(Passagem passagens[], int qtdPassagens,Passageiro passageiros[], int qtdPassageiros,Voo voos[], int qtdVoos){
     printf("---Gerar relatorio (Companhia Aerea)---\n");
     int comp;
     char companhia[50];
     int qtdPassagensEcontradas=0;
+    do {
     printf("Selecione uma companhia:\n");
     printf("1. Azul\n");
     printf("2. Gol\n");
     printf("3. Latam\n");
+    printf("0. Voltar\n");
     printf("Opcao: ");
-    do{
-        scanf("%d", &comp);
-    } while(comp!=1 && comp!=2 && comp!=3);
-    if(comp==1){
-        strcpy(companhia,"Azul");
-        printf("Gerando Relatorio (Azul)...");
-    }else if(comp==2){
-        strcpy(companhia,"Gol");
-        printf("Gerando Relatorio (Gol)...");
-    }else if(comp==3){
-        strcpy(companhia,"Latam");
-        printf("Gerando Relatorio (Latam)...");
-    } else{
-        printf("Entrada Invalida\n");
-        return;
+
+    if (scanf("%d", &comp) != 1) {
+        printf("Entrada invalida!\n");
+
+        while (getchar() != '\n'); // limpa o buffer
+        comp = -1;
     }
+    else if (comp < 0 || comp > 3) {
+        printf("Entrada invalida!\n");
+    }
+
+} while (comp < 0 || comp > 3);
+
+if (comp == 0) {
+    return;
+}
+else if (comp == 1) {
+    strcpy(companhia, "Azul");
+    printf("Gerando Relatorio (Azul)...\n");
+}
+else if (comp == 2) {
+    strcpy(companhia, "Gol");
+    printf("Gerando Relatorio (Gol)...\n");
+}
+else if (comp == 3) {
+    strcpy(companhia, "Latam");
+    printf("Gerando Relatorio (Latam)...\n");
+}
     FILE *relatorioCompanhia;
     relatorioCompanhia = fopen("RelatorioCompanhia.txt","w");
     if (relatorioCompanhia == NULL)
@@ -1250,10 +1264,16 @@ void relatorioCompanhia(Passagem passagens[], int qtdPassagens){
             qtdPassagensEcontradas++;
             fprintf(relatorioCompanhia,"----------------------------------------------------\n");
             fprintf(relatorioCompanhia,"Numero da passagem: %d\n",passagens[i].num_passagem);
+            int indicePassageiro = buscaCPF(passagens[i].cpf, passageiros, qtdPassageiros);
+            fprintf(relatorioCompanhia,"Nome: %s\n",passageiros[indicePassageiro].nome);
             char cpfExibicao[15]; //Cria uma variavel temporaria para armazenar o CPF que sera mostrado, para não editar o conteudo do vetor principal
-        strcpy(cpfExibicao, passagens[i].cpf); //Copia o conteudo do CPF do vetor
-        formatarCPF(cpfExibicao); //Formata somente o cpf a ser exibido no formato XXX.XXX.XXX-XX
+            strcpy(cpfExibicao, passagens[i].cpf); //Copia o conteudo do CPF do vetor
+            formatarCPF(cpfExibicao); //Formata somente o cpf a ser exibido no formato XXX.XXX.XXX-XX
             fprintf(relatorioCompanhia,"CPF: %s\n",cpfExibicao);
+            fprintf(relatorioCompanhia,"Codigo de Voo: %s\n",passagens[i].codigo_voo);
+            int indiceVoo = buscaVoo(passagens[i].codigo_voo,voos,qtdVoos);
+            fprintf(relatorioCompanhia,"Origem: %s\n",voos[indiceVoo].origem);
+            fprintf(relatorioCompanhia,"Destino: %s\n",voos[indiceVoo].destino);
             fprintf(relatorioCompanhia,"Assento: %s\n",passagens[i].assentos);
             fprintf(relatorioCompanhia,"Classe: %s\n",passagens[i].classe);
             fprintf(relatorioCompanhia,"Classe: %s\n",passagens[i].status);
@@ -1262,6 +1282,7 @@ void relatorioCompanhia(Passagem passagens[], int qtdPassagens){
     }
     fprintf(relatorioCompanhia,"-----------------------------------------\n");
     fprintf(relatorioCompanhia,"Passagens Encontradas: %d\n",qtdPassagensEcontradas);
+    printf("Relatorio Gerado!\n");
     fclose(relatorioCompanhia);
 
 }
@@ -1512,7 +1533,7 @@ int main(){
                 break;
 
             case 5:
-                relatorioCompanhia(passagens,qtdPassagem);
+                relatorioCompanhia(passagens,qtdPassagem,passageiros,qtdPassageiro,voos,qtdVoos);
                // menuRelatorios();
                 break;
 
