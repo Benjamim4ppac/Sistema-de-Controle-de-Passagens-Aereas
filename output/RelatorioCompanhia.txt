@@ -1,9 +1,49 @@
 ========================================
      RELATORIO DE PASSAGENS AEREAS
+               (Latam)
 ========================================
 
-Passagens Encontradas: 0
-Passagens Encontradas: 0
-Passagens Encontradas: 0
-Passagens Encontradas: 0
-Passagens Encontradas: 0
+----------------------------------------------------
+Numero da passagem: 1000
+CPF: 663.283.720-43
+Assento: A33
+Classe: Executiva
+Classe: Embarcada
+----------------------------------------------------
+Numero da passagem: 1002
+CPF: 392.669.013-50
+Assento: A40
+Classe: Executiva
+Classe: Confirmada
+----------------------------------------------------
+Numero da passagem: 1007
+CPF: 168.995.350-09
+Assento: A35
+Classe: Primeira Classe
+Classe: Confirmada
+----------------------------------------------------
+Numero da passagem: 1008
+CPF: 104.332.181-00
+Assento: D38
+Classe: Primeira Classe
+Classe: Cancelada
+----------------------------------------------------
+Numero da passagem: 1010
+CPF: 083.863.794-99
+Assento: B33
+Classe: Primeira Classe
+Classe: Confirmada
+----------------------------------------------------
+Numero da passagem: 1013
+CPF: 475.255.341-44
+Assento: C34
+Classe: Primeira Classe
+Classe: Cancelada
+----------------------------------------------------
+Numero da passagem: 1014
+CPF: 473.420.003-37
+Assento: B36
+Classe: Primeira Classe
+Classe: Confirmada
+-----------------------------------------
+Passagens Encontradas: 7

@@ -1049,7 +1049,7 @@ void cadastrarPassagem(Passageiro passageiros[],Voo voos[],Passagem passagens[],
         return;
     }
 
-    printf("!!!Lembre-se:\nAs fileiras de 1 a 32 sao para Economicas ou Executivas.\nAlem disso, as fileiras de 33 a 40 sao Primeira Classe ou Executivas\n\nAssentos:\n");
+    printf("!!!Lembre-se:\nAs fileiras de 1 a 32 sao para Economicas ou Executivas.\nAlem disso, as fileiras de 33 a 40 sao Primeira Classe ou Executivas\n\nAssento:");
     scanf("%s",passagens[*qtdPassagem].assentos);
     if(validaAssento(passagens[*qtdPassagem].assentos)!=1){
         printf("Assento inválido!\n");
@@ -1059,7 +1059,11 @@ void cadastrarPassagem(Passageiro passageiros[],Voo voos[],Passagem passagens[],
         printf("Assento ocupado nesse Voo!\n");
         return;
     }
-    printf("Para classe, digite:\nEconomica = 1\nExecutiva = 2\nPrimeira Classe = 3\n");
+    printf("--Classe--\n");
+    printf("1. Economica\n");
+    printf("2. Executiva\n");
+    printf("3. Primeira Classe\n");
+    printf("Opcao:");
     int op;
     scanf("%d",&op);
     if(op<1 || op>3){printf("Classe Invalida\n");
@@ -1073,7 +1077,11 @@ void cadastrarPassagem(Passageiro passageiros[],Voo voos[],Passagem passagens[],
         return;
     }
 
-    printf("Para o status, digite:\nConfirmada = 1\nCancelada = 2\nEmbarcada = 3\n");
+    printf("--Status--\n");
+    printf("1. Confirmada\n");
+    printf("2. Cancelada\n");
+    printf("3. Embarcada\n");
+    printf("Opcao:");
     int op2;
     scanf("%d",&op2);
     if(op2<1 || op2>3){printf("Status Inválido\n");return;}
@@ -1209,7 +1217,7 @@ void relatorioCompanhia(Passagem passagens[], int qtdPassagens){
     printf("3. Latam\n");
     printf("Opcao: ");
     do{
-        scanf("%d",&comp);
+        scanf("%d", &comp);
     } while(comp!=1 && comp!=2 && comp!=3);
     if(comp==1){
         strcpy(companhia,"Azul");
@@ -1220,6 +1228,9 @@ void relatorioCompanhia(Passagem passagens[], int qtdPassagens){
     }else if(comp==3){
         strcpy(companhia,"Latam");
         printf("Gerando Relatorio (Latam)...");
+    } else{
+        printf("Entrada Invalida\n");
+        return;
     }
     FILE *relatorioCompanhia;
     relatorioCompanhia = fopen("RelatorioCompanhia.txt","w");
@@ -1231,7 +1242,7 @@ void relatorioCompanhia(Passagem passagens[], int qtdPassagens){
 
     fprintf(relatorioCompanhia, "========================================\n");
     fprintf(relatorioCompanhia, "     RELATORIO DE PASSAGENS AEREAS\n");
-    fprintf(relatorioCompanhia, "                  (%s)\n",companhia);
+    fprintf(relatorioCompanhia, "               (%s)\n",companhia);
     fprintf(relatorioCompanhia, "========================================\n\n");
 
     for(int i=0;i<qtdPassagens;i++){
@@ -1239,10 +1250,13 @@ void relatorioCompanhia(Passagem passagens[], int qtdPassagens){
             qtdPassagensEcontradas++;
             fprintf(relatorioCompanhia,"----------------------------------------------------\n");
             fprintf(relatorioCompanhia,"Numero da passagem: %d\n",passagens[i].num_passagem);
-            fprintf(relatorioCompanhia,"CPF: %d\n",passagens[i].cpf);
-            fprintf(relatorioCompanhia,"Assento: %d\n",passagens[i].assentos);
-            fprintf(relatorioCompanhia,"Classe: %d\n",passagens[i].classe);
-            fprintf(relatorioCompanhia,"Classe: %d\n",passagens[i].status);
+            char cpfExibicao[15]; //Cria uma variavel temporaria para armazenar o CPF que sera mostrado, para não editar o conteudo do vetor principal
+        strcpy(cpfExibicao, passagens[i].cpf); //Copia o conteudo do CPF do vetor
+        formatarCPF(cpfExibicao); //Formata somente o cpf a ser exibido no formato XXX.XXX.XXX-XX
+            fprintf(relatorioCompanhia,"CPF: %s\n",cpfExibicao);
+            fprintf(relatorioCompanhia,"Assento: %s\n",passagens[i].assentos);
+            fprintf(relatorioCompanhia,"Classe: %s\n",passagens[i].classe);
+            fprintf(relatorioCompanhia,"Classe: %s\n",passagens[i].status);
         }
         
     }
