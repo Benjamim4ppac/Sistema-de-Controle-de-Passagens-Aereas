@@ -1197,6 +1197,62 @@ void editarPassagem(Passagem passagens[], int qtdPassagem){
         
     }
 }
+
+void relatorioCompanhia(Passagem passagens[], int qtdPassagens){
+    printf("---Gerar relatorio (Companhia Aerea)---\n");
+    int comp;
+    char companhia[50];
+    int qtdPassagensEcontradas=0;
+    printf("Selecione uma companhia:\n");
+    printf("1. Azul\n");
+    printf("2. Gol\n");
+    printf("3. Latam\n");
+    printf("Opcao: ");
+    do{
+        scanf("%d",&comp);
+    } while(comp!=1 && comp!=2 && comp!=3);
+    if(comp==1){
+        strcpy(companhia,"Azul");
+        printf("Gerando Relatorio (Azul)...");
+    }else if(comp==2){
+        strcpy(companhia,"Gol");
+        printf("Gerando Relatorio (Gol)...");
+    }else if(comp==3){
+        strcpy(companhia,"Latam");
+        printf("Gerando Relatorio (Latam)...");
+    }
+    FILE *relatorioCompanhia;
+    relatorioCompanhia = fopen("RelatorioCompanhia.txt","w");
+    if (relatorioCompanhia == NULL)
+    {
+        printf("Erro ao criar arquivo!\n");
+        return;
+    }
+
+    fprintf(relatorioCompanhia, "========================================\n");
+    fprintf(relatorioCompanhia, "     RELATORIO DE PASSAGENS AEREAS\n");
+    fprintf(relatorioCompanhia, "                  (%s)\n",companhia);
+    fprintf(relatorioCompanhia, "========================================\n\n");
+
+    for(int i=0;i<qtdPassagens;i++){
+        if(passagens[i].codigo_voo[0]==companhia[0]){
+            qtdPassagensEcontradas++;
+            fprintf(relatorioCompanhia,"----------------------------------------------------\n");
+            fprintf(relatorioCompanhia,"Numero da passagem: %d\n",passagens[i].num_passagem);
+            fprintf(relatorioCompanhia,"CPF: %d\n",passagens[i].cpf);
+            fprintf(relatorioCompanhia,"Assento: %d\n",passagens[i].assentos);
+            fprintf(relatorioCompanhia,"Classe: %d\n",passagens[i].classe);
+            fprintf(relatorioCompanhia,"Classe: %d\n",passagens[i].status);
+        }
+        
+    }
+    fprintf(relatorioCompanhia,"-----------------------------------------\n");
+    fprintf(relatorioCompanhia,"Passagens Encontradas: %d\n",qtdPassagensEcontradas);
+    fclose(relatorioCompanhia);
+
+}
+
+
 Passagem *deletarPassagem(Passagem passagens[], int *qtdPassagem, int *passagensAlocadas){
     int numero_digitado;
     printf("Digite o numero da passagem a ser deletada: ");
@@ -1442,6 +1498,7 @@ int main(){
                 break;
 
             case 5:
+                relatorioCompanhia(passagens,qtdPassagem);
                // menuRelatorios();
                 break;
 
