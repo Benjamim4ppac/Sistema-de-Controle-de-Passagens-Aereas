@@ -167,7 +167,18 @@ int validaCPF(char cpf[12]){ //Função para verificar a validade de um CPF
     }
 }
 
-int buscaCPF(char cpfConsulta[12], Passageiro consulta[], int qtdPassageiro){ //Função para verificar se o CPF já existe no banco de dados de CPFs cadastrados
+int buscaCPFPassagem(char cpfConsulta[12], Passagem consulta[], int qtdPassagens){ //Função para verificar se o CPF já existe no banco de dados de CPFs cadastrados em uma passagem
+    int cont;
+
+    for(cont=0;cont<qtdPassagens;cont++){
+        if(strcmp(cpfConsulta,consulta[cont].cpf)==0){
+            return cont; //CPF ja cadastrado em uma passagem - Retorna o indice do vetor que o CPF ja existe
+        }
+    }
+    return -1; //CPF não cadastrado
+}
+
+int buscaCPF(char cpfConsulta[12], Passageiro consulta[], int qtdPassageiro){ //Função para verificar se o CPF já existe no banco de dados de CPFs cadastrados dos passageiros
     int cont;
 
     for(cont=0;cont<qtdPassageiro;cont++){
@@ -489,7 +500,7 @@ void editarPassageiro(Passageiro editar[], int qtdPassageiro){
     }
 }
 
-Passageiro *deletarPassageiro(Passageiro deletar[], int *qtdPassageiro, int *passageirosAlocados){
+Passageiro *deletarPassageiro(Passageiro deletar[], int *qtdPassageiro, int *passageirosAlocados, Passagem passagens[], int qtdPassagens){
     
     if(*qtdPassageiro==0){
         printf("Nenhum passageiro cadastrado!\n");
@@ -502,12 +513,17 @@ Passageiro *deletarPassageiro(Passageiro deletar[], int *qtdPassageiro, int *pas
     scanf(" %s",cpfDigitado); //Recebe CPF do passageiro a ser deletado
  
     limparCPF(cpfDigitado,cpfDeletar); //cpfDeletado recebe o cpfDigitado com pontos e traços removidos
-
+    
     if(validaCPF(cpfDeletar)==0){ //verifica se é um CPF válido
         printf("CPF Inválido!\n");
         return deletar;
     }
-    
+    if(buscaCPFPassagem(cpfDeletar,passagens,qtdPassagens)!=-1){
+        printf("Operação Negada!\n");
+        printf("Passageiro vinculado a uma Passagem\n");
+        return deletar;
+    }
+
     int indiceDeletar = buscaCPF(cpfDeletar,deletar,*qtdPassageiro);
 
 
@@ -753,7 +769,7 @@ void listarVoos(Voo voos[], int qtdVoos){
     }
 }
 
-Passageiro *menuPassageiros(Passageiro passageiros[], int *qtdPassageiro, int *passageirosAlocados){
+Passageiro *menuPassageiros(Passageiro passageiros[], int *qtdPassageiro, int *passageirosAlocados, Passagem passagens[], int qtdPassagens){
     int opcao;
     do{
         printf("\n===== MENU PASSAGEIROS =====\n");
@@ -797,7 +813,7 @@ Passageiro *menuPassageiros(Passageiro passageiros[], int *qtdPassageiro, int *p
                 break;
 
             case 4:
-                passageiros = deletarPassageiro(passageiros, qtdPassageiro, passageirosAlocados);
+                passageiros = deletarPassageiro(passageiros, qtdPassageiro, passageirosAlocados,passagens,qtdPassagens);
                 salvarPassageiro(passageiros,*qtdPassageiro);
                 break;
 
@@ -1356,7 +1372,7 @@ int main(){
 
         switch(opcao){
             case 1:
-                passageiros = menuPassageiros(passageiros, &qtdPassageiro,&passageirosAlocados);
+                passageiros = menuPassageiros(passageiros, &qtdPassageiro,&passageirosAlocados,passagens,qtdPassagem);
                 printf("Passageiros cadastrados: %d\nPassageiros Alocados: %d\n",qtdPassageiro,passageirosAlocados);
                 break;
 
