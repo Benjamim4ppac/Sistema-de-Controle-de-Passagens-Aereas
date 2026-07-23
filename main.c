@@ -913,15 +913,17 @@ void carregarPassagem(Passagem passagens[],int *qtdPassagem, int *proximoNumero)
     arquivo = fopen("passagensSalvas.bin","rb");
 
     if(arquivo == NULL){
+    printf("Erro ao abrir passagensSalvos.bin\n");
     *qtdPassagem = 0;
     *proximoNumero = 1000;
     return;
+    }
     fread(qtdPassagem, sizeof(int), 1, arquivo);
     fread(proximoNumero, sizeof(int), 1, arquivo);
     fread(passagens, sizeof(Passagem), *qtdPassagem, arquivo);
-
+    printf("Quantidade de Passagens lidas: %d\n", *qtdPassagem);
+    printf("Dados das Passagens carregadas!\n");
     fclose(arquivo);
-    }
 }
 void listarPassagem(Passagem passagens[], int qtdPassagem){
     int cont;
@@ -969,7 +971,7 @@ int buscaNum (int numero_digitado,Passagem passagens[], int qtdPassagem){
 }
 
 int validaClasse(char assentos[], int op){
-    if(op==3){
+    if(op!=1){
         if(assentos[1]=='3' && assentos[2]>'2')return 1;
         else if(assentos[1]=='4' && assentos[2]=='0')return 1;
     }
@@ -1398,29 +1400,18 @@ int main(){
 
     int qtdPassagem=0;
     int proximoNumero=1000;
-    FILE *arquivoPassagens;
-    arquivoPassagens = fopen("passagensSalvas.bin", "rb");
-    if (arquivoPassagens == NULL){
-        printf("Erro ao abrir passagensSalvas.bin\n");
-        qtdPassagem = 0;
-    }else{
-        fread(&qtdPassagem, sizeof(int), 1, arquivoPassagens);
-        fclose(arquivoPassagens);
-        printf("Quantidade de Passagens lidas: %d\n", qtdPassagem);
-    }
-    int passagensAlocadas = qtdPassagem + 5;
     Passagem *passagens;
+    int passagensAlocadas = qtdPassagem + 5;
     passagens = (Passagem*) malloc(passagensAlocadas * sizeof(Passagem));
     if (passagens == NULL){
         printf("Erro ao alocar memoria (Passagens)!\n");
         return 1;
     }
-
-
+    carregarPassagem(passagens,&qtdPassagem,&proximoNumero);
     int opcao;
     carregarPassageiro(passageiros, &qtdPassageiro);
     carregarVoo(voos,&qtdVoos);
-    carregarPassagem(passagens,&qtdPassagem,&proximoNumero);
+    
 
     do{
         
@@ -1463,5 +1454,7 @@ int main(){
         }
     }while(opcao!=0);
     free(passageiros);
+    free(passagens);
+    free(voos);
     return 0;
 }
