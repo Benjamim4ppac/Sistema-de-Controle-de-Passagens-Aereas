@@ -102,6 +102,7 @@ void carregarVoo(Voo voos[], int *qtdVoos){
     *qtdVoos = 0;
     return;
     }
+    fseek(arquivo,sizeof(int),SEEK_SET); //Pula os quanto inteiros da qtdVoos já lida na main para declarar o vetor passageiros de forma dinâmica
     fread(voos, sizeof(Voo), *qtdVoos, arquivo);
     fclose(arquivo);
     printf("Dados dos Voos carregados!\n");
@@ -829,7 +830,10 @@ Voo *menuVoos(Voo voos[], int *qtdVoos, int *voosAlocados, Passagem passagens[],
         printf("0 - Voltar\n");
         printf("Opcao: ");
 
-        scanf("%d",&opcao);
+        if(scanf("%d", &opcao) != 1){ //Evita o loop infinito caso o digitado pelo usuario não seja um inteiro
+            while(getchar() != '\n'); // limpa o buffer
+            opcao = -1; // garante que não saia do menu
+        }
 
         switch(opcao){
 
@@ -1220,7 +1224,10 @@ Passagem *menuPassagens(Passageiro passageiros[],int *qtdPassageiro,Voo voos[],i
         printf("0 - Voltar\n");
         printf("Opcao: ");
 
-        scanf("%d", &opcao);
+        if(scanf("%d", &opcao) != 1){ //Evita o loop infinito caso o digitado pelo usuario não seja um inteiro
+            while(getchar() != '\n'); // limpa o buffer
+            opcao = -1; // garante que não saia do menu
+        }
 
         switch(opcao){
             case 1:
@@ -1342,7 +1349,7 @@ int main(){
         
         menuPrincipal();
 
-        if(scanf("%d", &opcao) != 1){
+        if(scanf("%d", &opcao) != 1){ //Evita o loop infinito caso o digitado pelo usuario não seja um inteiro
             while(getchar() != '\n'); // limpa o buffer
             opcao = -1; // garante que não saia do menu
         }
