@@ -973,11 +973,11 @@ int validaClasse(char assentos[], int op){
         if(assentos[1]=='3' && assentos[2]>'2')return 1;
         else if(assentos[1]=='4' && assentos[2]=='0')return 1;
     }
-    else if(op!=3){
-        if(op==1 && (assentos[0]!='A' && assentos[0]!='B')) return 0;
-        if(op==2 && (assentos[0]!='C' && assentos[0]!='D')) return 0;
+    else{
         if(assentos[1]=='3' && assentos[2]<='2')return 1;
-        else if(assentos[1]<'3')return 1;
+        else if(assentos[1]=='2' && assentos[2]<='9')return 1;
+        else if(assentos[1]=='1' && assentos[2]<='9')return 1;
+        else if(assentos[1]<='9' && assentos[2]=='\0')return 1;
     }
     return 0;
 }
@@ -994,45 +994,6 @@ void salvarPassagem(Passagem passagens[], int qtdPassagem, int proximoNumero){
     fwrite(passagens, sizeof(Passagem), qtdPassagem, arquivo);
     fclose(arquivo);
     printf("Operacao Salva!\n");
-
-void menuVoos(){
-    int opcao;
-
-    do{
-        printf("\n===== VOOS =====\n");
-        printf("1 - Cadastrar Voo\n");
-        printf("2 - Consultar Voo\n");
-        printf("3 - Alterar Voo\n");
-        printf("4 - Remover Voo\n");
-        printf("5 - Listar Voos\n");
-        printf("0 - Voltar\n");
-        printf("Opcao: ");
-
-        scanf("%d",&opcao);
-
-        switch(opcao){
-            case 1:
-                cadastrarVoo();
-                break;
-
-            case 2:
-                buscarVoo();
-                break;
-
-            case 3:
-                editarVoo();
-                break;
-
-            case 4:
-                deletarVoo();
-                break;
-
-            case 5:
-                listarVoos();
-                break;
-        }
-
-    }while(opcao != 0);
 }
 int buscaAssento(char assentos[],char codigo_voo[], Passagem passagens[], int qtdPassagem, int ignorar){
     for (int i=0; i<qtdPassagem;i++){
@@ -1086,7 +1047,7 @@ void cadastrarPassagem(Passageiro passageiros[],Voo voos[],Passagem passagens[],
         return;
     }
 
-    printf("\n!!!Lembre-se:\nAs fileiras de 1 a 32 sao Economicas e Executivas, sendo, 'A' e 'B' para Economicas e 'C' e 'D' Executivas.\nAlem disso, as fileiras de 33 a 40 sao Primeira Classe\n\nAssentos:\n");
+    printf("!!!Lembre-se:\nAs fileiras de 1 a 32 sao para Economicas ou Executivas.\nAlem disso, as fileiras de 33 a 40 sao Primeira Classe ou Executivas\n\nAssentos:\n");
     scanf("%s",passagens[*qtdPassagem].assentos);
     if(validaAssento(passagens[*qtdPassagem].assentos)!=1){
         printf("Assento inválido!\n");
@@ -1187,7 +1148,7 @@ void editarPassagem(Passagem passagens[], int qtdPassagem){
             printf("---Editar Assento ou/e Classe---\n");
             printf("Assento Atual: %s\n",passagens[indiceEditar].assentos);
             printf("Classe Atual: %s\n",passagens[indiceEditar].classe);
-            printf("\n!!!Lembre-se:\nAs fileiras de 1 à 32 são Economicas e Executivas, sendo, 'A' e 'B' para Economicas e 'C' e 'D' Executivas.\nAlem disso, as fileiras de 33 à 40 são Primeira Classe\n\nAssentos:\n");
+            printf("!!!Lembre-se:\nAs fileiras de 1 a 32 sao para Economicas ou Executivas.\nAlem disso, as fileiras de 33 a 40 sao Primeira Classe ou Executivas\n\nAssentos:\n");
             printf("Digite o assento atual ou o assento novo: ");
             char copiaAssento[5];
             scanf("%4s",copiaAssento);
@@ -1337,7 +1298,7 @@ Passagem *menuPassagens(Passageiro passageiros[],int *qtdPassageiro,Voo voos[],i
     }while(opcao != 0);
     return passagens;
 }
-void menuConsultas(){
+/*void menuConsultas(){
      int opcao;
 
     do{
@@ -1367,7 +1328,6 @@ void menuConsultas(){
     }while(opcao != 0);
 
 }
-
 void menuRelatorios(){
     int opcao;
 
@@ -1397,7 +1357,7 @@ void menuRelatorios(){
 
     }while(opcao != 0);
 }
-
+*/
 int main(){
     int qtdPassageiro=0;
     FILE *arquivoPassageiros;
@@ -1487,11 +1447,11 @@ int main(){
                 printf("Passagens cadastradas: %d\nPassagens Alocadas: %d\n",qtdPassagem,passagensAlocadas);
                 break;
             case 4:
-                menuConsultas();
+               // menuConsultas();
                 break;
 
             case 5:
-                menuRelatorios();
+               // menuRelatorios();
                 break;
 
             case 0:
