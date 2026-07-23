@@ -120,8 +120,8 @@ O código do voo também é um campo de valor único, portanto não é permitido
 A classe da passagem é definida automaticamente de acordo com o assento informado:
 
 * **Fileiras 1 a 32:**
-  * Assentos **A** e **B** → **Classe Econômica**
-  * Assentos **C** e **D** → **Classe Executiva**
+  * Pertencem à **Economica** ou **Executiva**.
+
 
 * **Fileiras 33 a 40:**
-  * Todos os assentos (**A**, **B**, **C** e **D**) pertencem à **Primeira Classe**.
+  * Pertencem à **Executiva** ou **Primeira Classe**.
