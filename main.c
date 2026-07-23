@@ -41,7 +41,7 @@ void menuPrincipal(){
     printf("2 - Gerenciar Voos\n");
     printf("3 - Gerenciar Passagens\n");
     printf("4 - Consultas\n");
-    printf("5 - Relatórios\n");
+    printf("5 - Relatorios\n");
     printf("0 - Sair\n\n");
 
     printf("Escolha uma opcao: ");
@@ -112,7 +112,7 @@ int validaCPF(char cpf[12]){ //Função para verificar a validade de um CPF
     int peso=10,cont,soma=0,resto;
     int digitoVerificador[2];
     if (strlen(cpf)!=11){ //Se o CPF não tem 11 digitos = CPF INVÁLIDO!
-        printf("Formato Não Correspondente\n");
+        printf("Formato Nao Correspondente\n");
         return 0;
     }
     /*for(cont = 0; cont<11; cont++){ //Se o CPF contém digitos não numericos = CPF INVÁLIDO!
@@ -999,7 +999,7 @@ void cadastrarPassagem(Passageiro passageiros[],Voo voos[],Passagem passagens[],
     scanf("%s",cpfDigitado);
     limparCPF(cpfDigitado, passagens[*qtdPassagem].cpf);
     if(validaCPF(passagens[*qtdPassagem].cpf) == 0){
-        printf("CPF Inválido!\n");
+        printf("CPF Invalido!\n");
         return;
     } 
     if(buscaCPF(passagens[*qtdPassagem].cpf,passageiros,*qtdPassageiro)== -1){  //Verifica se esse CPF ja foi cadastrado
@@ -1018,7 +1018,7 @@ void cadastrarPassagem(Passageiro passageiros[],Voo voos[],Passagem passagens[],
         return;
     }
 
-    printf("\n!!!Lembre-se:\nAs fileiras de 1 à 32 são Economicas e Executivas, sendo, 'A' e 'B' para Economicas e 'C' e 'D' Executivas.\nAlem disso, as fileiras de 33 à 40 são Primeira Classe\n\nAssentos:\n");
+    printf("\n!!!Lembre-se:\nAs fileiras de 1 a 32 sao Economicas e Executivas, sendo, 'A' e 'B' para Economicas e 'C' e 'D' Executivas.\nAlem disso, as fileiras de 33 a 40 sao Primeira Classe\n\nAssentos:\n");
     scanf("%s",passagens[*qtdPassagem].assentos);
     if(validaAssento(passagens[*qtdPassagem].assentos)!=1){
         printf("Assento inválido!\n");
@@ -1235,7 +1235,7 @@ Passagem *menuPassagens(Passageiro passageiros[],int *qtdPassageiro,Voo voos[],i
                     }
 
                 }
-                cadastrarPassagem(passageiros,voos,passagens,qtdPassagem,qtdVoos,qtdPassageiro,proximoNumero);
+                cadastrarPassagem(passageiros,voos,passagens,qtdPassagem,qtdPassageiro,qtdVoos,proximoNumero);
                 salvarPassagem(passagens,*qtdPassagem,*proximoNumero);
                 break;
 
