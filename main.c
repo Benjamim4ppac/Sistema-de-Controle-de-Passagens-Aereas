@@ -330,7 +330,7 @@ void formatarCPF(char cpfFormatado[15]){// formata o CPF recebido no formato: (X
 int menuEditarPassageiro(){//SubMenu acessado dentro da função editarPassageiro para saber qual dado do passageiro sera editado
     int menu;
     printf("---O que deseja Editar?---\n");
-    printf("1. Nome\n2. Telefone\n3. E-mail\n4. Data de Nascimento\nOpção Selecionada: ");
+    printf("1. Nome\n2. Telefone\n3. E-mail\n4. Data de Nascimento\nOpcao Selecionada: ");
     scanf("%d",&menu);
     switch (menu)
     {
@@ -523,7 +523,7 @@ Passageiro *deletarPassageiro(Passageiro deletar[], int *qtdPassageiro, int *pas
         return deletar;
     }
     if(buscaCPFPassagem(cpfDeletar,passagens,qtdPassagens)!=-1){
-        printf("Operaçao Negada!\n");
+        printf("Operacao Negada!\n");
         printf("Passageiro vinculado a uma Passagem\n");
         return deletar;
     }
@@ -949,7 +949,7 @@ void listarPassagem(Passagem passagens[], int qtdPassagem){
 int menuEditarPassagem(){
     int menu;
     printf("---O que deseja Editar?---\n");
-    printf("1. Assento e/ou Classe\n2. Status\nOpção Selecionada: ");
+    printf("1. Assento e/ou Classe\n2. Status\nOpcao Selecionada: ");
     scanf("%d",&menu);
     switch (menu)
     {

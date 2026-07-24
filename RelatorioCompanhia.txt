@@ -3,5 +3,14 @@
                (Azul)
 ========================================
 
+----------------------------------------------------
+Numero da passagem: 1000
+Nome: Kaio Jorge
+CPF: 925.887.280-06
+Codigo de Voo: A5027
+Uberlandia -> Brasilia
+Assento: A10
+Classe: Economica
+Status: Confirmada
 -----------------------------------------
-Passagens Encontradas: 0
+Passagens Encontradas: 1
