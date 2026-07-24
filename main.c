@@ -1411,9 +1411,10 @@ void consultarPorVoo(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int q
     char codigoConsultado[6];
     scanf("%s",codigoConsultado);
     int confere=0;
+    int qtdEmbarcada=0,qtdConfirmada=0,qtdCancelada=0;
     for(int i=0;i<qtdPassagem;i++){
         if(strcmp(passagens[i].codigo_voo,codigoConsultado)==0){
-            confere=1;
+            confere++;
             printf("\nNumero da passagem: %d\n",passagens[i].num_passagem);
             printf("CPF: %s\n",passagens[i].cpf);
             int indiceP = (buscaCPF(passagens[i].cpf,passageiros,qtdPassageiro));
@@ -1425,9 +1426,23 @@ void consultarPorVoo(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int q
             printf("Destino: %s\n",voos[indiceV].destino);
             printf("Data e hora do voo: %s\n",voos[indiceV].dataHora);
             printf("Status: %s\n\n",passagens[i].status);
+            if(strcmp(passagens[i].status,"Embarcada")==0) qtdEmbarcada++;
+            if(strcmp(passagens[i].status,"Confirmada")==0) qtdConfirmada++;
+            if(strcmp(passagens[i].status,"Cancelada")==0) qtdCancelada++;
         }
     }
     if(confere==0) printf("Codigo nao vinculado em nenhuma passagem\n");
+    else{
+        printf("Quantidade de passageiros embarcados: %d\n",qtdEmbarcada);
+        printf("Quantidade de passagens confirmadas: %d\n",qtdConfirmada);
+        printf("Quantidade de passagens canceladas: %d\n",qtdCancelada);
+        printf("Assentos ocupados: %d\n",confere);
+        printf("Capacidade restante:: %d\n",160-confere);
+
+    }
+}
+void consultarPorCPF(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int qtdVoos,Passagem passagens[],int qtdPassagem){
+
 }
 
 void menuConsultas(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int qtdVoos,Passagem passagens[],int qtdPassagem){
