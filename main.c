@@ -1562,7 +1562,7 @@ void consultarPorStatus(Passageiro passageiros[],int qtdPassageiro,Voo voos[],in
     printf("1. Confirmada\n");
     printf("2. Cancelada\n");
     printf("3. Embarcada\n");
-    printf("Informe o Status que voce deseja consultar:");
+    printf("Opcao:");
     int op2,confere=0;
     scanf("%d",&op2); 
     char status[20];
@@ -1574,28 +1574,34 @@ void consultarPorStatus(Passageiro passageiros[],int qtdPassageiro,Voo voos[],in
     for (int i=0;i<qtdPassagem;i++){
     if(strcmp(passagens[i].status,status)==0){
         confere++;
-        printf("== INFO STATUS(%d) - PASSAGEM ==\n",confere);
-        printf("Numero da passagem: %d\n",passagens[i].num_passagem);
-        printf("CPF: %s\n",passagens[i].cpf);
-        printf("Codigo do Voo: %s\n",passagens[i].codigo_voo);
-        printf("Assento: %s\n",passagens[i].assentos);
-        printf("Classe: %s\n",passagens[i].classe);
-        printf("Status: %s\n",passagens[i].status);
+        printf("================================================\n");
+        printf("        REGISTRO #%d | STATUS: %s\n", confere, passagens[i].status);
+        printf("================================================\n");
+
+        printf("\nPASSAGEM:\n");
+        printf("  Numero: %d\n", passagens[i].num_passagem);
+        printf("  CPF: %s\n", passagens[i].cpf);
+        printf("  Voo: %s\n", passagens[i].codigo_voo);
+        printf("  Assento: %s\n", passagens[i].assentos);
+        printf("  Classe: %s\n", passagens[i].classe);
+
         int indiceP = (buscaCPF(passagens[i].cpf,passageiros,qtdPassageiro));
-        printf("== INFO STATUS(%d) - PASSAGEIRO ==\n",confere);
-        printf("Nome: %s\n",passageiros[indiceP].nome);
-        printf("CPF: %s\n",passageiros[indiceP].cpf);
-        printf("Telefone: %s\n",passageiros[indiceP].telefone);
-        printf("E-Mail: %s\n",passageiros[indiceP].email);
-        printf("Data de nascimento: %s\n",passageiros[indiceP].dataNascimento);
+        printf("\nPASSAGEIRO:\n");
+        printf("  Nome: %s\n",passageiros[indiceP].nome);
+        printf("  CPF: %s\n",passageiros[indiceP].cpf);
+        printf("  Telefone: %s\n",passageiros[indiceP].telefone);
+        printf("  E-Mail: %s\n",passageiros[indiceP].email);
+        char dataFormatada[50];
+        strcpy(dataFormatada,passageiros[indiceP].dataNascimento);
+        printf("  Data de nascimento: %s\n",dataFormatada);
+
         int indiceV = buscaVoo(passagens[i].codigo_voo,voos,qtdVoos);
-        printf("== INFO STATUS(%d) - VOO ==\n",confere);
-        printf("Codigo do Voo: %s\n",voos[indiceV].codigo_voo);
-        printf("Origem: %s\n",voos[indiceV].origem);
-        printf("Destino: %s\n",voos[indiceV].destino);
-        printf("Data e Hora do voo: %s\n",voos[indiceV].dataHora);
-        printf("Duracao do voo: %s\n",voos[indiceV].duracao);
-        printf("Companhia: %s\n\n",voos[indiceV].companhia);
+        printf("\nVOO:\n");
+        printf("  Codigo do Voo: %s\n",voos[indiceV].codigo_voo);
+        printf("  Rota: %s -> %s\n",voos[indiceV].origem,voos[indiceV].destino);
+        printf("  Data e Hora do voo: %s\n",voos[indiceV].dataHora);
+        printf("  Duracao do voo: %s\n",voos[indiceV].duracao);
+        printf("  Companhia: %s\n\n",voos[indiceV].companhia);
     }
     }
     if(confere==0) printf("Sem passagens com esse status!\n");
@@ -1627,7 +1633,7 @@ void menuConsultas(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int qtd
                 consultarPorCPF(passageiros, qtdPassageiro, voos, qtdVoos, passagens, qtdPassagem);
                 break;
 
-            case 3: 
+            case 3:
                 consultarPorStatus(passageiros, qtdPassageiro, voos, qtdVoos, passagens, qtdPassagem);
                 break;
         }
