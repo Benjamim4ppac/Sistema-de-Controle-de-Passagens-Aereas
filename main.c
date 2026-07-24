@@ -1499,11 +1499,11 @@ void consultarPorVoo(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int q
     scanf("%s",codigoConsultado);
     int confere=0;
     int qtdEmbarcada=0,qtdConfirmada=0,qtdCancelada=0;
-    printf("PASSAGENS VINCULADAS NESSE VOO\n");
+    printf("\n==== PASSAGENS VINCULADAS NESSE VOO: ====\n\n");
     for(int i=0;i<qtdPassagem;i++){
         if(strcmp(passagens[i].codigo_voo,codigoConsultado)==0){
             confere++;
-            printf("\nNumero da passagem: %d\n",passagens[i].num_passagem);
+            printf("Numero da passagem: %d\n",passagens[i].num_passagem);
             printf("CPF: %s\n",passagens[i].cpf);
             int indiceP = (buscaCPF(passagens[i].cpf,passageiros,qtdPassageiro));
             printf("Nome: %s\n",passageiros[indiceP].nome);
@@ -1535,13 +1535,13 @@ void consultarPorCPF(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int q
     scanf("%s",cpfConsultadoSujo);
     char cpfConsultado[12];
     limparCPF(cpfConsultadoSujo,cpfConsultado);
-    printf("PASSAGENS VINCULADAS NESSE CPF:\n");
+    printf("\n==== PASSAGENS VINCULADAS NESSE CPF: ====\n\n");
     int confere=0;
 
     for(int i=0;i<qtdPassagem;i++){
         if(strcmp(passagens[i].cpf,cpfConsultado)==0){
             confere=1;
-            printf("\nNumero da passagem: %d\n",passagens[i].num_passagem);
+            printf("Numero da passagem: %d\n",passagens[i].num_passagem);
             printf("\nCodigo do Voo: %s\n",passagens[i].codigo_voo);
             int indiceV = buscaVoo(passagens[i].codigo_voo,voos,qtdVoos);
             printf("Origem: %s\n",voos[indiceV].origem);
