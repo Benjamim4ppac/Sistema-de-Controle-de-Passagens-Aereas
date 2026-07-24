@@ -1021,6 +1021,16 @@ int validaAssento(char assentos[]){
     return 1;}
     else return 0;
 }
+int buscaCPFeVoo(char vooDigitado[],char cpfDigitado[], Passagem passagens[], int qtdPassagem){
+    int loop;
+    for (int i=0;i<qtdPassagem;i++){
+        loop=0;
+        if(strcmp(passagens[i].codigo_voo,vooDigitado)==0) loop++;
+        if(strcmp(passagens[i].cpf,cpfDigitado)==0) loop++;
+        if(loop==2) return 1;
+    }
+    return 0;
+}
 void cadastrarPassagem(Passageiro passageiros[],Voo voos[],Passagem passagens[],int *qtdPassagem,int *qtdPassageiro,int *qtdVoos,int *proximoNumero){
     printf("------- Cadastro de Nova Passagem -------\n");
     passagens[*qtdPassagem].num_passagem = *proximoNumero;
@@ -1046,6 +1056,10 @@ void cadastrarPassagem(Passageiro passageiros[],Voo voos[],Passagem passagens[],
     }
     if(buscaVoo(passagens[*qtdPassagem].codigo_voo, voos, *qtdVoos) == -1){
         printf("Codigo nao encontrado em Voos!\n");
+        return;
+    }
+    if(buscaCPFeVoo(passagens[*qtdPassagem].codigo_voo,passagens[*qtdPassagem].cpf,passagens,*qtdPassagem)==1){
+        printf("Esse CPF ja foi cadastrado nesse Voo!\n");
         return;
     }
 
