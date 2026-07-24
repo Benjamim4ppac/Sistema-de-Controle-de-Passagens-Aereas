@@ -1494,7 +1494,7 @@ Passagem *menuPassagens(Passageiro passageiros[],int *qtdPassageiro,Voo voos[],i
 }
 
 void consultarPorVoo(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int qtdVoos,Passagem passagens[],int qtdPassagem){
-    printf("Informe o codigo do voo: \n");
+    printf("Informe o codigo do voo: ");
     char codigoConsultado[6];
     scanf("%s",codigoConsultado);
     int confere=0;
@@ -1503,6 +1503,7 @@ void consultarPorVoo(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int q
     for(int i=0;i<qtdPassagem;i++){
         if(strcmp(passagens[i].codigo_voo,codigoConsultado)==0){
             confere++;
+            printf("-------------------------------------\n");
             printf("Numero da passagem: %d\n",passagens[i].num_passagem);
             printf("CPF: %s\n",passagens[i].cpf);
             int indiceP = (buscaCPF(passagens[i].cpf,passageiros,qtdPassageiro));
@@ -1519,18 +1520,18 @@ void consultarPorVoo(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int q
             if(strcmp(passagens[i].status,"Cancelada")==0) qtdCancelada++;
         }
     }
-    if(confere==0) printf("Codigo nao vinculado em nenhuma passagem\n");
+    if(confere==0) printf("Voo Vazio! Nao ha passagens vinculadas\n");
     else{
         printf("Quantidade de passageiros embarcados: %d\n",qtdEmbarcada);
         printf("Quantidade de passagens confirmadas: %d\n",qtdConfirmada);
         printf("Quantidade de passagens canceladas: %d\n",qtdCancelada);
         printf("Assentos ocupados: %d\n",confere);
-        printf("Capacidade restante:: %d\n",160-confere);
+        printf("Capacidade restante: %d\n",160-confere);
 
     }
 }
 void consultarPorCPF(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int qtdVoos,Passagem passagens[],int qtdPassagem){
-    printf("Informe o CPF: \n");
+    printf("Informe o CPF: ");
     char cpfConsultadoSujo[12];
     scanf("%s",cpfConsultadoSujo);
     char cpfConsultado[12];
@@ -1541,8 +1542,9 @@ void consultarPorCPF(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int q
     for(int i=0;i<qtdPassagem;i++){
         if(strcmp(passagens[i].cpf,cpfConsultado)==0){
             confere=1;
+            printf("-------------------------------------\n");
             printf("Numero da passagem: %d\n",passagens[i].num_passagem);
-            printf("\nCodigo do Voo: %s\n",passagens[i].codigo_voo);
+            printf("Codigo do Voo: %s\n",passagens[i].codigo_voo);
             int indiceV = buscaVoo(passagens[i].codigo_voo,voos,qtdVoos);
             printf("Origem: %s\n",voos[indiceV].origem);
             printf("Destino: %s\n",voos[indiceV].destino);
@@ -1551,7 +1553,7 @@ void consultarPorCPF(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int q
             printf("Status: %s\n\n",passagens[i].status);
         }
     }
-    if(confere==0) printf("CPF nao vinculado em nenhuma passagem\n");
+    if(confere==0) printf("Passageiro sem passagem! Nenhuma passagem encontrada neste CPF\n");
 }
 
 void menuConsultas(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int qtdVoos,Passagem passagens[],int qtdPassagem){
@@ -1559,13 +1561,16 @@ void menuConsultas(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int qtd
 
     do{
         printf("\n===== CONSULTAS =====\n");
-        printf("1 - Consultar por Codigo do Voo\n");
-        printf("2 - Consultar por CPF do Passageiro\n");
-        printf("3 - Consultar por Status\n");
-        printf("0 - Voltar\n");
+        printf("1. Consultar por Codigo do Voo\n");
+        printf("2. Consultar por CPF do Passageiro\n");
+        printf("3. Consultar por Status\n");
+        printf("0. Voltar\n");
         printf("Opcao: ");
 
-        scanf("%d",&opcao);
+        if(scanf("%d", &opcao) != 1){ //Evita o loop infinito caso o digitado pelo usuario não seja um inteiro
+            while(getchar() != '\n'); // limpa o buffer
+            opcao = -1; // garante que não saia do menu
+        }
 
         switch(opcao){
             case 1:
