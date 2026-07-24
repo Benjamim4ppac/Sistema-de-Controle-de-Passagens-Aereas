@@ -376,7 +376,7 @@ void cadastrarPassageiro(Passageiro cadastro[], int *qtdPassageiro){ //Função 
     limparCPF(cpfDigitado, cadastro[*qtdPassageiro].cpf); //Caso o usuario digite o CPF com (. ou -) ele sera convertido em apenas caracteres numéricos
 
     if(validaCPF(cadastro[*qtdPassageiro].cpf) == 0){ //verifica se é um CPF válido
-        printf("CPF Inválido!\n"); //CPF invaliudo, fecha a função
+        printf("CPF Invalido!\n"); //CPF invaliudo, fecha a função
         return;
     } 
    
@@ -388,7 +388,7 @@ void cadastrarPassageiro(Passageiro cadastro[], int *qtdPassageiro){ //Função 
     printf("Nome: ");
     scanf(" %[^\n]",cadastro[*qtdPassageiro].nome);
 
-    printf("Telefone: ");
+    printf("Telefone: (sem espacos)");
     scanf("%s",cadastro[*qtdPassageiro].telefone);
 
     printf("E-mail: ");
