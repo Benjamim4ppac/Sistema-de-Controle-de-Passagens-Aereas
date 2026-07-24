@@ -1286,11 +1286,10 @@ void relatorioCompanhia(Passagem passagens[], int qtdPassagens,Passageiro passag
             fprintf(relatorioCompanhia,"CPF: %s\n",cpfExibicao);
             fprintf(relatorioCompanhia,"Codigo de Voo: %s\n",passagens[i].codigo_voo);
             int indiceVoo = buscaVoo(passagens[i].codigo_voo,voos,qtdVoos);
-            fprintf(relatorioCompanhia,"Origem: %s\n",voos[indiceVoo].origem);
-            fprintf(relatorioCompanhia,"Destino: %s\n",voos[indiceVoo].destino);
+            fprintf(relatorioCompanhia,"%s -> %s\n",voos[indiceVoo].origem,voos[indiceVoo].destino);
             fprintf(relatorioCompanhia,"Assento: %s\n",passagens[i].assentos);
             fprintf(relatorioCompanhia,"Classe: %s\n",passagens[i].classe);
-            fprintf(relatorioCompanhia,"Classe: %s\n",passagens[i].status);
+            fprintf(relatorioCompanhia,"Status: %s\n",passagens[i].status);
         }
         
     }
@@ -1387,6 +1386,86 @@ void relatorioDestino(Passagem passagens[], int qtdPassagens, Passageiro passage
     fprintf(relatorioDestino,"Passagens para %s: %d\n",destinoEscolhido,totalPassagensDestino);
     free(destinos);
     fclose(relatorioDestino);
+}
+
+void relatorioCPF(Passagem passagens[], int qtdPassagens,Passageiro passageiros[], int qtdPassageiros,Voo voos[], int qtdVoos){
+    int qtdPassagensCPF=0;
+    printf("---Gerar relatorio (CPF)---\n");
+    char cpfDigitado[20];
+    printf("CPF: ");
+    scanf("%s",cpfDigitado);
+    char cpfLimpo[20];
+    FILE *relatorioCPF;
+    relatorioCPF = fopen("RelatorioCPF.txt","w");
+    if (relatorioCPF == NULL)
+    {
+        printf("Erro ao gerar arquivo!(Relatorio/CPF)\n");
+        return;
+    }
+    limparCPF(cpfDigitado, cpfLimpo);
+    if(validaCPF(cpfLimpo) == 0){
+        printf("CPF Invalido!\n");
+        return;
+    } 
+    /*if(buscaCPFPassagem(cpfLimpo,passagens,qtdPassagens)== -1){  //Verifica se esse CPF ja foi cadastrado
+        qtdPassagensCPF = 0;
+        return;
+    }*/
+    
+    char cpfExibicao[15]; //Cria uma variavel temporaria para armazenar o CPF que sera mostrado, para não editar o conteudo do vetor principal
+    strcpy(cpfExibicao, cpfLimpo); //Copia o conteudo do CPF do vetor
+    formatarCPF(cpfExibicao); //Formata somente o cpf a ser exibido no formato XXX.XXX.XXX-XX
+
+    fprintf(relatorioCPF, "========================================\n");
+    fprintf(relatorioCPF, "     RELATORIO DE PASSAGENS AEREAS\n");
+    fprintf(relatorioCPF, "         (%s)\n",cpfExibicao);
+    fprintf(relatorioCPF, "========================================\n\n");
+
+    int indicePassageiro = buscaCPF(cpfLimpo,passageiros,qtdPassageiros);
+    if(indicePassageiro==-1){
+        fprintf(relatorioCPF,"Passageiro nao cadastrado!\n");
+        printf("Passageiro nao cadastrado!\n");
+        fclose(relatorioCPF);
+        return;
+    }
+    fprintf(relatorioCPF,"Nome: %s\n",passageiros[indicePassageiro].nome);
+    fprintf(relatorioCPF,"Telefone: %s\n",passageiros[indicePassageiro].telefone);
+    fprintf(relatorioCPF,"E-mail: %s\n",passageiros[indicePassageiro].email);
+    fprintf(relatorioCPF,"Data de Nascimento: %s\n\n",passageiros[indicePassageiro].dataNascimento);
+    fprintf(relatorioCPF,"----------------------------------------------------\n");
+    fprintf(relatorioCPF,"PASSAGENS ENCONTRADAS\n");
+    int qtdCancelada=0,qtdEmbarcada=0,qtdConfirmada=0;
+    for(int i=0;i<qtdPassagens;i++){
+        if(strcmp(passagens[i].cpf,cpfLimpo)==0){
+            qtdPassagensCPF++;
+            fprintf(relatorioCPF,"----------------------------------------------------\n");
+            fprintf(relatorioCPF,"  Numero da passagem: %d\n",passagens[i].num_passagem);
+            int indicePassageiro = buscaCPF(passagens[i].cpf, passageiros, qtdPassageiros);
+            fprintf(relatorioCPF,"  Codigo de Voo: %s\n",passagens[i].codigo_voo);
+            int indiceVoo = buscaVoo(passagens[i].codigo_voo,voos,qtdVoos);
+            fprintf(relatorioCPF,"  Companhia: %s\n",voos[i].companhia);
+            fprintf(relatorioCPF,"  %s -> %s\n",voos[indiceVoo].origem,voos[indiceVoo].destino);
+            fprintf(relatorioCPF,"  Assento: %s\n",passagens[i].assentos);
+            fprintf(relatorioCPF,"  Classe: %s\n",passagens[i].classe);
+            fprintf(relatorioCPF,"  Status: %s\n",passagens[i].status);
+            if(strcmp(passagens[i].status,"Embarcada")==0){
+                qtdEmbarcada++;
+            }else if(strcmp(passagens[i].status,"Confirmada")==0){
+                qtdConfirmada++;
+            }else if(strcmp(passagens[i].status,"Cancelada")==0){
+                qtdCancelada++;
+            }
+        }
+        
+    }
+    fprintf(relatorioCPF,"-----------------------------------------\n");
+    fprintf(relatorioCPF,"Passagens Encontradas: %d\n",qtdPassagensCPF);
+    fprintf(relatorioCPF,"  Confirmada: %d\n",qtdConfirmada);
+    fprintf(relatorioCPF,"  Embarcada: %d\n",qtdEmbarcada);
+    fprintf(relatorioCPF,"  Canceladas: %d\n",qtdCancelada);
+    printf("Relatorio Gerado!\n");
+    fclose(relatorioCPF);
+
 }
 
 Passagem *deletarPassagem(Passagem passagens[], int *qtdPassagem, int *passagensAlocadas){
@@ -1668,7 +1747,7 @@ void menuRelatorios(Passagem passagens[], int qtdPassagem, Passageiro passageiro
                 break;
 
             case 3:
-                //relatorioHistoricoCPF();
+                relatorioCPF(passagens,qtdPassagem,passageiros,qtdPassageiro,voos,qtdVoos);
                 break;
             default:
                 printf("Opcao invalida!\n");
