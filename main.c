@@ -1334,9 +1334,9 @@ void relatorioDestino(Passagem passagens[], int qtdPassagens, Passageiro passage
         }
     }
 
-if(qtdDestinos % 3 != 0){
+    if(qtdDestinos % 3 != 0){
     printf("\n");
-}
+    }
     int opcao;
     int retorno;
     do{
@@ -1499,6 +1499,7 @@ void consultarPorVoo(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int q
     scanf("%s",codigoConsultado);
     int confere=0;
     int qtdEmbarcada=0,qtdConfirmada=0,qtdCancelada=0;
+    printf("PASSAGENS VINCULADAS NESSE VOO\n");
     for(int i=0;i<qtdPassagem;i++){
         if(strcmp(passagens[i].codigo_voo,codigoConsultado)==0){
             confere++;
@@ -1529,7 +1530,28 @@ void consultarPorVoo(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int q
     }
 }
 void consultarPorCPF(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int qtdVoos,Passagem passagens[],int qtdPassagem){
+    printf("Informe o CPF: \n");
+    char cpfConsultadoSujo[12];
+    scanf("%s",cpfConsultadoSujo);
+    char cpfConsultado[12];
+    limparCPF(cpfConsultadoSujo,cpfConsultado);
+    printf("PASSAGENS VINCULADAS NESSE CPF:\n");
+    int confere=0;
 
+    for(int i=0;i<qtdPassagem;i++){
+        if(strcmp(passagens[i].cpf,cpfConsultado)==0){
+            confere=1;
+            printf("\nNumero da passagem: %d\n",passagens[i].num_passagem);
+            printf("\nCodigo do Voo: %s\n",passagens[i].codigo_voo);
+            int indiceV = buscaVoo(passagens[i].codigo_voo,voos,qtdVoos);
+            printf("Origem: %s\n",voos[indiceV].origem);
+            printf("Destino: %s\n",voos[indiceV].destino);
+            printf("Assento: %s\n",passagens[i].assentos);
+            printf("Classe: %s\n",passagens[i].classe);
+            printf("Status: %s\n\n",passagens[i].status);
+        }
+    }
+    if(confere==0) printf("CPF nao vinculado em nenhuma passagem\n");
 }
 
 void menuConsultas(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int qtdVoos,Passagem passagens[],int qtdPassagem){
@@ -1551,7 +1573,7 @@ void menuConsultas(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int qtd
                 break;
 
             case 2:
-                //consultarPorCPF(passageiros, qtdPassageiro, voos, qtdVoos, passagens, qtdPassagem);
+                consultarPorCPF(passageiros, qtdPassageiro, voos, qtdVoos, passagens, qtdPassagem);
                 break;
 
             case 3: 
