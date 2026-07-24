@@ -5,45 +5,223 @@
 
 ----------------------------------------------------
 Numero da passagem: 1000
+Nome: Melissa Souza
 CPF: 663.283.720-43
+Codigo de Voo: L0011
+Origem: Curitiba
+Destino: Salvador
 Assento: A33
 Classe: Executiva
 Classe: Embarcada
 ----------------------------------------------------
 Numero da passagem: 1002
+Nome: Arthur Ribeiro
 CPF: 392.669.013-50
+Codigo de Voo: L2462
+Origem: Manaus
+Destino: Bel‚m
 Assento: A40
 Classe: Executiva
 Classe: Confirmada
 ----------------------------------------------------
 Numero da passagem: 1007
+Nome: Ana Costa
 CPF: 168.995.350-09
+Codigo de Voo: L9997
+Origem: SÆo Paulo
+Destino: Manaus
 Assento: A35
 Classe: Primeira Classe
 Classe: Confirmada
 ----------------------------------------------------
 Numero da passagem: 1008
+Nome: Bruno Henrique
 CPF: 104.332.181-00
+Codigo de Voo: L2462
+Origem: Manaus
+Destino: Bel‚m
 Assento: D38
 Classe: Primeira Classe
 Classe: Cancelada
 ----------------------------------------------------
 Numero da passagem: 1010
+Nome: Lucas Pereira
 CPF: 083.863.794-99
+Codigo de Voo: L0011
+Origem: Curitiba
+Destino: Salvador
 Assento: B33
 Classe: Primeira Classe
 Classe: Confirmada
 ----------------------------------------------------
 Numero da passagem: 1013
+Nome: Juliana Souza
 CPF: 475.255.341-44
+Codigo de Voo: L9997
+Origem: SÆo Paulo
+Destino: Manaus
 Assento: C34
 Classe: Primeira Classe
 Classe: Cancelada
 ----------------------------------------------------
 Numero da passagem: 1014
+Nome: Renato Carvalho
 CPF: 473.420.003-37
+Codigo de Voo: L2462
+Origem: Manaus
+Destino: Bel‚m
 Assento: B36
 Classe: Primeira Classe
 Classe: Confirmada
+----------------------------------------------------
+Numero da passagem: 1018
+Nome: Camila Ribeiro
+CPF: 131.243.859-26
+Codigo de Voo: L9997
+Origem: SÆo Paulo
+Destino: Manaus
+Assento: A37
+Classe: Primeira Classe
+Classe: Confirmada
+----------------------------------------------------
+Numero da passagem: 1021
+Nome: Vin¡cius Pereira
+CPF: 148.178.511-71
+Codigo de Voo: L0011
+Origem: Curitiba
+Destino: Salvador
+Assento: B34
+Classe: Primeira Classe
+Classe: Embarcada
+----------------------------------------------------
+Numero da passagem: 1024
+Nome: Sofia Nunes
+CPF: 943.298.144-47
+Codigo de Voo: L9997
+Origem: SÆo Paulo
+Destino: Manaus
+Assento: C35
+Classe: Primeira Classe
+Classe: Cancelada
+----------------------------------------------------
+Numero da passagem: 1025
+Nome: Daniel Ribeiro
+CPF: 380.408.310-24
+Codigo de Voo: L2462
+Origem: Manaus
+Destino: Bel‚m
+Assento: B38
+Classe: Primeira Classe
+Classe: Embarcada
+----------------------------------------------------
+Numero da passagem: 1030
+Nome: Let¡cia Gomes
+CPF: 175.371.713-27
+Codigo de Voo: L9997
+Origem: SÆo Paulo
+Destino: Manaus
+Assento: A33
+Classe: Primeira Classe
+Classe: Confirmada
+----------------------------------------------------
+Numero da passagem: 1031
+Nome: Rafael Mendes
+CPF: 149.768.603-29
+Codigo de Voo: L2462
+Origem: Manaus
+Destino: Bel‚m
+Assento: D40
+Classe: Primeira Classe
+Classe: Embarcada
+----------------------------------------------------
+Numero da passagem: 1038
+Nome: Gustavo Rocha
+CPF: 211.303.277-52
+Codigo de Voo: L2462
+Origem: Manaus
+Destino: Bel‚m
+Assento: D35
+Classe: Primeira Classe
+Classe: Embarcada
+----------------------------------------------------
+Numero da passagem: 1040
+Nome: Felipe Oliveira
+CPF: 255.648.373-39
+Codigo de Voo: L0011
+Origem: Curitiba
+Destino: Salvador
+Assento: B7
+Classe: Economica
+Classe: Embarcada
+----------------------------------------------------
+Numero da passagem: 1045
+Nome: Helena Martins
+CPF: 125.072.653-02
+Codigo de Voo: L9997
+Origem: SÆo Paulo
+Destino: Manaus
+Assento: C37
+Classe: Primeira Classe
+Classe: Confirmada
+----------------------------------------------------
+Numero da passagem: 1049
+Nome: Rafael Souza
+CPF: 604.858.205-60
+Codigo de Voo: L0011
+Origem: Curitiba
+Destino: Salvador
+Assento: D14
+Classe: Economica
+Classe: Cancelada
+----------------------------------------------------
+Numero da passagem: 1054
+Nome: Camila Souza
+CPF: 881.274.587-32
+Codigo de Voo: L9997
+Origem: SÆo Paulo
+Destino: Manaus
+Assento: A40
+Classe: Primeira Classe
+Classe: Embarcada
+----------------------------------------------------
+Numero da passagem: 1057
+Nome: Victor Almeida
+CPF: 459.107.081-63
+Codigo de Voo: L2462
+Origem: Manaus
+Destino: Bel‚m
+Assento: D20
+Classe: Economica
+Classe: Embarcada
+----------------------------------------------------
+Numero da passagem: 1059
+Nome: Matheus Oliveira
+CPF: 946.644.114-05
+Codigo de Voo: L0011
+Origem: Curitiba
+Destino: Salvador
+Assento: B22
+Classe: Economica
+Classe: Confirmada
+----------------------------------------------------
+Numero da passagem: 1065
+Nome: Nicole Martins
+CPF: 199.856.591-20
+Codigo de Voo: L8569
+Origem: Uberlƒndia
+Destino: Salvador
+Assento: C33
+Classe: Primeira Classe
+Classe: Confirmada
+----------------------------------------------------
+Numero da passagem: 1070
+Nome: Amanda Silva
+CPF: 229.464.407-70
+Codigo de Voo: L4330
+Origem: Curitiba
+Destino: Uberlƒndia
+Assento: B39
+Classe: Primeira Classe
+Classe: Confirmada
 -----------------------------------------
-Passagens Encontradas: 7
+Passagens Encontradas: 22

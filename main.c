@@ -1021,6 +1021,16 @@ int validaAssento(char assentos[]){
     return 1;}
     else return 0;
 }
+int buscaCPFeVoo(char vooDigitado[],char cpfDigitado[], Passagem passagens[], int qtdPassagem){
+    int loop;
+    for (int i=0;i<qtdPassagem;i++){
+        loop=0;
+        if(strcmp(passagens[i].codigo_voo,vooDigitado)==0) loop++;
+        if(strcmp(passagens[i].cpf,cpfDigitado)==0) loop++;
+        if(loop==2) return 1;
+    }
+    return 0;
+}
 void cadastrarPassagem(Passageiro passageiros[],Voo voos[],Passagem passagens[],int *qtdPassagem,int *qtdPassageiro,int *qtdVoos,int *proximoNumero){
     printf("------- Cadastro de Nova Passagem -------\n");
     passagens[*qtdPassagem].num_passagem = *proximoNumero;
@@ -1046,6 +1056,10 @@ void cadastrarPassagem(Passageiro passageiros[],Voo voos[],Passagem passagens[],
     }
     if(buscaVoo(passagens[*qtdPassagem].codigo_voo, voos, *qtdVoos) == -1){
         printf("Codigo nao encontrado em Voos!\n");
+        return;
+    }
+    if(buscaCPFeVoo(passagens[*qtdPassagem].codigo_voo,passagens[*qtdPassagem].cpf,passagens,*qtdPassagem)==1){
+        printf("Esse CPF ja foi cadastrado nesse Voo!\n");
         return;
     }
 
@@ -1206,31 +1220,45 @@ void editarPassagem(Passagem passagens[], int qtdPassagem){
     }
 }
 
-void relatorioCompanhia(Passagem passagens[], int qtdPassagens){
+void relatorioCompanhia(Passagem passagens[], int qtdPassagens,Passageiro passageiros[], int qtdPassageiros,Voo voos[], int qtdVoos){
     printf("---Gerar relatorio (Companhia Aerea)---\n");
     int comp;
     char companhia[50];
     int qtdPassagensEcontradas=0;
+    do {
     printf("Selecione uma companhia:\n");
     printf("1. Azul\n");
     printf("2. Gol\n");
     printf("3. Latam\n");
+    printf("0. Voltar\n");
     printf("Opcao: ");
-    do{
-        scanf("%d", &comp);
-    } while(comp!=1 && comp!=2 && comp!=3);
-    if(comp==1){
-        strcpy(companhia,"Azul");
-        printf("Gerando Relatorio (Azul)...");
-    }else if(comp==2){
-        strcpy(companhia,"Gol");
-        printf("Gerando Relatorio (Gol)...");
-    }else if(comp==3){
-        strcpy(companhia,"Latam");
-        printf("Gerando Relatorio (Latam)...");
-    } else{
-        printf("Entrada Invalida\n");
-        return;
+
+    if (scanf("%d", &comp) != 1) {
+        printf("Entrada invalida!\n");
+
+        while (getchar() != '\n'); // limpa o buffer
+        comp = -1;
+    }
+    else if (comp < 0 || comp > 3) {
+        printf("Entrada invalida!\n");
+    }
+
+    } while (comp < 0 || comp > 3);
+
+    if (comp == 0) {
+    return;
+    }
+    else if (comp == 1) {
+    strcpy(companhia, "Azul");
+    printf("Gerando Relatorio (Azul)...\n");
+    }
+    else if (comp == 2) {
+    strcpy(companhia, "Gol");
+    printf("Gerando Relatorio (Gol)...\n");
+    }
+    else if (comp == 3) {
+    strcpy(companhia, "Latam");
+    printf("Gerando Relatorio (Latam)...\n");
     }
     FILE *relatorioCompanhia;
     relatorioCompanhia = fopen("RelatorioCompanhia.txt","w");
@@ -1250,10 +1278,16 @@ void relatorioCompanhia(Passagem passagens[], int qtdPassagens){
             qtdPassagensEcontradas++;
             fprintf(relatorioCompanhia,"----------------------------------------------------\n");
             fprintf(relatorioCompanhia,"Numero da passagem: %d\n",passagens[i].num_passagem);
+            int indicePassageiro = buscaCPF(passagens[i].cpf, passageiros, qtdPassageiros);
+            fprintf(relatorioCompanhia,"Nome: %s\n",passageiros[indicePassageiro].nome);
             char cpfExibicao[15]; //Cria uma variavel temporaria para armazenar o CPF que sera mostrado, para não editar o conteudo do vetor principal
-        strcpy(cpfExibicao, passagens[i].cpf); //Copia o conteudo do CPF do vetor
-        formatarCPF(cpfExibicao); //Formata somente o cpf a ser exibido no formato XXX.XXX.XXX-XX
+            strcpy(cpfExibicao, passagens[i].cpf); //Copia o conteudo do CPF do vetor
+            formatarCPF(cpfExibicao); //Formata somente o cpf a ser exibido no formato XXX.XXX.XXX-XX
             fprintf(relatorioCompanhia,"CPF: %s\n",cpfExibicao);
+            fprintf(relatorioCompanhia,"Codigo de Voo: %s\n",passagens[i].codigo_voo);
+            int indiceVoo = buscaVoo(passagens[i].codigo_voo,voos,qtdVoos);
+            fprintf(relatorioCompanhia,"Origem: %s\n",voos[indiceVoo].origem);
+            fprintf(relatorioCompanhia,"Destino: %s\n",voos[indiceVoo].destino);
             fprintf(relatorioCompanhia,"Assento: %s\n",passagens[i].assentos);
             fprintf(relatorioCompanhia,"Classe: %s\n",passagens[i].classe);
             fprintf(relatorioCompanhia,"Classe: %s\n",passagens[i].status);
@@ -1262,10 +1296,98 @@ void relatorioCompanhia(Passagem passagens[], int qtdPassagens){
     }
     fprintf(relatorioCompanhia,"-----------------------------------------\n");
     fprintf(relatorioCompanhia,"Passagens Encontradas: %d\n",qtdPassagensEcontradas);
+    printf("Relatorio Gerado!\n");
     fclose(relatorioCompanhia);
 
 }
 
+void relatorioDestino(Passagem passagens[], int qtdPassagens, Passageiro passageiros[], int qtdPassageiros, Voo voos[], int qtdVoos){
+
+    char (*destinos)[50]; //Vetor de Vetor que armazena por linha os nomes das cidades de origem sem repetição
+    destinos = malloc(qtdVoos * sizeof(*destinos));
+
+    if(destinos == NULL){
+        printf("Erro de alocacao(Relatorio/Destino)!\n");
+        return;
+    }
+    int qtdDestinos = 0;
+    for(int i=0;i<qtdVoos;i++){
+        int existe = 0;
+        for(int j=0;j<qtdDestinos;j++){
+            if(strcmp(voos[i].destino,destinos[j])==0){
+                existe = 1;
+                break;
+            }
+
+        }
+        if(existe==0){
+            strcpy(destinos[qtdDestinos],voos[i].destino);
+            qtdDestinos++;
+        }
+    }
+
+    printf("\n----------------------- Destinos Disponiveis ----------------------\n");
+    for(int i = 0; i < qtdDestinos; i++){
+        printf("%2d. %-20s", i + 1, destinos[i]);//faz com que sejam impressos 3 destinos por linha
+        if((i + 1) % 3 == 0){
+            printf("\n");
+        }
+    }
+
+    if(qtdDestinos % 3 != 0){
+    printf("\n");
+    }
+    int opcao;
+    int retorno;
+    do{
+        printf("Opcao: ");
+        retorno = scanf("%d", &opcao);
+        if(retorno != 1){
+            printf("Digite apenas numeros!\n");
+            while(getchar() != '\n'); // limpa buffer
+            opcao = -1;
+        }
+    }while(opcao < 1 || opcao > qtdDestinos);
+    char destinoEscolhido[50];
+    strcpy(destinoEscolhido, destinos[opcao - 1]);
+    printf("Gerando Relatorio (%s)...\n",destinoEscolhido);
+    FILE *relatorioDestino;
+    relatorioDestino = fopen("RelatorioDestino.txt","w");
+    fprintf(relatorioDestino, "========================================\n");
+    fprintf(relatorioDestino, "     RELATORIO DE PASSAGENS AEREAS\n");
+    fprintf(relatorioDestino, "               (%s)\n",destinoEscolhido);
+    fprintf(relatorioDestino, "========================================\n\n");
+    int totalPassagensDestino=0;
+    for(int k=0;k<qtdPassagens;k++){
+        int indiceVoo = buscaVoo(passagens[k].codigo_voo, voos, qtdVoos);
+        if(indiceVoo == -1){
+            continue;
+        }
+        if(strcmp(voos[indiceVoo].destino,destinoEscolhido)==0){
+            totalPassagensDestino++;
+            int indicePassageiro = buscaCPF(passagens[k].cpf,passageiros,qtdPassageiros);
+            if(indicePassageiro == -1){
+                continue;
+            }
+            fprintf(relatorioDestino,"----------------------------------------\n");
+            fprintf(relatorioDestino,"Número da Passagem: %d\n",passagens[k].num_passagem);
+            fprintf(relatorioDestino,"Nome: %s\n",passageiros[indicePassageiro].nome);
+            char cpfExibicao[15]; //Cria uma variavel temporaria para armazenar o CPF que sera mostrado, para não editar o conteudo do vetor principal
+            strcpy(cpfExibicao, passagens[k].cpf); //Copia o conteudo do CPF do vetor
+            formatarCPF(cpfExibicao); //Formata somente o cpf a ser exibido no formato XXX.XXX.XXX-XX
+            fprintf(relatorioDestino,"CPF: %s\n",cpfExibicao);
+            fprintf(relatorioDestino,"Companhia: %s\n",voos[indiceVoo].companhia);
+            fprintf(relatorioDestino, "Origem: %s\n",voos[indiceVoo].origem);
+            fprintf(relatorioDestino,"Assento: %s\n",passagens[k].assentos);
+            fprintf(relatorioDestino,"Classe: %s\n",passagens[k].classe);
+            fprintf(relatorioDestino,"Status: %s\n\n",passagens[k].status);
+        }
+    }
+    fprintf(relatorioDestino,"----------------------------------------\n");
+    fprintf(relatorioDestino,"Passagens para %s: %d\n",destinoEscolhido,totalPassagensDestino);
+    free(destinos);
+    fclose(relatorioDestino);
+}
 
 Passagem *deletarPassagem(Passagem passagens[], int *qtdPassagem, int *passagensAlocadas){
     int numero_digitado;
@@ -1370,37 +1492,157 @@ Passagem *menuPassagens(Passageiro passageiros[],int *qtdPassageiro,Voo voos[],i
     }while(opcao != 0);
     return passagens;
 }
-/*void menuConsultas(){
+
+void consultarPorVoo(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int qtdVoos,Passagem passagens[],int qtdPassagem){
+    printf("Informe o codigo do voo: ");
+    char codigoConsultado[6];
+    scanf("%s",codigoConsultado);
+    int confere=0;
+    int qtdEmbarcada=0,qtdConfirmada=0,qtdCancelada=0;
+    printf("\n==== PASSAGENS VINCULADAS NESSE VOO: ====\n\n");
+    for(int i=0;i<qtdPassagem;i++){
+        if(strcmp(passagens[i].codigo_voo,codigoConsultado)==0){
+            confere++;
+            printf("-------------------------------------\n");
+            printf("Numero da passagem: %d\n",passagens[i].num_passagem);
+            printf("CPF: %s\n",passagens[i].cpf);
+            int indiceP = (buscaCPF(passagens[i].cpf,passageiros,qtdPassageiro));
+            printf("Nome: %s\n",passageiros[indiceP].nome);
+            printf("Assento: %s\n",passagens[i].assentos);
+            printf("Classe: %s\n",passagens[i].classe);
+            int indiceV = buscaVoo(codigoConsultado,voos,qtdVoos);
+            printf("Origem: %s\n",voos[indiceV].origem);
+            printf("Destino: %s\n",voos[indiceV].destino);
+            printf("Data e hora do voo: %s\n",voos[indiceV].dataHora);
+            printf("Status: %s\n\n",passagens[i].status);
+            if(strcmp(passagens[i].status,"Embarcada")==0) qtdEmbarcada++;
+            if(strcmp(passagens[i].status,"Confirmada")==0) qtdConfirmada++;
+            if(strcmp(passagens[i].status,"Cancelada")==0) qtdCancelada++;
+        }
+    }
+    if(confere==0) printf("Voo Vazio! Nao ha passagens vinculadas\n");
+    else{
+        printf("Quantidade de passageiros embarcados: %d\n",qtdEmbarcada);
+        printf("Quantidade de passagens confirmadas: %d\n",qtdConfirmada);
+        printf("Quantidade de passagens canceladas: %d\n",qtdCancelada);
+        printf("Assentos ocupados: %d\n",confere);
+        printf("Capacidade restante: %d\n",160-confere);
+
+    }
+}
+
+void consultarPorCPF(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int qtdVoos,Passagem passagens[],int qtdPassagem){
+    printf("Informe o CPF: ");
+    char cpfConsultadoSujo[12];
+    scanf("%s",cpfConsultadoSujo);
+    char cpfConsultado[12];
+    limparCPF(cpfConsultadoSujo,cpfConsultado);
+    printf("\n==== PASSAGENS VINCULADAS NESSE CPF: ====\n\n");
+    int confere=0;
+
+    for(int i=0;i<qtdPassagem;i++){
+        if(strcmp(passagens[i].cpf,cpfConsultado)==0){
+            confere=1;
+            printf("-------------------------------------\n");
+            printf("Numero da passagem: %d\n",passagens[i].num_passagem);
+            printf("Codigo do Voo: %s\n",passagens[i].codigo_voo);
+            int indiceV = buscaVoo(passagens[i].codigo_voo,voos,qtdVoos);
+            printf("Origem: %s\n",voos[indiceV].origem);
+            printf("Destino: %s\n",voos[indiceV].destino);
+            printf("Assento: %s\n",passagens[i].assentos);
+            printf("Classe: %s\n",passagens[i].classe);
+            printf("Status: %s\n\n",passagens[i].status);
+        }
+    }
+    if(confere==0) printf("Passageiro sem passagem! Nenhuma passagem encontrada neste CPF\n");
+}
+
+void consultarPorStatus(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int qtdVoos,Passagem passagens[],int qtdPassagem){
+    printf("--Status Para consulta--\n");
+    printf("1. Confirmada\n");
+    printf("2. Cancelada\n");
+    printf("3. Embarcada\n");
+    printf("Opcao:");
+    int op2,confere=0;
+    scanf("%d",&op2); 
+    char status[20];
+    if(op2<1 || op2>3){printf("Status Inválido\n");return;}
+    if(op2==1) strcpy(status,"Confirmada");
+    if(op2==2) strcpy(status,"Cancelada");
+    if(op2==3) strcpy(status,"Embarcada");
+
+    for (int i=0;i<qtdPassagem;i++){
+    if(strcmp(passagens[i].status,status)==0){
+        confere++;
+        printf("================================================\n");
+        printf("        REGISTRO #%d | STATUS: %s\n", confere, passagens[i].status);
+        printf("================================================\n");
+
+        printf("\nPASSAGEM:\n");
+        printf("  Numero: %d\n", passagens[i].num_passagem);
+        printf("  CPF: %s\n", passagens[i].cpf);
+        printf("  Voo: %s\n", passagens[i].codigo_voo);
+        printf("  Assento: %s\n", passagens[i].assentos);
+        printf("  Classe: %s\n", passagens[i].classe);
+
+        int indiceP = (buscaCPF(passagens[i].cpf,passageiros,qtdPassageiro));
+        printf("\nPASSAGEIRO:\n");
+        printf("  Nome: %s\n",passageiros[indiceP].nome);
+        printf("  CPF: %s\n",passageiros[indiceP].cpf);
+        printf("  Telefone: %s\n",passageiros[indiceP].telefone);
+        printf("  E-Mail: %s\n",passageiros[indiceP].email);
+        char dataFormatada[50];
+        strcpy(dataFormatada,passageiros[indiceP].dataNascimento);
+        printf("  Data de nascimento: %s\n",dataFormatada);
+
+        int indiceV = buscaVoo(passagens[i].codigo_voo,voos,qtdVoos);
+        printf("\nVOO:\n");
+        printf("  Codigo do Voo: %s\n",voos[indiceV].codigo_voo);
+        printf("  Rota: %s -> %s\n",voos[indiceV].origem,voos[indiceV].destino);
+        printf("  Data e Hora do voo: %s\n",voos[indiceV].dataHora);
+        printf("  Duracao do voo: %s\n",voos[indiceV].duracao);
+        printf("  Companhia: %s\n\n",voos[indiceV].companhia);
+    }
+    }
+    if(confere==0) printf("Sem passagens com esse status!\n");
+    else printf("Quantidade de passagens %s: %d\n",status,confere);
+}
+
+void menuConsultas(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int qtdVoos,Passagem passagens[],int qtdPassagem){
      int opcao;
 
     do{
         printf("\n===== CONSULTAS =====\n");
-        printf("1 - Consultar por Codigo do Voo\n");
-        printf("2 - Consultar por CPF do Passageiro\n");
-        printf("3 - Consultar por Status\n");
-        printf("0 - Voltar\n");
+        printf("1. Consultar por Codigo do Voo\n");
+        printf("2. Consultar por CPF do Passageiro\n");
+        printf("3. Consultar por Status\n");
+        printf("0. Voltar\n");
         printf("Opcao: ");
 
-        scanf("%d",&opcao);
+        if(scanf("%d", &opcao) != 1){ //Evita o loop infinito caso o digitado pelo usuario não seja um inteiro
+            while(getchar() != '\n'); // limpa o buffer
+            opcao = -1; // garante que não saia do menu
+        }
 
         switch(opcao){
             case 1:
-                consultarPorVoo();
+                consultarPorVoo(passageiros, qtdPassageiro, voos, qtdVoos, passagens, qtdPassagem);
                 break;
 
             case 2:
-                consultarPorCPF();
+                consultarPorCPF(passageiros, qtdPassageiro, voos, qtdVoos, passagens, qtdPassagem);
                 break;
 
             case 3:
-                consultarPorStatus();
+                consultarPorStatus(passageiros, qtdPassageiro, voos, qtdVoos, passagens, qtdPassagem);
                 break;
         }
 
     }while(opcao != 0);
 
 }
-void menuRelatorios(){
+
+void menuRelatorios(Passagem passagens[], int qtdPassagem, Passageiro passageiros[], int qtdPassageiro, Voo voos[], int qtdVoos){
     int opcao;
 
     do{
@@ -1411,25 +1653,31 @@ void menuRelatorios(){
         printf("0 - Voltar\n");
         printf("Opcao: ");
 
-        scanf("%d",&opcao);
+        if(scanf("%d", &opcao) != 1){ //Evita o loop infinito caso o digitado pelo usuario não seja um inteiro
+            while(getchar() != '\n'); // limpa o buffer
+            opcao = -1; // garante que não saia do menu
+        }
 
         switch(opcao){
             case 1:
-                relatorioCompanhia();
+                relatorioCompanhia(passagens,qtdPassagem,passageiros,qtdPassageiro,voos,qtdVoos);
                 break;
 
             case 2:
-                relatorioDestino();
+                relatorioDestino(passagens,qtdPassagem,passageiros,qtdPassageiro,voos,qtdVoos);
                 break;
 
             case 3:
-                relatorioHistoricoCPF();
+                //relatorioHistoricoCPF();
+                break;
+            default:
+                printf("Opcao invalida!\n");
                 break;
         }
 
     }while(opcao != 0);
 }
-*/
+
 int main(){
     int qtdPassageiro=0;
     FILE *arquivoPassageiros;
@@ -1471,6 +1719,18 @@ int main(){
     int qtdPassagem=0;
     int proximoNumero=1000;
     Passagem *passagens;
+
+    FILE *arquivoPassagem;
+    arquivoPassagem=fopen("passagensSalvas.bin","rb");
+    if(arquivoPassagem == NULL){
+        printf("Erro ao abrir passagensSalvas.bin\n");
+        qtdPassagem = 0;
+    }else{
+        fread(&qtdPassagem, sizeof(int), 1, arquivoPassagem);
+        fread(&proximoNumero, sizeof(int), 1, arquivoPassagem);
+        fclose(arquivoPassagem);
+    }
+
     int passagensAlocadas = qtdPassagem + 5;
     passagens = (Passagem*) malloc(passagensAlocadas * sizeof(Passagem));
     if (passagens == NULL){
@@ -1508,12 +1768,12 @@ int main(){
                 printf("Passagens cadastradas: %d\nPassagens Alocadas: %d\n",qtdPassagem,passagensAlocadas);
                 break;
             case 4:
-               // menuConsultas();
+               menuConsultas(passageiros, qtdPassageiro, voos, qtdVoos, passagens, qtdPassagem);
                 break;
 
             case 5:
-                relatorioCompanhia(passagens,qtdPassagem);
-               // menuRelatorios();
+                //relatorioDestino(passagens,qtdPassagem,passageiros,qtdPassageiro,voos,qtdVoos);
+                menuRelatorios(passagens,qtdPassagem,passageiros,qtdPassageiro,voos,qtdVoos);
                 break;
 
             case 0:
