@@ -243,7 +243,7 @@ int validacodigo_voo(char codigo_voo[6]){
     limparCodVoo(codigo_voo);
     
     if(strlen(codigo_voo)!=5){//O formato esperado deve ter 5 caracteres (LXXXX)
-        printf("Formato Não Correspondente\n");
+        printf("Formato Nao Correspondente\n");
         return 0;
     }
     if(codigo_voo[0]!='L' && codigo_voo[0]!='A' && codigo_voo[0]!='G'){
@@ -264,7 +264,7 @@ int validacodigo_voo(char codigo_voo[6]){
     int digitoVerificador = soma%10;
 
     if(digitoInformado!= digitoVerificador){
-        printf("Código Inválido\n");
+        printf("Codigo Invalido\n");
         return 0;
     }
 
