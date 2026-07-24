@@ -1405,7 +1405,32 @@ Passagem *menuPassagens(Passageiro passageiros[],int *qtdPassageiro,Voo voos[],i
     }while(opcao != 0);
     return passagens;
 }
-/*void menuConsultas(){
+
+void consultarPorVoo(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int qtdVoos,Passagem passagens[],int qtdPassagem){
+    printf("Informe o codigo do voo: \n");
+    char codigoConsultado[6];
+    scanf("%s",codigoConsultado);
+    int confere=0;
+    for(int i=0;i<qtdPassagem;i++){
+        if(strcmp(passagens[i].codigo_voo,codigoConsultado)==0){
+            confere=1;
+            printf("\nNumero da passagem: %d\n",passagens[i].num_passagem);
+            printf("CPF: %s\n",passagens[i].cpf);
+            int indiceP = (buscaCPF(passagens[i].cpf,passageiros,qtdPassageiro));
+            printf("Nome: %s\n",passageiros[indiceP].nome);
+            printf("Assento: %s\n",passagens[i].assentos);
+            printf("Classe: %s\n",passagens[i].classe);
+            int indiceV = buscaVoo(codigoConsultado,voos,qtdVoos);
+            printf("Origem: %s\n",voos[indiceV].origem);
+            printf("Destino: %s\n",voos[indiceV].destino);
+            printf("Data e hora do voo: %s\n",voos[indiceV].dataHora);
+            printf("Status: %s\n\n",passagens[i].status);
+        }
+    }
+    if(confere==0) printf("Codigo nao vinculado em nenhuma passagem\n");
+}
+
+void menuConsultas(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int qtdVoos,Passagem passagens[],int qtdPassagem){
      int opcao;
 
     do{
@@ -1420,21 +1445,22 @@ Passagem *menuPassagens(Passageiro passageiros[],int *qtdPassageiro,Voo voos[],i
 
         switch(opcao){
             case 1:
-                consultarPorVoo();
+                consultarPorVoo(passageiros, qtdPassageiro, voos, qtdVoos, passagens, qtdPassagem);
                 break;
 
             case 2:
-                consultarPorCPF();
+                //consultarPorCPF(passageiros, qtdPassageiro, voos, qtdVoos, passagens, qtdPassagem);
                 break;
 
-            case 3:
-                consultarPorStatus();
+            case 3: 
+                //consultarPorStatus(passageiros, qtdPassageiro, voos, qtdVoos, passagens, qtdPassagem);
                 break;
         }
 
     }while(opcao != 0);
 
 }
+/*
 void menuRelatorios(){
     int opcao;
 
@@ -1555,7 +1581,7 @@ int main(){
                 printf("Passagens cadastradas: %d\nPassagens Alocadas: %d\n",qtdPassagem,passagensAlocadas);
                 break;
             case 4:
-               // menuConsultas();
+               menuConsultas(passageiros, qtdPassageiro, voos, qtdVoos, passagens, qtdPassagem);
                 break;
 
             case 5:
