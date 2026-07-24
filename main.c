@@ -1229,23 +1229,23 @@ void relatorioCompanhia(Passagem passagens[], int qtdPassagens,Passageiro passag
         printf("Entrada invalida!\n");
     }
 
-} while (comp < 0 || comp > 3);
+    } while (comp < 0 || comp > 3);
 
-if (comp == 0) {
+    if (comp == 0) {
     return;
-}
-else if (comp == 1) {
+    }
+    else if (comp == 1) {
     strcpy(companhia, "Azul");
     printf("Gerando Relatorio (Azul)...\n");
-}
-else if (comp == 2) {
+    }
+    else if (comp == 2) {
     strcpy(companhia, "Gol");
     printf("Gerando Relatorio (Gol)...\n");
-}
-else if (comp == 3) {
+    }
+    else if (comp == 3) {
     strcpy(companhia, "Latam");
     printf("Gerando Relatorio (Latam)...\n");
-}
+    }
     FILE *relatorioCompanhia;
     relatorioCompanhia = fopen("RelatorioCompanhia.txt","w");
     if (relatorioCompanhia == NULL)
@@ -1492,6 +1492,18 @@ int main(){
     int qtdPassagem=0;
     int proximoNumero=1000;
     Passagem *passagens;
+
+    FILE *arquivoPassagem;
+    arquivoPassagem=fopen("passagensSalvas.bin","rb");
+    if(arquivoPassagem == NULL){
+        printf("Erro ao abrir passagensSalvas.bin\n");
+        qtdPassagem = 0;
+    }else{
+        fread(&qtdPassagem, sizeof(int), 1, arquivoPassagem);
+        fread(&proximoNumero, sizeof(int), 1, arquivoPassagem);
+        fclose(arquivoPassagem);
+    }
+
     int passagensAlocadas = qtdPassagem + 5;
     passagens = (Passagem*) malloc(passagensAlocadas * sizeof(Passagem));
     if (passagens == NULL){
