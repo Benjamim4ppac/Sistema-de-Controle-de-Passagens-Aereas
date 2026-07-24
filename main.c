@@ -1563,7 +1563,7 @@ void menuConsultas(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int qtd
 
 }
 
-/*void menuRelatorios(Passagem passagens[], int qtdPassagem, Passageiro passageiros[], int qtdPassageiro, Voo voos[], int qtdVoos){
+void menuRelatorios(Passagem passagens[], int qtdPassagem, Passageiro passageiros[], int qtdPassageiro, Voo voos[], int qtdVoos){
     int opcao;
 
     do{
@@ -1585,16 +1585,19 @@ void menuConsultas(Passageiro passageiros[],int qtdPassageiro,Voo voos[],int qtd
                 break;
 
             case 2:
-                relatorioCompanhia(passagens,qtdPassagem,passageiros,qtdPassageiro,voos,qtdVoos);
+                relatorioDestino(passagens,qtdPassagem,passageiros,qtdPassageiro,voos,qtdVoos);
                 break;
 
             case 3:
                 //relatorioHistoricoCPF();
                 break;
+            default:
+                printf("Opcao invalida!\n");
+                break;
         }
 
     }while(opcao != 0);
-}*/
+}
 
 int main(){
     int qtdPassageiro=0;
@@ -1690,8 +1693,8 @@ int main(){
                 break;
 
             case 5:
-                relatorioDestino(passagens,qtdPassagem,passageiros,qtdPassageiro,voos,qtdVoos);
-                //menuRelatorios(passagens,qtdPassagem,passageiros,qtdPassageiro,voos,qtdVoos);
+                //relatorioDestino(passagens,qtdPassagem,passageiros,qtdPassageiro,voos,qtdVoos);
+                menuRelatorios(passagens,qtdPassagem,passageiros,qtdPassageiro,voos,qtdVoos);
                 break;
 
             case 0:
