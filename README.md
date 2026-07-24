@@ -7,7 +7,7 @@ Trabalho da disciplina Algoritmos e Programação II (FACOM/UFU).
 - Pedro Henrique Pereira da Mata - 12521BSI243
 - Benjamim Martins Magalhães Sena - 12521BSI246
 - Gustavo Henrique Silva Lima - 12521BSI237
-- William Ferreira Rabelo - 12511BSI255
+- ~~William Ferreira Rabelo - 12511BSI255~~ (Saiu do Projeto)
 
 ## Descrição
 
@@ -22,6 +22,35 @@ Arquivo principal contendo todas as estruturas, menus e funções implementadas 
 
 ### Alg2_Trabalho_2026_1.pdf
 Arquivo contendo o enunciado e os requisitos do trabalho. Está presente apenas para facilitar a consulta dos integrantes do grupo em relação as entregas.
+### passageirosSalvos.bin
+Arquivo binário utilizado para armazenar os dados dos passageiros cadastrados.
+
+### voosSalvos.bin
+Arquivo binário utilizado para armazenar os dados dos voos cadastrados.
+
+### passagensSalvas.bin
+Arquivo binário utilizado para armazenar os dados das passagens cadastradas.
+
+### RelatorioCompanhia.txt
+Relatório gerado pelo sistema contendo as passagens filtradas por companhia aérea.
+
+### RelatorioDestino.txt
+Relatório gerado pelo sistema contendo as passagens filtradas por destino.
+
+### RelatorioCPF.txt
+Relatório gerado pelo sistema contendo o histórico de voos de um passageiro a partir do CPF informado.
+
+## Persistência de Dados
+
+O sistema realiza carregamento automático dos dados armazenados nos arquivos binários durante a inicialização.
+
+As alterações realizadas durante a execução são salvas nos respectivos arquivos binários, permitindo que os registros permaneçam disponíveis em futuras execuções do programa.
+
+Arquivos utilizados:
+
+- passageirosSalvos.bin
+- voosSalvos.bin
+- passagensSalvas.bin
 
 ## Validação de CPF e Código de Voo
 
@@ -119,9 +148,34 @@ O código do voo também é um campo de valor único, portanto não é permitido
 ### Classes dos assentos
 A classe da passagem é definida automaticamente de acordo com o assento informado:
 
-* **Fileiras 1 a 32:**
-  * Pertencem à **Economica** ou **Executiva**.
+* **Fileiras 1 a 20:**
+  * Classe **Econômica**.
 
+* **Fileiras 21 a 32:**
+  * Classe **Executiva**.
 
 * **Fileiras 33 a 40:**
-  * Pertencem à **Executiva** ou **Primeira Classe**.
+  * Classe **Primeira Classe**.
+
+## Relatórios Disponíveis
+
+O sistema permite a geração dos seguintes relatórios em arquivos texto:
+
+### Relatório de Passagens por Companhia Aérea
+Gera um arquivo contendo todas as passagens associadas à companhia aérea informada pelo usuário.
+
+### Relatório de Passagens por Destino
+Gera um arquivo contendo todas as passagens destinadas ao local informado pelo usuário.
+
+### Relatório de Histórico de Voos por CPF
+Gera um arquivo contendo o histórico completo de passagens associadas ao CPF informado, incluindo informações do passageiro e dos voos relacionados.
+
+## Consultas Disponíveis
+
+O sistema permite consultar passagens utilizando os seguintes critérios:
+
+- Código do voo;
+- CPF do passageiro;
+- Status da passagem (Confirmada, Cancelada ou Embarcada).
+
+As consultas exibem informações da passagem, do passageiro e do voo relacionado.
