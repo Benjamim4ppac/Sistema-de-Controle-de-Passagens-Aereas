@@ -1,57 +1,77 @@
 ========================================
      RELATORIO DE PASSAGENS AEREAS
-               (Uberl�ndia)
+               (Porto Alegre)
 ========================================
 
 ----------------------------------------
-Número da Passagem: 1066
-Nome: Samuel Lima
-CPF: 620.497.516-13
-Companhia: Azul
-Origem: S�o Paulo
-Assento: D18
+Número da Passagem: 1012
+Nome: Thiago Oliveira
+CPF: 310.341.316-56
+Companhia: Gol
+Origem: Belo Horizonte
+Assento: B17
 Classe: Economica
-Status: Cancelada
+Status: Confirmada
 
 ----------------------------------------
-Número da Passagem: 1067
-Nome: Joana Martins
-CPF: 748.667.481-50
-Companhia: Azul
-Origem: S�o Paulo
-Assento: B14
+Número da Passagem: 1023
+Nome: Diego Almeida
+CPF: 766.290.019-31
+Companhia: Gol
+Origem: Belo Horizonte
+Assento: B16
 Classe: Economica
 Status: Embarcada
 
 ----------------------------------------
-Número da Passagem: 1068
-Nome: Arthur Ribeiro
-CPF: 392.669.013-50
-Companhia: Azul
-Origem: S�o Paulo
-Assento: D22
+Número da Passagem: 1029
+Nome: Vitor Almeida
+CPF: 239.553.594-09
+Companhia: Gol
+Origem: Belo Horizonte
+Assento: D10
+Classe: Economica
+Status: Embarcada
+
+----------------------------------------
+Número da Passagem: 1035
+Nome: Eduardo Rocha
+CPF: 249.350.007-59
+Companhia: Gol
+Origem: Belo Horizonte
+Assento: D4
 Classe: Economica
 Status: Confirmada
 
 ----------------------------------------
-Número da Passagem: 1069
-Nome: Melissa Souza
-CPF: 663.283.720-43
+Número da Passagem: 1044
+Nome: Bruno Almeida
+CPF: 228.933.779-04
 Companhia: Gol
 Origem: Belo Horizonte
-Assento: A34
-Classe: Primeira Classe
+Assento: B10
+Classe: Economica
 Status: Cancelada
 
 ----------------------------------------
-Número da Passagem: 1070
-Nome: Amanda Silva
-CPF: 229.464.407-70
-Companhia: Latam
-Origem: Curitiba
-Assento: B39
-Classe: Primeira Classe
+Número da Passagem: 1053
+Nome: Henrique Lima
+CPF: 027.013.040-32
+Companhia: Gol
+Origem: Belo Horizonte
+Assento: D17
+Classe: Economica
 Status: Confirmada
 
 ----------------------------------------
-Passagens para Uberl�ndia: 5
+Número da Passagem: 1063
+Nome: Diego Martins
+CPF: 981.163.711-34
+Companhia: Gol
+Origem: Belo Horizonte
+Assento: B26
+Classe: Economica
+Status: Embarcada
+
+----------------------------------------
+Passagens para Porto Alegre: 7

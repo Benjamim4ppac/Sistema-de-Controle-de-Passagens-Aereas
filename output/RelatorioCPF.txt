@@ -1,33 +1,33 @@
 ========================================
      RELATORIO DE PASSAGENS AEREAS
-         (663.283.720-43)
+         (255.648.373-39)
 ========================================
 
-Nome: Melissa Souza
-Telefone: 34991110080
-E-mail: melissa.souza@gmail.com
-Data de Nascimento: 05/02/1999
+Nome: Felipe Oliveira
+Telefone: 34991110023
+E-mail: felipe.oliveira@gmail.com
+Data de Nascimento: 13/04/2001
 
 ----------------------------------------------------
 PASSAGENS ENCONTRADAS
 ----------------------------------------------------
-  Numero da passagem: 1000
+  Numero da passagem: 1040
   Codigo de Voo: L0011
-  Companhia: Gol
+  Companhia: omica
   Curitiba -> Salvador
-  Assento: A33
-  Classe: Executiva
+  Assento: B7
+  Classe: Economica
   Status: Embarcada
 ----------------------------------------------------
-  Numero da passagem: 1069
-  Codigo de Voo: G7210
+  Numero da passagem: 1076
+  Codigo de Voo: G3722
   Companhia: 
-  Belo Horizonte -> Uberlƒndia
-  Assento: A34
-  Classe: Primeira Classe
-  Status: Cancelada
+  Uberlƒndia -> Bras¡lia
+  Assento: C32
+  Classe: Economica
+  Status: Confirmada
 -----------------------------------------
 Passagens Encontradas: 2
-  Confirmada: 0
+  Confirmada: 1
   Embarcada: 1
-  Canceladas: 1
+  Canceladas: 0
