@@ -1,57 +1,107 @@
 ========================================
      RELATORIO DE PASSAGENS AEREAS
-               (Uberlƒndia)
+               (Bras¡lia)
 ========================================
 
 ----------------------------------------
-NÃºmero da Passagem: 1066
-Nome: Samuel Lima
-CPF: 620.497.516-13
-Companhia: Azul
-Origem: SÆo Paulo
-Assento: D18
+NÃºmero da Passagem: 1004
+Nome: JoÆo Silva
+CPF: 529.982.247-25
+Companhia: Gol
+Origem: Rio de Janeiro
+Assento: A12
+Classe: Economica
+Status: Confirmada
+
+----------------------------------------
+NÃºmero da Passagem: 1005
+Nome: JoÆo Silva
+CPF: 529.982.247-25
+Companhia: Gol
+Origem: Rio de Janeiro
+Assento: A8
+Classe: Economica
+Status: Confirmada
+
+----------------------------------------
+NÃºmero da Passagem: 1011
+Nome: Carolina Almeida
+CPF: 026.542.351-14
+Companhia: Gol
+Origem: Rio de Janeiro
+Assento: C9
+Classe: Economica
+Status: Confirmada
+
+----------------------------------------
+NÃºmero da Passagem: 1016
+Nome: Larissa Souza
+CPF: 054.005.497-64
+Companhia: Gol
+Origem: Rio de Janeiro
+Assento: A11
+Classe: Economica
+Status: Confirmada
+
+----------------------------------------
+NÃºmero da Passagem: 1022
+Nome: Gabriela Rocha
+CPF: 447.337.213-82
+Companhia: Gol
+Origem: Rio de Janeiro
+Assento: C24
+Classe: Economica
+Status: Confirmada
+
+----------------------------------------
+NÃºmero da Passagem: 1032
+Nome: Camila Martins
+CPF: 190.064.989-63
+Companhia: Gol
+Origem: Rio de Janeiro
+Assento: A1
+Classe: Economica
+Status: Confirmada
+
+----------------------------------------
+NÃºmero da Passagem: 1041
+Nome: Nat lia Silva
+CPF: 043.543.815-83
+Companhia: Gol
+Origem: Rio de Janeiro
+Assento: C8
 Classe: Economica
 Status: Cancelada
 
 ----------------------------------------
-NÃºmero da Passagem: 1067
-Nome: Joana Martins
-CPF: 748.667.481-50
-Companhia: Azul
-Origem: SÆo Paulo
-Assento: B14
+NÃºmero da Passagem: 1050
+Nome: Mariana Alves
+CPF: 694.589.996-93
+Companhia: Gol
+Origem: Rio de Janeiro
+Assento: A15
+Classe: Economica
+Status: Confirmada
+
+----------------------------------------
+NÃºmero da Passagem: 1060
+Nome: Juliana Ribeiro
+CPF: 776.001.768-58
+Companhia: Gol
+Origem: Rio de Janeiro
+Assento: C23
 Classe: Economica
 Status: Embarcada
 
 ----------------------------------------
-NÃºmero da Passagem: 1068
-Nome: Arthur Ribeiro
-CPF: 392.669.013-50
-Companhia: Azul
-Origem: SÆo Paulo
-Assento: D22
-Classe: Economica
-Status: Confirmada
-
-----------------------------------------
-NÃºmero da Passagem: 1069
-Nome: Melissa Souza
-CPF: 663.283.720-43
+NÃºmero da Passagem: 1064
+Nome: Guilherme Souza
+CPF: 825.844.464-64
 Companhia: Gol
-Origem: Belo Horizonte
-Assento: A34
-Classe: Primeira Classe
-Status: Cancelada
+Origem: Uberlƒndia
+Assento: B12
+Classe: Economica
+Status: Embarcada
 
 ----------------------------------------
-NÃºmero da Passagem: 1070
-Nome: Amanda Silva
-CPF: 229.464.407-70
-Companhia: Latam
-Origem: Curitiba
-Assento: B39
-Classe: Primeira Classe
-Status: Confirmada
-
-----------------------------------------
-Passagens para Uberlƒndia: 5
+Passagens para Bras¡lia: 10
