@@ -388,7 +388,7 @@ void cadastrarPassageiro(Passageiro cadastro[], int *qtdPassageiro){ //Função 
     printf("Nome: ");
     scanf(" %[^\n]",cadastro[*qtdPassageiro].nome);
 
-    printf("Telefone: (sem espacos)");
+    printf("Telefone (sem espacos):");
     scanf("%s",cadastro[*qtdPassageiro].telefone);
 
     printf("E-mail: ");
