@@ -1287,6 +1287,93 @@ void relatorioCompanhia(Passagem passagens[], int qtdPassagens,Passageiro passag
 
 }
 
+void relatorioDestino(Passagem passagens[], int qtdPassagens, Passageiro passageiros[], int qtdPassageiros, Voo voos[], int qtdVoos){
+
+    char (*destinos)[50]; //Vetor de Vetor que armazena por linha os nomes das cidades de origem sem repetição
+    destinos = malloc(qtdVoos * sizeof(*destinos));
+
+    if(destinos == NULL){
+        printf("Erro de alocacao(Relatorio/Destino)!\n");
+        return;
+    }
+    int qtdDestinos = 0;
+    for(int i=0;i<qtdVoos;i++){
+        int existe = 0;
+        for(int j=0;j<qtdDestinos;j++){
+            if(strcmp(voos[i].destino,destinos[j])==0){
+                existe = 1;
+                break;
+            }
+
+        }
+        if(existe==0){
+            strcpy(destinos[qtdDestinos],voos[i].destino);
+            qtdDestinos++;
+        }
+    }
+
+    printf("\n----------------------- Destinos Disponiveis ----------------------\n");
+    for(int i = 0; i < qtdDestinos; i++){
+        printf("%2d. %-20s", i + 1, destinos[i]);//faz com que sejam impressos 3 destinos por linha
+        if((i + 1) % 3 == 0){
+            printf("\n");
+        }
+    }
+
+if(qtdDestinos % 3 != 0){
+    printf("\n");
+}
+    int opcao;
+    int retorno;
+    do{
+        printf("Opcao: ");
+        retorno = scanf("%d", &opcao);
+        if(retorno != 1){
+            printf("Digite apenas numeros!\n");
+            while(getchar() != '\n'); // limpa buffer
+            opcao = -1;
+        }
+    }while(opcao < 1 || opcao > qtdDestinos);
+    char destinoEscolhido[50];
+    strcpy(destinoEscolhido, destinos[opcao - 1]);
+    printf("Gerando Relatorio (%s)...\n",destinoEscolhido);
+    FILE *relatorioDestino;
+    relatorioDestino = fopen("RelatorioDestino.txt","w");
+    fprintf(relatorioDestino, "========================================\n");
+    fprintf(relatorioDestino, "     RELATORIO DE PASSAGENS AEREAS\n");
+    fprintf(relatorioDestino, "               (%s)\n",destinoEscolhido);
+    fprintf(relatorioDestino, "========================================\n\n");
+    int totalPassagensDestino=0;
+    for(int k=0;k<qtdPassagens;k++){
+        int indiceVoo = buscaVoo(passagens[k].codigo_voo, voos, qtdVoos);
+        if(indiceVoo == -1){
+            continue;
+        }
+        if(strcmp(voos[indiceVoo].destino,destinoEscolhido)==0){
+            totalPassagensDestino++;
+            int indicePassageiro = buscaCPF(passagens[k].cpf,passageiros,qtdPassageiros);
+            if(indicePassageiro == -1){
+                continue;
+            }
+            fprintf(relatorioDestino,"----------------------------------------\n");
+            fprintf(relatorioDestino,"Número da Passagem: %d\n",passagens[k].num_passagem);
+            fprintf(relatorioDestino,"Nome: %s\n",passageiros[indicePassageiro].nome);
+            char cpfExibicao[15]; //Cria uma variavel temporaria para armazenar o CPF que sera mostrado, para não editar o conteudo do vetor principal
+            strcpy(cpfExibicao, passagens[k].cpf); //Copia o conteudo do CPF do vetor
+            formatarCPF(cpfExibicao); //Formata somente o cpf a ser exibido no formato XXX.XXX.XXX-XX
+            fprintf(relatorioDestino,"CPF: %s\n",cpfExibicao);
+            fprintf(relatorioDestino,"Companhia: %s\n",voos[indiceVoo].companhia);
+            fprintf(relatorioDestino, "Origem: %s\n",voos[indiceVoo].origem);
+            fprintf(relatorioDestino,"Assento: %s\n",passagens[k].assentos);
+            fprintf(relatorioDestino,"Classe: %s\n",passagens[k].classe);
+            fprintf(relatorioDestino,"Status: %s\n\n",passagens[k].status);
+        }
+    }
+    fprintf(relatorioDestino,"----------------------------------------\n");
+    fprintf(relatorioDestino,"Passagens para %s: %d\n",destinoEscolhido,totalPassagensDestino);
+    free(destinos);
+    fclose(relatorioDestino);
+}
 
 Passagem *deletarPassagem(Passagem passagens[], int *qtdPassagem, int *passagensAlocadas){
     int numero_digitado;
@@ -1545,7 +1632,7 @@ int main(){
                 break;
 
             case 5:
-                relatorioCompanhia(passagens,qtdPassagem,passageiros,qtdPassageiro,voos,qtdVoos);
+                relatorioDestino(passagens,qtdPassagem,passageiros,qtdPassageiro,voos,qtdVoos);
                // menuRelatorios();
                 break;
 
