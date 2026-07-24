@@ -1,0 +1,33 @@
+========================================
+     RELATORIO DE PASSAGENS AEREAS
+         (663.283.720-43)
+========================================
+
+Nome: Melissa Souza
+Telefone: 34991110080
+E-mail: melissa.souza@gmail.com
+Data de Nascimento: 05/02/1999
+
+----------------------------------------------------
+PASSAGENS ENCONTRADAS
+----------------------------------------------------
+  Numero da passagem: 1000
+  Codigo de Voo: L0011
+  Companhia: Gol
+  Curitiba -> Salvador
+  Assento: A33
+  Classe: Executiva
+  Status: Embarcada
+----------------------------------------------------
+  Numero da passagem: 1069
+  Codigo de Voo: G7210
+  Companhia: 
+  Belo Horizonte -> Uberlƒndia
+  Assento: A34
+  Classe: Primeira Classe
+  Status: Cancelada
+-----------------------------------------
+Passagens Encontradas: 2
+  Confirmada: 0
+  Embarcada: 1
+  Canceladas: 1

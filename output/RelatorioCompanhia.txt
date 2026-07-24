@@ -1,227 +1,295 @@
 ========================================
      RELATORIO DE PASSAGENS AEREAS
-               (Latam)
+               (Azul)
 ========================================
 
 ----------------------------------------------------
-Numero da passagem: 1000
-Nome: Melissa Souza
-CPF: 663.283.720-43
-Codigo de Voo: L0011
-Origem: Curitiba
-Destino: Salvador
-Assento: A33
-Classe: Executiva
-Classe: Embarcada
-----------------------------------------------------
-Numero da passagem: 1002
+Numero da passagem: 1003
 Nome: Arthur Ribeiro
 CPF: 392.669.013-50
-Codigo de Voo: L2462
-Origem: Manaus
-Destino: Bel‚m
+Codigo de Voo: A5184
+Fortaleza -> Cuiab 
 Assento: A40
-Classe: Executiva
-Classe: Confirmada
-----------------------------------------------------
-Numero da passagem: 1007
-Nome: Ana Costa
-CPF: 168.995.350-09
-Codigo de Voo: L9997
-Origem: SÆo Paulo
-Destino: Manaus
-Assento: A35
 Classe: Primeira Classe
-Classe: Confirmada
+Status: Confirmada
 ----------------------------------------------------
-Numero da passagem: 1008
-Nome: Bruno Henrique
-CPF: 104.332.181-00
-Codigo de Voo: L2462
-Origem: Manaus
-Destino: Bel‚m
-Assento: D38
+Numero da passagem: 1006
+Nome: Maria Oliveira
+CPF: 111.444.777-35
+Codigo de Voo: A1236
+Uberlƒndia -> SÆo Paulo
+Assento: B5
+Classe: Economica
+Status: Embarcada
+----------------------------------------------------
+Numero da passagem: 1009
+Nome: Mariana Costa
+CPF: 960.013.389-14
+Codigo de Voo: A5184
+Fortaleza -> Cuiab 
+Assento: A20
+Classe: Economica
+Status: Embarcada
+----------------------------------------------------
+Numero da passagem: 1015
+Nome: Patr¡cia Mendes
+CPF: 641.999.370-99
+Codigo de Voo: A5184
+Fortaleza -> Cuiab 
+Assento: C15
+Classe: Economica
+Status: Cancelada
+----------------------------------------------------
+Numero da passagem: 1017
+Nome: Andr‚ Martins
+CPF: 651.964.390-48
+Codigo de Voo: A1236
+Uberlƒndia -> SÆo Paulo
+Assento: B21
+Classe: Economica
+Status: Embarcada
+----------------------------------------------------
+Numero da passagem: 1019
+Nome: Henrique Santos
+CPF: 127.028.983-78
+Codigo de Voo: A4509
+Bras¡lia -> Florian¢polis
+Assento: B8
+Classe: Economica
+Status: Embarcada
+----------------------------------------------------
+Numero da passagem: 1020
+Nome: Mariana Oliveira
+CPF: 937.158.249-99
+Codigo de Voo: A5184
+Fortaleza -> Cuiab 
+Assento: A13
+Classe: Economica
+Status: Confirmada
+----------------------------------------------------
+Numero da passagem: 1026
+Nome: Sabrina Alves
+CPF: 311.307.550-53
+Codigo de Voo: A5184
+Fortaleza -> Cuiab 
+Assento: C12
+Classe: Economica
+Status: Cancelada
+----------------------------------------------------
+Numero da passagem: 1027
+Nome: Caio Martins
+CPF: 568.737.182-62
+Codigo de Voo: A1236
+Uberlƒndia -> SÆo Paulo
+Assento: B18
+Classe: Economica
+Status: Confirmada
+----------------------------------------------------
+Numero da passagem: 1028
+Nome: Renata Carvalho
+CPF: 082.711.226-22
+Codigo de Voo: A7850
+Recife -> Fortaleza
+Assento: C36
 Classe: Primeira Classe
-Classe: Cancelada
+Status: Cancelada
 ----------------------------------------------------
-Numero da passagem: 1010
-Nome: Lucas Pereira
-CPF: 083.863.794-99
-Codigo de Voo: L0011
-Origem: Curitiba
-Destino: Salvador
-Assento: B33
-Classe: Primeira Classe
-Classe: Confirmada
+Numero da passagem: 1033
+Nome: Diego Ribeiro
+CPF: 937.257.392-26
+Codigo de Voo: A1236
+Uberlƒndia -> SÆo Paulo
+Assento: B2
+Classe: Economica
+Status: Embarcada
 ----------------------------------------------------
-Numero da passagem: 1013
-Nome: Juliana Souza
-CPF: 475.255.341-44
-Codigo de Voo: L9997
-Origem: SÆo Paulo
-Destino: Manaus
-Assento: C34
-Classe: Primeira Classe
-Classe: Cancelada
+Numero da passagem: 1034
+Nome: Larissa Alves
+CPF: 703.037.657-98
+Codigo de Voo: A7850
+Recife -> Fortaleza
+Assento: C3
+Classe: Economica
+Status: Cancelada
 ----------------------------------------------------
-Numero da passagem: 1014
-Nome: Renato Carvalho
-CPF: 473.420.003-37
-Codigo de Voo: L2462
-Origem: Manaus
-Destino: Bel‚m
-Assento: B36
-Classe: Primeira Classe
-Classe: Confirmada
-----------------------------------------------------
-Numero da passagem: 1018
-Nome: Camila Ribeiro
-CPF: 131.243.859-26
-Codigo de Voo: L9997
-Origem: SÆo Paulo
-Destino: Manaus
-Assento: A37
-Classe: Primeira Classe
-Classe: Confirmada
-----------------------------------------------------
-Numero da passagem: 1021
-Nome: Vin¡cius Pereira
-CPF: 148.178.511-71
-Codigo de Voo: L0011
-Origem: Curitiba
-Destino: Salvador
+Numero da passagem: 1036
+Nome: Henrique Costa
+CPF: 270.548.474-40
+Codigo de Voo: A4509
+Bras¡lia -> Florian¢polis
 Assento: B34
 Classe: Primeira Classe
-Classe: Embarcada
+Status: Confirmada
 ----------------------------------------------------
-Numero da passagem: 1024
-Nome: Sofia Nunes
-CPF: 943.298.144-47
-Codigo de Voo: L9997
-Origem: SÆo Paulo
-Destino: Manaus
-Assento: C35
+Numero da passagem: 1039
+Nome: Amanda Costa
+CPF: 054.912.228-10
+Codigo de Voo: A5184
+Fortaleza -> Cuiab 
+Assento: A6
+Classe: Economica
+Status: Confirmada
+----------------------------------------------------
+Numero da passagem: 1042
+Nome: Rodrigo Mendes
+CPF: 861.681.163-03
+Codigo de Voo: A1236
+Uberlƒndia -> SÆo Paulo
+Assento: D9
+Classe: Economica
+Status: Confirmada
+----------------------------------------------------
+Numero da passagem: 1043
+Nome: Carolina Rocha
+CPF: 569.648.072-17
+Codigo de Voo: A7850
+Recife -> Fortaleza
+Assento: A36
 Classe: Primeira Classe
-Classe: Cancelada
+Status: Embarcada
 ----------------------------------------------------
-Numero da passagem: 1025
-Nome: Daniel Ribeiro
-CPF: 380.408.310-24
-Codigo de Voo: L2462
-Origem: Manaus
-Destino: Bel‚m
-Assento: B38
+Numero da passagem: 1046
+Nome: Matheus Souza
+CPF: 913.423.704-65
+Codigo de Voo: A4509
+Bras¡lia -> Florian¢polis
+Assento: D11
+Classe: Economica
+Status: Embarcada
+----------------------------------------------------
+Numero da passagem: 1048
+Nome: Beatriz Lima
+CPF: 080.249.003-43
+Codigo de Voo: A5184
+Fortaleza -> Cuiab 
+Assento: C13
+Classe: Economica
+Status: Embarcada
+----------------------------------------------------
+Numero da passagem: 1051
+Nome: Gustavo Martins
+CPF: 790.439.679-39
+Codigo de Voo: A1236
+Uberlƒndia -> SÆo Paulo
+Assento: B16
+Classe: Economica
+Status: Embarcada
+----------------------------------------------------
+Numero da passagem: 1052
+Nome: Isabela Costa
+CPF: 872.630.955-64
+Codigo de Voo: A7850
+Recife -> Fortaleza
+Assento: C39
 Classe: Primeira Classe
-Classe: Embarcada
+Status: Cancelada
 ----------------------------------------------------
-Numero da passagem: 1030
-Nome: Let¡cia Gomes
-CPF: 175.371.713-27
-Codigo de Voo: L9997
-Origem: SÆo Paulo
-Destino: Manaus
-Assento: A33
-Classe: Primeira Classe
-Classe: Confirmada
+Numero da passagem: 1055
+Nome: Leonardo Martins
+CPF: 777.364.719-40
+Codigo de Voo: A4509
+Bras¡lia -> Florian¢polis
+Assento: B18
+Classe: Economica
+Status: Cancelada
 ----------------------------------------------------
-Numero da passagem: 1031
-Nome: Rafael Mendes
-CPF: 149.768.603-29
-Codigo de Voo: L2462
-Origem: Manaus
-Destino: Bel‚m
-Assento: D40
-Classe: Primeira Classe
-Classe: Embarcada
+Numero da passagem: 1058
+Nome: Larissa Costa
+CPF: 491.072.587-39
+Codigo de Voo: A5184
+Fortaleza -> Cuiab 
+Assento: A21
+Classe: Economica
+Status: Cancelada
 ----------------------------------------------------
-Numero da passagem: 1038
+Numero da passagem: 1061
+Nome: Andr‚ Santos
+CPF: 411.791.603-39
+Codigo de Voo: A1236
+Uberlƒndia -> SÆo Paulo
+Assento: D24
+Classe: Economica
+Status: Cancelada
+----------------------------------------------------
+Numero da passagem: 1062
+Nome: Fernanda Rocha
+CPF: 652.044.076-00
+Codigo de Voo: A7850
+Recife -> Fortaleza
+Assento: A25
+Classe: Economica
+Status: Confirmada
+----------------------------------------------------
+Numero da passagem: 1066
+Nome: Samuel Lima
+CPF: 620.497.516-13
+Codigo de Voo: A6400
+SÆo Paulo -> Uberlƒndia
+Assento: D18
+Classe: Economica
+Status: Cancelada
+----------------------------------------------------
+Numero da passagem: 1067
+Nome: Joana Martins
+CPF: 748.667.481-50
+Codigo de Voo: A6400
+SÆo Paulo -> Uberlƒndia
+Assento: B14
+Classe: Economica
+Status: Embarcada
+----------------------------------------------------
+Numero da passagem: 1068
+Nome: Arthur Ribeiro
+CPF: 392.669.013-50
+Codigo de Voo: A6400
+SÆo Paulo -> Uberlƒndia
+Assento: D22
+Classe: Economica
+Status: Confirmada
+----------------------------------------------------
+Numero da passagem: 1071
+Nome: Renata Carvalho
+CPF: 082.711.226-22
+Codigo de Voo: A1236
+Uberlƒndia -> SÆo Paulo
+Assento: B8
+Classe: Economica
+Status: Embarcada
+----------------------------------------------------
+Numero da passagem: 1072
+Nome: Alexandre Souza
+CPF: 781.109.277-85
+Codigo de Voo: A5184
+Fortaleza -> Cuiab 
+Assento: A24
+Classe: Economica
+Status: Embarcada
+----------------------------------------------------
+Numero da passagem: 1073
+Nome: Larissa Alves
+CPF: 703.037.657-98
+Codigo de Voo: A2147
+Goiƒnia -> SÆo Lu¡s
+Assento: D22
+Classe: Economica
+Status: Confirmada
+----------------------------------------------------
+Numero da passagem: 1074
+Nome: Henrique Costa
+CPF: 270.548.474-40
+Codigo de Voo: A9021
+JoÆo Pessoa -> Recife
+Assento: C11
+Classe: Economica
+Status: Embarcada
+----------------------------------------------------
+Numero da passagem: 1075
 Nome: Gustavo Rocha
 CPF: 211.303.277-52
-Codigo de Voo: L2462
-Origem: Manaus
-Destino: Bel‚m
-Assento: D35
-Classe: Primeira Classe
-Classe: Embarcada
-----------------------------------------------------
-Numero da passagem: 1040
-Nome: Felipe Oliveira
-CPF: 255.648.373-39
-Codigo de Voo: L0011
-Origem: Curitiba
-Destino: Salvador
-Assento: B7
+Codigo de Voo: A3564
+Florian¢polis -> Foz do Igua‡u
+Assento: A7
 Classe: Economica
-Classe: Embarcada
-----------------------------------------------------
-Numero da passagem: 1045
-Nome: Helena Martins
-CPF: 125.072.653-02
-Codigo de Voo: L9997
-Origem: SÆo Paulo
-Destino: Manaus
-Assento: C37
-Classe: Primeira Classe
-Classe: Confirmada
-----------------------------------------------------
-Numero da passagem: 1049
-Nome: Rafael Souza
-CPF: 604.858.205-60
-Codigo de Voo: L0011
-Origem: Curitiba
-Destino: Salvador
-Assento: D14
-Classe: Economica
-Classe: Cancelada
-----------------------------------------------------
-Numero da passagem: 1054
-Nome: Camila Souza
-CPF: 881.274.587-32
-Codigo de Voo: L9997
-Origem: SÆo Paulo
-Destino: Manaus
-Assento: A40
-Classe: Primeira Classe
-Classe: Embarcada
-----------------------------------------------------
-Numero da passagem: 1057
-Nome: Victor Almeida
-CPF: 459.107.081-63
-Codigo de Voo: L2462
-Origem: Manaus
-Destino: Bel‚m
-Assento: D20
-Classe: Economica
-Classe: Embarcada
-----------------------------------------------------
-Numero da passagem: 1059
-Nome: Matheus Oliveira
-CPF: 946.644.114-05
-Codigo de Voo: L0011
-Origem: Curitiba
-Destino: Salvador
-Assento: B22
-Classe: Economica
-Classe: Confirmada
-----------------------------------------------------
-Numero da passagem: 1065
-Nome: Nicole Martins
-CPF: 199.856.591-20
-Codigo de Voo: L8569
-Origem: Uberlƒndia
-Destino: Salvador
-Assento: C33
-Classe: Primeira Classe
-Classe: Confirmada
-----------------------------------------------------
-Numero da passagem: 1070
-Nome: Amanda Silva
-CPF: 229.464.407-70
-Codigo de Voo: L4330
-Origem: Curitiba
-Destino: Uberlƒndia
-Assento: B39
-Classe: Primeira Classe
-Classe: Confirmada
+Status: Confirmada
 -----------------------------------------
-Passagens Encontradas: 22
+Passagens Encontradas: 32
