@@ -1,0 +1,57 @@
+========================================
+     RELATORIO DE PASSAGENS AEREAS
+               (Uberlƒndia)
+========================================
+
+----------------------------------------
+NÃºmero da Passagem: 1066
+Nome: Samuel Lima
+CPF: 620.497.516-13
+Companhia: Azul
+Origem: SÆo Paulo
+Assento: D18
+Classe: Economica
+Status: Cancelada
+
+----------------------------------------
+NÃºmero da Passagem: 1067
+Nome: Joana Martins
+CPF: 748.667.481-50
+Companhia: Azul
+Origem: SÆo Paulo
+Assento: B14
+Classe: Economica
+Status: Embarcada
+
+----------------------------------------
+NÃºmero da Passagem: 1068
+Nome: Arthur Ribeiro
+CPF: 392.669.013-50
+Companhia: Azul
+Origem: SÆo Paulo
+Assento: D22
+Classe: Economica
+Status: Confirmada
+
+----------------------------------------
+NÃºmero da Passagem: 1069
+Nome: Melissa Souza
+CPF: 663.283.720-43
+Companhia: Gol
+Origem: Belo Horizonte
+Assento: A34
+Classe: Primeira Classe
+Status: Cancelada
+
+----------------------------------------
+NÃºmero da Passagem: 1070
+Nome: Amanda Silva
+CPF: 229.464.407-70
+Companhia: Latam
+Origem: Curitiba
+Assento: B39
+Classe: Primeira Classe
+Status: Confirmada
+
+----------------------------------------
+Passagens para Uberlƒndia: 5
